@@ -1,0 +1,162 @@
+.b-header {
+  position: absolute;
+  top: 0;
+
+  z-index: 999;
+  display: flex;
+  justify-content: space-between;
+
+  height: 60px;
+  width: 100%;
+  padding: 10px 15px;
+
+  // min-width: 1000px;
+
+  // background: $header-bg;
+  // color: $white-grey;
+  // background: $dark-grey;
+  // background: linear-gradient(rgba($dark-grey, .6), rgba($dark-grey, 0));
+
+  color: $white;
+  // color: $dark-grey;
+  // color: $header-bg;
+  // border-bottom: solid 1px $white-grey;
+
+  // @include screen(mobile){
+  //   min-width: 320px;
+  // };
+  //
+  // @include screen(tablet){
+  //   min-width: 320px;
+  // };
+
+  transition: top .2s;
+
+  a {
+    color: inherit;
+  }
+
+  &__logo {
+    left: 20px;
+    text-align: left;
+    float: left;
+    z-index: 3;
+    overflow: hidden;
+    transition: all .3s;
+    width: 180px;
+
+    @include screen(mobile) {
+      width: 25px;
+    };
+  }
+
+  &__logo-img {
+    height: 25px;
+    margin-top: 10px;
+
+  }
+
+  &__search {
+    // left: 50%;
+    // margin-left: -320px;
+    margin: 3px 0;
+    // z-index: 0;
+
+    width: 40px;
+    @include screen(desktop) {
+      width: 640px;
+    };
+
+    @include screen(mobile){
+      width: 90px;
+    };
+
+    @include screen(tablet){
+      width: 360px;
+    };
+
+    text-align: center;
+    .i-input {
+      // width: 40px;
+      // width: 640px;
+      padding-top: 6px;
+      padding-bottom: 6px;
+      margin: 0;
+    }
+  }
+  &__nav {
+    text-align: right;
+    float: right;
+    width: 180px;
+  }
+  &__login {
+    position: relative;
+    top: -7px;
+  }
+
+  &__write-text {
+    @include screen(mobile) {
+      display: none;
+    };
+    @include screen(tablet) {
+      display: none;
+    };
+  }
+
+
+  &__btn {
+    margin-top: -6px;
+    margin-left: 6px;
+    height: 40px;
+
+    font-size: 16px;
+    line-height: 1;
+
+    background: none;
+    outline: none;
+    text-shadow: 0 0 10px rgba($dark-grey, .5);
+
+    cursor: pointer;
+
+    &.js-down {
+      i {
+        font-size: 22px;
+      }
+    }
+
+    &:hover {
+      opacity: .8;
+    }
+
+    i {
+      position: relative;
+      top: 5px;
+      padding: 10px 5px;
+      height: 40px;
+      line-height: 40px;
+      font-size: 28px;
+    }
+
+    img {
+      border-radius: 20px;
+      width: 40px;
+      height: 40px;
+      margin-top: -3px;
+    }
+  }
+
+  &__notif {
+    &.is-notif {
+      color: $red;
+      animation: blink 1s infinite;
+    }
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: .2 }
+    10% { opacity: 1 }
+    80% { opacity: 1 }
+  }
+
+
+}

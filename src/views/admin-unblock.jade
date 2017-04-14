@@ -1,0 +1,20 @@
+style.
+  body { font-family:monospace }
+  table { min-width: 500px }
+  th, td { padding: 5px 10px; }
+  img { width: 30px; border-radius: 20px; }
+
+table
+  tr
+    th title
+    th subtitle
+  each block in blocks
+    tr
+      td 
+        a(href="/p/#{block.block_id.slug}") #{block.block_id.title}
+      td #{block.block_id.subtitle}
+      td
+        form(method="post" action="/x/unblock-article")
+          input(type="hidden" name="_csrf" value="#{CSRF}" )
+          input(type="hidden" name="_id" value="#{block._id}")
+          input(type="submit" value="unblock")

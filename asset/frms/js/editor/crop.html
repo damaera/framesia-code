@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <style>
+      body {
+        margin: 0px;
+        padding: 0px;
+      }
+    </style>
+  </head>
+  <body>
+    <input type="file" id="js-input">
+    <script src="https://blueimp.github.io/JavaScript-Load-Image/js/load-image.js"></script>
+    <script>
+
+document.getElementById('js-input').onchange = function (e) {
+  loadImage(
+    e.target.files[0],
+    function (img) {
+      var options = {}
+      var ratio = img.width / img.height
+      if (img.width >= 960) {
+        options.maxWidth = 960
+        if (ratio < 960/540) {
+          options.maxHeight = 540
+          options.crop = true
+          options.cover = true
+        }
+      }
+      else if (img.width >= 640) {
+        options.maxWidth = 640
+        if (ratio < 640/540) {
+          options.maxHeight = 540
+          options.crop = true
+          options.cover = true
+        }
+      }
+      else {
+        if (img.height > 540) {
+          options.maxHeight = 540
+          options.crop = true
+          options.cover = true
+        }
+      }
+      loadImage(
+        img.toDataURL(),
+        function ($img) {
+          console.log($img)
+          document.body.appendChild($img)
+        },
+        options
+      )
+    },
+    {
+      canvas: true
+    } // Options
+  );
+}
+// };
+    </script>
+  </body>
+</html>

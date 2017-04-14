@@ -1,0 +1,60 @@
+extends layout/index
+
+
+block meta
+  title #{title}
+  meta(name="description" content="#{description ? description : title}")
+  meta(name="keywords" content="#{keywords ? keywords : title.split(' ').join(',')}")
+  //- if author.length > 0
+  //-   meta(name="author" content="#{author}")
+
+block content
+  if empty
+    .b-article
+      .b-article__head.is-center
+        .b-article__cover.is-cover-not-full
+          br
+          br
+          br
+          br
+          .i-wrap--640
+            h2.b-graf--h2.b-article__head__textarea #{__('Clean reader')}
+            p.b-graf #{__('Turns an article page into a clean view for reading')}
+            form(action="/read" method="post")
+              input.i-input(name="url" placeholder="#{__('Insert article link here')}" required)
+              input.i-button.i-button--green.i-button--large(type="submit")
+  else
+    .b-article
+      if image
+        .b-article__cover.is-cover
+          img.b-article__cover__img.js-cover(src="/read?img=#{image}")
+      else
+        .b-article__cover
+
+      .b-article__title.is-center
+        h1.b-graf.b-graf--h1.b-article__head__textarea #{title}
+        div
+          if USER
+            button.i-button.js-article-repost-link(data-article-id="#{linkId}" class="#{is_reposted ? '' : 'i-button--green'}")
+              b #{is_reposted ? __('Reposted') : __('Repost')}
+            button.i-button.js-add-to-collection(data-article-id="#{linkId}") #{__('Add to collection')}
+          a(href="#{url}" target="_blank")
+            button.i-button.i-button--blue
+              if source
+                | #{source}
+              else
+                | #{hostname}
+          .clear
+          .i-wrap--640
+            .tag-col
+              each tag in tags
+                .nsg-tag #{tag}
+              .clear
+          br
+          br
+      .b-article__content.js-article(data-article-id="reader")
+        .b-graf.i-wrap--640 !{content}
+      span.b-toc.js-toc.is-with-header
+        button.js-close-toc.f-icon-more(onclick="this.parentNode.classList.toggle('is-show')")
+        .b-graf--sc #{__('Table of Contents')}
+        .title: a(href="#") #{title}

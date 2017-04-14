@@ -1,0 +1,76 @@
+@font-face {
+	font-family: 'framesia-icon-editor';
+	src:url('fonts/framesia-icon-editor.eot?sinr8u');
+	src:url('fonts/framesia-icon-editor.eot?sinr8u#iefix') format('embedded-opentype'),
+		url('fonts/framesia-icon-editor.ttf?sinr8u') format('truetype'),
+		url('fonts/framesia-icon-editor.woff?sinr8u') format('woff'),
+		url('fonts/framesia-icon-editor.svg?sinr8u#framesia-icon-editor') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+	font-family: 'framesia-icon-editor';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.icon-add-img:before {
+	content: "\e800";
+}
+.icon-bold:before {
+	content: "\e801";
+}
+.icon-center:before {
+	content: "\e802";
+}
+.icon-drop-cap:before {
+	content: "\e803";
+}
+.icon-h1:before {
+	content: "\e804";
+}
+.icon-h2:before {
+	content: "\e805";
+}
+.icon-italic:before {
+	content: "\e807";
+}
+.icon-img-center:before {
+	content: "\e808";
+}
+.icon-img-full:before {
+	content: "\e80a";
+}
+.icon-img-left:before {
+	content: "\e80b";
+}
+.icon-img-right:before {
+	content: "\e80c";
+}
+.icon-link:before {
+	content: "\e80d";
+}
+.icon-quote1:before {
+	content: "\e80e";
+}
+.icon-quote2:before {
+	content: "\e80f";
+}
+.icon-code:before {
+	content: "\f270";
+}
+.icon-hr:before {
+	content: "\f462";
+}
+.icon-del:before {
+	content: "\f252";
+}

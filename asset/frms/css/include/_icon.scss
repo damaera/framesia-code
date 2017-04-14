@@ -1,0 +1,76 @@
+@font-face {
+  font-family: 'framesia-icon';
+	src:    url('fonts/framesia-icon.eot?q6j22f');
+	src:    url('fonts/framesia-icon.eot?q6j22f#iefix') format('embedded-opentype'),
+    url('fonts/framesia-icon.ttf?q6j22f') format('truetype'),
+    url('fonts/framesia-icon.woff?q6j22f') format('woff'),
+    url('fonts/framesia-icon.svg?q6j22f#framesia-icon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="f-icon-"], [class*=" f-icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'framesia-icon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.f-icon-mark:before {
+  content: "\f36b";
+}
+.f-icon-repost:before {
+  content: "\f3b1";
+  -webkit-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+.f-icon-down:before {
+  content: "\f123";
+}
+.f-icon-up:before {
+  content: "\f126";
+}
+.f-icon-close:before {
+  content: "\f129";
+}
+.f-icon-bell:before {
+  content: "\f3e2";
+}
+.f-icon-book:before {
+  content: "\f3e8";
+}
+.f-icon-comment:before {
+  content: "\f3fc";
+}
+.f-icon-write:before {
+  content: "\f418";
+}
+.f-icon-mail:before {
+  content: "\f423";
+}
+.f-icon-eye:before {
+  content: "\f425";
+}
+.f-icon-love:before {
+  content: "\f443";
+}
+.f-icon-more:before {
+  content: "\f46a";
+}
+.f-icon-plus:before {
+  content: "\f48b";
+}
+.f-icon-search:before {
+  content: "\f4a4";
+}
+.f-icon-reply:before {
+  content: "\f4c7";
+}

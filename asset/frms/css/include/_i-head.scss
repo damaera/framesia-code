@@ -1,0 +1,15 @@
+.i-head {
+  &--2 {
+    margin: 20px 0;
+
+    font-size: 2em;
+  }
+  &--3 {
+    margin: 20px 0;
+
+    font-size: 1.5em;
+    font-weight: normal;
+    
+    color: $light-grey;
+  }
+}

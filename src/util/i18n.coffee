@@ -1,0 +1,17 @@
+module.exports =
+  category:
+    business: 'Business'
+    design: 'Design'
+    education: 'Education'
+    entertainment: 'Entertainment'
+    fiction: 'Fiction'
+    finance: 'Finance'
+    health: 'Health'
+    photography: 'Photography'
+    politics: 'Politics'
+    programming: 'Programming'
+    research: 'Research'
+    science: 'Science'
+    technology: 'Technology'
+    travel: 'Travel'
+    tutorial: 'Tutorial'

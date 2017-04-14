@@ -1,0 +1,64 @@
+extends layout/index
+
+block content
+  .i-wrap--full.bg-white: .i-wrap--640: form(action="/u/edit" method="post")
+    br
+    if USER.is_new
+      h2.i-head--2
+        | #{__('Almost')}&hellip;
+      h3.i-head--3
+        | #{__('One more step')}, 
+        span.text-red.text-bold #{USER.name}
+        | . #{__('Choose username and tell us about you.')}
+    else
+      h2.i-head--2
+        | #{__('Editing your information')}
+
+    label.text-bold #{__('Name')}
+    input.i-input(name="name" value="#{USER.name}" type="text" placeholder="#{__('Fullname')}" minLength="3" maxLength="30" pattern="[a-zA-Z ]{3,30}" required autocomplete="off")
+
+    label.text-bold #{__('Change profile picture')}
+    br
+    if USER.is_new
+      img.js-first-time-ava(src="#{USER.picture}", alt="", height="200")
+    else
+      img.js-first-time-ava(src="#{IMG_URL}ava/#{USER._id}.jpg", alt="", height="200")
+    input.js-first-time-ava-input.is-hidden(type="file")
+    input.js-first-time-ava-data.is-hidden(name="picture" type="text")
+    br
+    br
+
+    label.text-bold #{__('Username')}
+    label.text-red.is-hidden.js-username-exist.pull-right #{__('Username already taken')}
+    if USER.is_new
+      input.i-input.js-username-user(name="username" type="text" placeholder="#{__('Choose unique username (Alphabet, number or \'-\', max 16)')}" minLength="3" maxLength="16" pattern="[a-zA-Z0-9\-]{3,16}" required autocomplete="off")
+    else
+      input.i-input.js-username-user(name="username" type="text" placeholder="#{__('Choose proper username (Alphabet, number or \'-\' , max 16)')}" minLength="3" maxLength="16" pattern="[a-zA-Z0-9\-]{3,16}" required autocomplete="off" value="#{USER.username}")
+
+    label.text-bold #{__('About you')}
+    textarea.i-input.i-input--textarea(name="description" type="text" placeholder="#{__('Description about you, max 200')}" rows="3" minLength="3" maxLength="200" required autocomplete="off") #{USER.description}
+    
+    
+    table.i-wrap--640
+      tr: td
+        b #{__('Choose language')}
+        select.i-input(name="language_chosen")
+          option.opt-.opt-en(value="en") English
+          if USER.language_chosen == 'id'
+            option.opt-id(value="id" selected) Bahasa Indonesia
+          else
+            option.opt-id(value="id") Bahasa Indonesia
+      tr: td
+        b #{__('Choose country')}
+        select.i-input(name="country_chosen")
+          option.opt-intl.opt-(value="intl") International
+          if USER.country_chosen == 'id'
+            option.opt-id(value="id" selected) Indonesia
+          else
+            option.opt-id(value="id") Indonesia
+
+    input.i-button.i-button--green.pull-right(type="submit" value="Submit")
+    .clear
+    br
+    br
+

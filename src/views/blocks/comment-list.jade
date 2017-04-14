@@ -1,0 +1,57 @@
+include ../util/time.jade
+
+each comment in comments
+  .b-comment__item(id="#{comment._id}")
+    .i-user--inline
+      span.i-user--inline__ava
+        img(src="#{IMG_URL}c_fill,w_50/ava/#{comment.user._id}.jpg")
+      span.i-user--inline__name
+        a(href="/#{comment.user.username}") #{comment.user.name}
+      span.b-comment__date.i-user--inline__mod
+        +time(comment.created_at)
+    if !comment.is_published 
+      button.i-button.i-button--small.i-button--w-green.pull-right.is-private Private
+    .b-comment__content !{comment.content.replace(/@([a-z0-9_]{3,16})/g, "<a href='/$1'>@$1</a>")}
+      .b-post__button-wrap
+        if is_login
+          button.b-post__button.js-comment-love(data-comment-id="#{comment._id}" class="#{ comment.is_loving ? 'is-loving' : ''}")
+            b #{comment.love_count}
+            i.f-icon-love
+          button.b-post__button.js-comment-reply(data-username="#{comment.user.username}" data-comment-id="#{comment._id}")
+            i.f-icon-reply
+          if comment.is_yours
+            button.b-post__button.i-button--small.js-comment-delete.pull-right(data-comment-id="#{comment._id}")
+              i.icon-del
+        else
+          button.b-post__button
+            b #{comment.love_count}
+            i.f-icon-love
+    //- .b-comment__replies
+    //-   each reply in comment.replies
+    //-     .b-comment__reply
+    //-       .i-user
+    //-         span.i-user__ava
+    //-           img(src="#{IMG_URL}ava/#{reply.user._id}-50.jpg")
+    //-         p.i-user__name
+    //-           a(href="/#{reply.user.username}") #{reply.user.name}
+    //-         p.i-user__mod
+    //-           +time(reply.created_at)
+    //-       .b-comment__content !{reply.content.replace(/@([a-z0-9_]{3,16})/g, "<a href='/$1'>@$1</a>")}
+    //-         .b-post__button-wrap
+    //-           if USER
+    //-             button.b-post__button.js-reply-love(data-reply-id="#{reply._id}")
+    //-               b #{reply.love_count}
+    //-               i.f-icon-love
+    //-             button.b-post__button.js-comment-reply(data-username="#{reply.user.username}" data-comment-id="#{comment._id}")
+    //-               i.f-icon-reply
+    //-               b #{__('reply')}
+    //-           else
+    //-             button.b-post__button
+    //-               b #{reply.love_count}
+    //-               i.f-icon-love
+      //- if USER
+      //-   .b-comment__reply
+      //-     span.i-user__ava
+      //-       img(src="#{IMG_URL}ava/#{USER._id}-50.jpg")
+      //-     input.i-input.i-input--comment.js-reply-input(placeholder="#{__('Reply comment')}&hellip;" data-comment-id="#{comment._id}")
+      //-     button.i-button.i-button--comment.js-reply-submit #{__('Send')}

@@ -1,0 +1,3 @@
+mixin read(reading_time)
+  - var readTime = ( reading_time / 60000).toFixed(1)
+  span #{ readTime } #{__('min read')}

@@ -1,0 +1,54 @@
+extends layout/index
+
+block meta
+  title #{__('Your collections')}
+  meta(name="robots" content="noindex")
+
+block content
+  .i-wrap--640
+    br
+    br
+    h1.b-graf--h2 #{__('Collections')}
+    p.b-graf--h3 #{__('Collection which you are contributed to')}
+    br
+    br
+  .b-post
+    br
+    .i-wrap--640
+      a(href="/p/new-collection")
+        button.i-button.i-button--green #{__('Create new collection')}
+      br
+      br
+      br
+      .b-graf--h3 Admin
+      .b-graf--h6 #{__('You\'re admin in this collection')}
+      each col in admin
+        a(href="/c/#{col.username}")
+          .b-collection
+            span.i-user__ava--100
+              img(src="#{IMG_URL}col/#{col._id}.jpg")
+            span.b-graf--h4 #{col.name}
+            span   &middot;  
+            span.b-graf--h5.text-green #{col.username}
+            br
+            br
+
+      else 
+        .i-block-empty.align-left #{__('No collections')}
+      br
+      .divider
+      br
+      .b-graf--h3 Member
+      .b-graf--h6 #{__('You\'re member in this collection')}
+      each col in member
+        a(href="/c/#{col.username}")
+          .b-collection
+            span.i-user__ava--100
+              img(src="#{IMG_URL}col/#{col._id}.jpg")
+            span.b-graf--h4 #{col.name}
+            span   &middot;  
+            span.b-graf--h5.text-green #{col.username}
+            br
+            br
+      else
+        .i-block-empty.align-left #{__('No collections')}

@@ -1,0 +1,32 @@
+.is-center {
+  text-align: center;
+}
+.is-hidden {
+  display: none;
+}
+
+.bg-red {
+  background: $red;
+  color: $white;
+}
+.bg-green {
+  background: $green;
+  color: $white;
+}
+.bg-blue {
+  background: $blue;
+  color: $white;
+}
+.text-bold {
+  font-weight: bold;
+}
+.text-red {
+  color: $red;
+}
+.text-green {
+  color: $green;
+}
+.bg-white {
+  background: $white;
+  color: $dark-grey;
+}

@@ -1,0 +1,91 @@
+extends layout/index
+
+
+block meta
+  title #{user.name} &middot; Framesia
+  meta(name="description" content="#{user.name} &middot; #{user.description}")
+
+block content
+  .i-wrap--full
+    .i-wrap__right
+      .js-colright
+        .b-graf--sc.is-center #{__('Contributed in')}
+        .js-colright-feed.is-empty(data-username="#{user.username}" data-col-contr='true')
+        .js-colright-spinner.spinner
+          .bar1
+          .bar2
+          .bar3
+      .js-colright
+        .b-graf--sc.is-center #{__('Following collections')}
+        .js-colright-feed.is-empty(data-username="#{user.username}" data-col-follow='true')
+        .js-colright-spinner.spinner
+          .bar1
+          .bar2
+          .bar3
+      .divider
+      .js-trenda
+        .b-graf--sc.is-center #{__('Loved articles')}
+        .js-trenda-feed.is-empty(data-username="#{user.username}")
+        .js-trenda-spinner.spinner
+          .bar1
+          .bar2
+          .bar3
+        a.i-button.is-center(href="/u/#{user.username}/loved-articles") #{__('More')}
+
+      .divider
+      include ./blocks/footer-menu.jade
+    .i-wrap__left
+      .b-profile.i-wrap--640.is-center
+        .b-profile__left
+          img.b-profile__ava(src="#{IMG_URL}ava/#{user._id}.jpg" alt="#{user.name} Framesia")
+        .b-profile__right
+          h1.b-profile__name #{user.name}
+          p.b-profile__desc #{user.description}
+          span.b-profile__username @#{user.username}
+          a(href="http://www.facebook.com/#{ user.facebook_id }" target="_blank")
+            | <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+            |    width="40px" height="14px" viewBox="0 0 266.893 266.895" enable-background="new 0 0 266.893 266.895"
+            |    xml:space="preserve">
+            | <path id="Blue_1_" fill="#999" d="M248.082,262.307c7.854,0,14.223-6.369,14.223-14.225V18.812
+            |   c0-7.857-6.368-14.224-14.223-14.224H18.812c-7.857,0-14.224,6.367-14.224,14.224v229.27c0,7.855,6.366,14.225,14.224,14.225
+            |   H248.082z"/>
+            | <path id="f" fill="#FFF" d="M182.409,262.307v-99.803h33.499l5.016-38.895h-38.515V98.777c0-11.261,3.127-18.935,19.275-18.935
+            |   l20.596-0.009V45.045c-3.562-0.474-15.788-1.533-30.012-1.533c-29.695,0-50.025,18.126-50.025,51.413v28.684h-33.585v38.895h33.585
+            |   v99.803H182.409z"/>
+            | </svg>
+
+
+          if USER && user._id == USER._id
+            a(href="/me/edit") #{__('Edit me')}
+          else if USER
+            button.i-button.i-button--green.js-follow(data-follow-id="#{user._id}" data-follow-type="User") #{__('Follow')}
+          br
+          br
+          .b-profile__follow
+            span 
+              b #{user.follower_count} 
+              | #{__('Follower')}
+            span &middot; 
+            span 
+              b #{user.following_user_count} 
+              | #{__('Following')}
+          br
+          
+        .clear
+      .b-post.i-wrap--640
+        .js-article-feed.is-empty(data-article-id="#{user._id}")
+        .js-article-spinner.spinner
+          .bar1
+          .bar2
+          .bar3
+        .is-center
+          br
+          br
+          br
+          button.i-button.i-button--w-green.js-load-more-article-feed.is-hidden #{__('Load more')}
+          br
+          br
+          br
+        //- include ./blocks/post.jade
+      
+    .clear

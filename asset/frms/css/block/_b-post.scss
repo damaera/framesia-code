@@ -1,0 +1,172 @@
+.b-post {
+  // width: 640px;
+  background: $white;
+  min-height: 500px;
+
+  &__head {
+    font-size: 1.1em;
+    margin-bottom: 10px;
+  }
+
+  &__left {
+    width: 380px;
+    float: left;
+
+    &.is-full {
+      width: 100%;
+    }
+
+    @include screen(mobile-tablet) {
+      width: 100%;
+      padding: 10px;
+
+      &.is-full {
+        padding-right: 0;
+      }
+    };
+  }
+  &__right {
+    float: right;
+    text-align: center;
+
+    @include screen(mobile-tablet) {
+      float: none;
+      margin-bottom: 10px;
+    };
+  }
+
+  &__item {
+    padding: 25px 0;
+    border-bottom: solid 1px $white-grey;
+  }
+
+  &__title {
+    font-size: 1.6em;
+    line-height: 1.2;
+    font-weight: 900;
+    margin-bottom: 5px;
+  }
+
+  &__subtitle {
+    font-family: $font-stack-serif;
+    font-size: 15px;
+    line-height: 1.5;
+    margin-bottom: 10px;
+  }
+
+  &__button-wrap {
+    margin-top: 15px;
+  }
+
+  &__button {
+    color: $light-grey;
+    cursor: pointer;
+    margin-right: 15px;
+    outline: none;
+    &.is-loving {
+      color: $red;
+    }
+    &.is-repost {
+      color: $green;
+    }
+    i {
+      font-size: 1.2em;
+    }
+    b {
+      font-weight: 800;
+      display: inline-block;
+      margin-top: -10px;
+      vertical-align: middle;
+      margin-right: 3px;
+    }
+  }
+
+  &__repost, &__response {
+    border-radius: 2px;
+    padding: 30px 40px;
+    border: solid 1px #eee;
+    background: lighten($white-grey, 2);
+
+    @include screen(mobile) {
+      padding: 10px 20px;
+    }
+  }
+
+  &__repost--half {
+    
+    margin-top: 40px;
+
+    .is-half.img {
+      text-align: right;
+      float: right;
+      padding-left: 0;
+      padding-right: 0;
+
+      @include screen(mobile) {
+        text-align: left;
+      }
+    }
+
+    img {
+      width: 240px;
+      // margin-top: -20px;
+    }
+  }
+
+  &__repost--main {
+
+    position: relative;
+
+    &__cover {
+      max-height: 360px;
+
+      @include screen(mobile){
+        max-height: 480px;
+      }
+    }
+
+    &__content {
+      padding: 40px;
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      color: $white !important;
+      background: none;
+
+      @include screen(mobile) {
+        padding: 20px;
+      }
+    }
+  }
+
+  &__response {
+    padding: 15px 40px;
+    margin-bottom: 20px;
+
+    @include screen(mobile) {
+      padding: 10px 20px;
+    }
+  }
+
+  &__tags {
+    font-size: .9em;
+    margin-bottom: 10px;
+  }
+
+  &__from {
+    // font-size: .9em;
+    margin-left: 40px;
+    padding: 5px 0;
+    color: $light-grey;
+    i {
+      position: relative;
+      top: 5px;
+      margin-right: 10px;
+      font-size: 1.4em;
+    }
+    b {
+      margin-right: 20px;
+      font-size: .9em;
+    }
+  }
+}

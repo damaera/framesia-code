@@ -1,0 +1,1 @@
+watchify main.coffee -t coffeeify -o main.js

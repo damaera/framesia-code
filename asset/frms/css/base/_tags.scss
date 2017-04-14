@@ -1,0 +1,122 @@
+.tags-wrap {
+  min-width: 200px;
+  outline: none;
+  // font-size: .9em;
+}
+.nsg-editor {
+  // padding: 50px 0;
+  cursor: text;
+}
+.nsg-tag {
+  display: inline-block;
+  cursor: pointer;
+  // background: $white-grey;
+  // padding: 8px 15px;
+  margin-right: 7px;
+  // border-radius: 3px;
+  // &:hover {
+  //   background: lighten($green, 30);
+  // }
+  &:first-child:before {
+    display: inline;
+    margin-right: 7px;
+    content: 'in';
+    opacity: .9;
+    font-size: .9em;
+  }
+  &:after {
+    margin-left: 7px;
+    content: '·'
+  }
+  &:last-child:after {
+    margin-left: 0;
+    content: ''
+  }
+  &:last-child {
+    margin-right: 0;
+  }
+}
+.nsg-tags-after {
+  span {
+    margin-left: 100px;
+  }
+}
+.nsg-input {
+  -webkit-transition: width 0.25s;
+  -moz-transition: width 0.25s;
+  -o-transition: width 0.25s;
+  -ms-transition: width 0.25s;
+  transition: width 0.25s;
+  // padding: 3px;
+  margin: 5px 0;
+  position: absolute;
+
+  text-transform: uppercase;
+  letter-spacing: .25em;
+}
+
+.tag-col {
+  margin: 20px 0;
+  .nsg-tag {
+    text-transform: uppercase;;
+    padding: 5px 8px;
+    background: lighten($white-grey, 2);
+    font-weight: bold;
+    letter-spacing: .2em;
+    font-size: .8em;
+    border: solid 1px #eee;
+    margin: 3px;
+    &:before {
+      content: '';
+    }
+    &:after {
+      content: '';
+    }
+  }
+  .nsg-input {
+    padding: 5px;
+    margin: 0 10px;
+
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: .2em;
+    font-size: .8em;
+  }
+}
+
+// horsey
+
+.sey-list {
+  z-index: 99999;
+  display: none;
+  position: absolute;
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+  box-shadow: 0 2px 5px $white-grey;
+  background-color: #fff;
+  color: #333;
+  transition: left 0.1s ease-in-out;
+}
+.sey-show {
+  display: block;
+}
+.sey-hide {
+  display: none;
+}
+.sey-item {
+  cursor: pointer;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding: 8px 15px;
+  transition: none;
+}
+.sey-item:hover {
+  background-color: $white-grey;
+  color: $light-grey;
+}
+.sey-selected {
+  background-color: $green;
+  color: #fff;
+}

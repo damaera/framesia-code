@@ -1,0 +1,55 @@
+extends layout/index
+
+block content
+  .i-wrap--640
+    br
+    br
+    h2.b-graf--h3 #{__('Trending')} #{__(since).toLowerCase()}
+    br
+    br
+  .i-wrap--640
+    div.pull-right
+      a(href="?since=today")
+        button.i-button.i-button--small #{__('Today')}
+      a(href="?since=weekly")
+        button.i-button.i-button--small #{__('This week')}
+      a(href="?since=monthly")
+        button.i-button.i-button--small #{__('This month')}
+    .clear
+    each post in posts
+      a(href="/p/#{post.slug}")
+        if post.is_cover == true
+          .b-post__repost--half
+            .is-half.img
+              img(src="#{IMG_URL}/post/#{post._id}-medium-cover.jpg")
+            .is-half
+              .b-post__repost__content
+                h3.b-post__title !{post.title}
+                p.b-post__subtitle !{post.subtitle}
+                p.i-user--inline.i-user--inline__mod #{__('By')}  
+                  a(href="/u/#{post.user.username}")
+                    span.text-red #{post.user.name}
+                  span(style="margin:5px") &middot;
+                  b #{post.love_count || 0} 
+                    span.text-red &#9825;
+                  |    #{__(since)}
+            .clear
+          .clear
+        else
+          .b-post__repost--half
+            .b-post__repost__content
+              h3.b-post__title !{post.title}
+              p.b-post__subtitle !{post.subtitle}
+              p.i-user--inline.i-user--inline__mod #{__('By')}  
+                a(href="/u/#{post.user.username}")
+                  span.text-red #{post.user.name}
+                span(style="margin:5px") &middot;
+                b #{post.love_count || 0} 
+                  span.text-red &#9825;
+                |   #{__(since)}
+            .clear
+    else
+      .i-block-empty #{__('No articles')}
+    br
+    br
+    br

@@ -1,0 +1,16 @@
+include ../util/time.jade
+
+each item in post
+  .b-post__item(data-love-id="#{item.loveId}")
+    .b-post__repost
+      a(href="/p/#{item.slug}")
+        .b-post__repost__content
+          h3.b-post__title !{item.title}
+          p.b-post__subtitle !{item.subtitle}
+          p.i-user--inline.i-user--inline__mod #{__('By')}  
+            a(href="/u/#{item.user.username}")
+              span.text-red #{item.user.name}
+            span(style="margin:5px") &middot;
+            b #{item.love_count || 0} 
+              span.text-red &#9825;
+    .clear

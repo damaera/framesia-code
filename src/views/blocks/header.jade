@@ -1,0 +1,78 @@
+- var isEdit = /^\/p\/(new-article|[a-z0-9A-Z]+\/edit)$/.test(PATH)
+header.b-header
+  span.b-header__logo
+    a(href="/")
+      img.b-header__logo-img(src="#{ASSET_URL}img/Frame.svg")
+  if !isEdit
+    span.b-header__search
+      form(action="/s")
+        input.i-input(name="q" type="search" placeholder="#{__('Search articles, tags, users, reading lists etc')}..." autocomplete="off")
+  span.b-header__nav
+    if USER 
+      if isEdit
+        //- button.b-header__btn.js-down-editor
+        //-   i.f-icon-down.grey
+        //- div.i-drop.i-drop--editor.js-drop-editor.is-hidden
+        form.js-save-form.is-hidden(method="POST", action="")
+          input.js-save-input(name="data" type="hidden")
+          input(type="submit")
+        button.b-header__login.i-button.i-button--w-green.js-save-server #{__('Save')}
+        if article
+          if !article.is_published
+            button.b-header__login.i-button.i-button--w-blue.js-save-publish #{__('Publish')}
+        else
+          button.b-header__login.i-button.i-button--w-blue.js-save-publish #{__('Publish')}
+      else
+        
+        //- form.b-header__search
+        //-   input.i-input(type="search", placeholder="Search")
+        a(href="/p/new-article")
+          button.b-header__btn
+            i.f-icon-write.text-green
+            span.b-header__write-text #{__('Write')}
+        button.b-header__btn.js-down-notif.b-header__notif
+          i.f-icon-bell.grey
+        button.b-header__btn.js-down-user
+          if USER.is_new
+            img(src="#{USER.picture}")
+          else
+            img(src="#{IMG_URL}c_fill,w_50/ava/#{USER._id}.jpg")
+        div.i-drop.i-drop--user.js-drop-user.is-hidden
+            if !USER.is_new
+              a(href="/u/#{USER.username}")
+                div.i-drop__item #{__('Profile')}
+              .divider
+              a(href="/me/articles")
+                div.i-drop__item #{__('Articles')}
+              a(href="/me/drafts")
+                div.i-drop__item #{__('Drafts')}
+              a(href="/me/loved-articles")
+                div.i-drop__item #{__('Loved articles')}
+              .divider
+              a(href="/me/collections")
+                div.i-drop__item #{__('Collections')}
+              a(href="/me/stats")
+                div.i-drop__item #{__('Stats')}
+              .divider
+              a(href="/me/edit")
+                div.i-drop__item #{__('Edit me')}
+            a(href="/a/logout")
+              div.i-drop__item #{__('Logout')}
+      
+      div.i-drop.i-drop--notif.js-drop-notif.is-hidden
+        .b-notif
+          .js-notif-feed.is-empty
+          .js-notif-spinner.spinner
+            .bar1
+            .bar2
+            .bar3
+          .is-center
+            a(href="/me/notifications")
+              button.i-button.i-button--green #{__('Load more')}
+        
+      
+      
+    else
+      a(href="/a/facebook")
+        button.b-header__login.i-button.i-button--green #{__('Sign in')}
+    .clear

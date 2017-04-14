@@ -1,0 +1,4 @@
+.tag-col.is-center
+  each tag in tags
+    a(href="/s?q=#{tag._id}&type=topic")
+      .nsg-tag #{tag._id}  

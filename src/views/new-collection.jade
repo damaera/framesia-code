@@ -1,0 +1,80 @@
+extends layout/index
+
+block meta
+  title #{__('New collection')}
+  meta(name="robots" content="noindex")
+
+block content
+  .i-wrap.i-wrap--full.bg-white: .i-wrap--640
+    br
+    form(method="post", action="/c/new-collection")
+      
+      h2.i-head--2 #{__('Creating new collection')}&hellip;
+      label.text-bold #{__('Name')}
+      input.i-input(name="name" value="" type="text" placeholder="#{__('Collection name')}" minLength="3" maxLength="50" required autocomplete="off")
+
+      label.text-bold #{__('Change profile picture')}
+      br
+      img.js-first-time-ava(src="#{ASSET_URL}img/greyBG.jpg", alt="", height="200" width="200")
+      input.js-first-time-ava-input.is-hidden(type="file")
+      input.js-first-time-ava-data.is-hidden(name="picture" type="text")
+      br
+      br
+        
+      label.text-bold #{__('Username')}
+      label.text-red.is-hidden.js-username-exist.pull-right #{__('Username already taken')}
+      input.i-input.js-username-col(name="username" type="text" placeholder="#{__('Choose unique username for collection (Alphabet, number or \'-\', max 30)')}" minLength="2" maxLength="30" pattern="[a-zA-Z0-9\-]{2,30}" required autocomplete="off")
+
+      label.text-bold #{__('About')}
+      textarea.i-input.i-input--textarea(name="description" type="text" placeholder="#{__('Description about collection, max 240')}" rows="3" minLength="3" maxLength="240" required autocomplete="off")
+
+      label.text-bold #{__('Invite people to become member')}
+      input.i-input.js-auto-user(name="invite" type="text" placeholder="#{__('Invite using username and divided by space, example: ')}@#{USER.username} @framesia" pattern="^((@[a-z0-9-]{3,16}) ?)+$" autocomplete="off")
+
+      label.text-bold #{__('Tags')}
+      .tag-col
+        input.tags-wrap(placeholder="Insert tags, Max 3")
+      input.js-collection-tag(name="tags" type="hidden")
+
+      label.text-bold #{__('Setting')}
+      table.i-wrap--640
+        tr
+          td
+            b #{__('Is anyone can request to join to this collection ?')}
+            br
+            i #{__('if "yes", all users can request to join, with permission from admin')}
+            br
+            i #{__('if "no", only owner and member can invite people to this collection')}
+          td: .switch.pull-right
+            input#switch0.switch-checkbox(name="is_anyone_can_join" type="checkbox")
+            label.switch-label(for="switch0")
+              span.switch-inner
+              span.switch-switch
+        tr
+          td
+            b #{__('Is anyone can request to publish to this collection ?')}
+            br
+            i #{__('if "yes", all users can request to publish')}
+            br
+            i #{__('if "no", only owner and member can publish to this')} #{__('collection')}
+          td: .switch.pull-right
+            input#switch1.switch-checkbox.js-switch1(name="is_anyone_can_request" type="checkbox")
+            label.switch-label(for="switch1")
+              span.switch-inner
+              span.switch-switch
+        tr.js-switch2.is-hidden
+          td 
+            b #{__('Is anyone can directly publish to this collection ?')}
+            br
+            i #{__('if "yes", all users can directly publish without permission from collection owner and member')}
+            br
+            i #{__('if "no", users can request an article to publish, and then owner and member decide that article published or not')}
+          td: .switch.pull-right
+            input#switch2.switch-checkbox(name="is_anyone_can_post" type="checkbox")
+            label.switch-label(for="switch2")
+              span.switch-inner
+              span.switch-switch
+      input.i-button.i-button--green.pull-right(type="submit" value="#{__('Submit')}")
+      .clear
+      br
+      br

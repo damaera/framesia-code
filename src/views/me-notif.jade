@@ -1,0 +1,26 @@
+extends layout/index
+
+
+block meta
+  title #{__('Notifications')}
+  meta(name="robots" content="noindex")
+
+block content
+  .b-post
+    br
+    .i-wrap--640
+      .js-menotif-feed.is-empty
+      .js-menotif-spinner.spinner
+        .bar1
+        .bar2
+        .bar3
+      .is-center
+        br
+        br
+        br
+        button.i-button.i-button--w-green.js-load-more-menotif-feed.is-hidden #{__('Load more')}
+        br
+        br
+        br
+      //- include ./blocks/post-item.jade
+    br

@@ -1,0 +1,10 @@
+if collections
+  each collection in collections
+    br
+    span.i-user__ava--sq(height="100%")
+      img(src="#{IMG_URL}c_fill,w_50/col/#{collection._id}.jpg")
+    span.i-user--footer__name.text-green: a(href="/c/#{collection.username}") #{collection.name}
+    p.i-user--footer__desc #{collection.description}
+    p.i-user--footer__username: a(href="/c/#{collection.username}") /#{collection.username}
+    .divider
+    br

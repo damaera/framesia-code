@@ -1,0 +1,346 @@
+/*! sanitize.css | CC0 Public Domain | github.com/jonathantneal/sanitize.css */
+/*
+ * Normalization
+ */
+:root {
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  overflow-y: scroll;
+  -webkit-text-size-adjust: 100%;
+}
+
+audio:not([controls]) {
+  display: none;
+}
+
+button {
+  overflow: visible;
+}
+
+details {
+  display: block;
+}
+
+input[type="number"] {
+  width: auto;
+}
+input[type="search"] {
+  -webkit-appearance: textfield;
+}
+input[type="search"]::-webkit-search-cancel-button, input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+main {
+  display: block;
+}
+
+summary {
+  display: block;
+}
+
+pre {
+  overflow: auto;
+}
+
+progress {
+  display: inline-block;
+}
+
+small {
+  font-size: 75%;
+}
+
+template {
+  display: none;
+}
+
+textarea {
+  overflow: auto;
+}
+
+[hidden] {
+  display: none;
+}
+
+/*
+ * Universal inheritance
+ */
+*,
+::before,
+::after {
+  -webkit-box-sizing: inherit;
+  -moz-box-sizing: inherit;
+  box-sizing: inherit;
+}
+
+* {
+  background-color: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+::before,
+::after {
+  text-decoration: inherit;
+  vertical-align: inherit;
+}
+
+/*
+ * Opinionated defaults
+ */
+*,
+::before,
+::after {
+  border-style: solid;
+  border-width: 0;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  cursor: default;
+  font: 100%/1.5 sans-serif;
+  text-rendering: optimizeLegibility;
+}
+
+html {
+  background-color: white;
+  color: black;
+}
+
+a {
+  text-decoration: none;
+}
+
+audio,
+canvas,
+iframe,
+img,
+svg,
+video {
+  vertical-align: middle;
+}
+
+button,
+input,
+select,
+textarea {
+  background-color: transparent;
+}
+
+button,
+input,
+select,
+textarea {
+  color: inherit;
+  font-family: inherit;
+  font-style: inherit;
+  font-weight: inherit;
+}
+
+button,
+[type="button"],
+[type="date"],
+[type="datetime"],
+[type="datetime-local"],
+[type="email"],
+[type="month"],
+[type="number"],
+[type="password"],
+[type="reset"],
+[type="search"],
+[type="submit"],
+[type="tel"],
+[type="text"],
+[type="time"],
+[type="url"],
+[type="week"],
+select,
+textarea {
+  min-height: 1.5em;
+}
+
+code,
+kbd,
+pre,
+samp {
+  font-family: monospace, monospace;
+}
+
+nav ol,
+nav ul {
+  list-style: none;
+}
+
+select {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+}
+select::-ms-expand {
+  display: none;
+}
+select::-ms-value {
+  color: currentColor;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+textarea {
+  resize: vertical;
+}
+
+::-moz-selection {
+  background-color: #b3d4fc;
+  text-shadow: none;
+}
+
+::selection {
+  background-color: #b3d4fc;
+  text-shadow: none;
+}
+
+[aria-busy="true"] {
+  cursor: progress;
+}
+
+[aria-controls] {
+  cursor: pointer;
+}
+
+[aria-disabled] {
+  cursor: default;
+}
+
+[hidden][aria-hidden="false"] {
+  clip: rect(0 0 0 0);
+  display: inherit;
+  position: absolute;
+}
+[hidden][aria-hidden="false"]:focus {
+  clip: auto;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "m-1c", sans-serif;
+  font-size: 14px;
+  line-height: 1.4;
+  letter-spacing: -.02em;
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -moz-font-feature-settings: "liga" on;
+  color: #444444;
+}
+
+.wf-loading * {
+  color: rgba(68, 68, 68, 0) !important;
+}
+
+.container {
+  max-width: 100%;
+}
+
+.clear {
+  clear: both;
+}
+
+.is-center {
+  text-align: center;
+}
+
+::-moz-selection {
+  background: #66cc99;
+}
+
+::selection {
+  background: #66cc99;
+}
+
+.b-editable {
+  margin: 0 auto;
+  padding: 100px 20px;
+  width: 740px;
+  outline: none;
+}
+
+.b-graf {
+  margin-bottom: 20px;
+  width: 100%;
+  font-size: 20px;
+  line-height: 1.4;
+  font-family: "alegreya", serif;
+  word-break: break-all;
+}
+.b-graf--h2 {
+  margin-bottom: 5px;
+  font-family: "alfa-slab-one", sans-serif;
+  line-height: 1;
+  font-weight: normal;
+  font-size: 3.2em;
+}
+.b-graf--h3 {
+  margin-bottom: 5px;
+  font-family: "m-1c", sans-serif;
+  line-height: 1;
+  font-weight: 800;
+  font-size: 2.4em;
+  letter-spacing: -.05em;
+}
+.b-graf--quote {
+  padding: 0px 0 0 17px;
+  margin: 0 -20px 20px -20px;
+  width: 100%;
+  font-size: 1.6em;
+  color: #999999;
+  font-family: "m-1c", sans-serif;
+  border-left: solid 3px #444444;
+}
+.b-graf--pullquote {
+  width: 960px;
+  margin: 30px -130px;
+  padding: 0;
+  font-size: 2em;
+  font-family: "alegreya", serif;
+  font-style: italic;
+  text-align: center;
+  color: #444;
+}
+.b-graf--pullquote::before {
+  content: '"';
+}
+.b-graf--pullquote::after {
+  content: '"';
+}
+
+.b-toolbar {
+  position: fixed;
+  top: 0;
+  padding: 1em;
+  width: 100%;
+  text-align: center;
+  background: #444444;
+}
+.b-toolbar__item {
+  padding: .5em;
+  font-size: 1.2em;
+  font-family: "alfa-slab-one", sans-serif;
+  color: #444444;
+  background: #cccccc;
+  outline: none;
+  border: none;
+}
+.b-toolbar__item.is-active {
+  background: #66cc99;
+}

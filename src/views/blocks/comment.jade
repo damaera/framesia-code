@@ -1,0 +1,71 @@
+
+include ../util/time.jade
+
+.b-comment.js-comment(class="#{is_comment_cb ? 'is-show' : ''}#{ USER ? '': ' is-not-user' }")
+  button.b-comment__close.js-comment-close
+    i.f-icon-close
+  .b-comment__head
+    //- br
+    //- span.i-button.i-button--w-green #{__n('%d comment', '%d comments', article.comment_count || 0)}
+    //- span.i-button.i-button--w-green #{__n('%d response', '%d responses', article.response_count || 0)}
+    //- if USER
+    //-   a(href="/p/new-article?respond=#{article._id}")
+    //-     button.i-button.i-button--green #{__('Respond with article')}
+    //- br
+    //- br
+    if USER
+      .b-comment__user
+        .i-user--inline
+          span.i-user--inline__ava
+            img(src="#{IMG_URL}c_fill,w_50/ava/#{USER._id}.jpg")
+          p.i-user--inline__name: a(href="/u/#{USER.username}") #{USER.name}
+          .clear
+      .b-comment__input
+        textarea.b-comment__textarea.js-comment-input(name="comment" placeholder="#{__('Enter comment')}..." data-article-id="#{article._id}")
+        div
+          button.i-button.i-button--green.js-comment-submit #{__('Send')}
+          span.js-comment-limit 200
+  br
+  br
+  .b-comment__list
+    .b-graf--sc.is-center #{__('Comment')}
+    .js-comment-spinner2.spinner.is-hidden
+      .bar1
+      .bar2
+      .bar3
+    .is-center
+      br
+      button.i-button.i-button--w-green.i-button--small.js-load-more-comment-feed2(class="#{is_comment_cb ? '' : 'is-hidden'}") Load more
+      br
+    .js-comment-feed(data-article-id="#{article._id}" class="#{is_comment_cb ? '' : 'is-empty'}")
+      if is_comment_cb
+        each comment in comments
+          .b-comment__item(id="#{comment._id}" class="#{(comment._id == QUERY.comment ) ? 'is-selected' : ''}")
+            
+            .i-user--inline
+              span.i-user--inline__ava
+                img(src="#{IMG_URL}ava/#{comment.user._id}-50.jpg")
+              span.i-user--inline__name
+                a(href="/#{comment.user.username}") #{comment.user.name}
+              span.b-comment__date.i-user--inline__mod
+                +time(comment.created_at)
+            if !comment.is_published 
+              button.i-button.i-button--small.i-button--w-green.pull-right.is-private Private
+            .b-comment__content !{comment.content.replace(/@([a-z0-9_]{3,16})/g, "<a href='/$1'>@$1</a>")}
+              .b-post__button-wrap
+                button.b-post__button.js-comment-love(data-comment-id="#{comment._id}" class="#{ comment.is_loving ? 'is-loving' : ''}")
+                  b #{comment.love_count}
+                  i.f-icon-love
+                button.b-post__button.js-comment-reply(data-username="#{comment.user.username}" data-comment-id="#{comment._id}")
+                  i.f-icon-reply
+                if comment.user._id == USER._id
+                  button.b-post__button.i-button--small.js-comment-delete.pull-right(data-comment-id="#{comment._id}")
+                    i.icon-del
+    .js-comment-spinner.spinner(class="#{is_comment_cb ? 'is-hidden' : ''}")
+      .bar1
+      .bar2
+      .bar3
+    .is-center
+      br
+      button.i-button.i-button--w-green.i-button--small.js-load-more-comment-feed(class="#{is_comment_cb ? '' : 'is-hidden'}") Load more
+      br

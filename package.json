@@ -1,26 +1,53 @@
 {
-  "name": "get-started-node",
-  "main": "server.js",
-  "description": "An introduction to developing Node.js apps on the Bluemix platform",
-  "version": "0.1.1",
-  "private": false,
-  "engines": {
-    "node": "4.*"
-  },
+  "name": "frms",
+  "version": "0.0.0",
+  "private": true,
   "scripts": {
-    "start": "node server.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/IBM-Bluemix/get-started-node"
+    "start": "coffee src/app.coffee"
   },
   "dependencies": {
-    "body-parser": "^1.16.1",
-    "cfenv": "^1.0.x",
-    "cloudant": "^1.7.1",
-    "dotenv": "^4.0.0",
-    "express": "^4.14.1"
-  },
-  "author": "IBM Corp",
-  "license": "Apache-2.0"
+    "arslugify": "^1.0.1",
+    "article-parser": "^0.4.3",
+    "auto-sni": "^0.8.1",
+    "big-number": "^0.3.1",
+    "bluebird": "^3.0.6",
+    "body-parser": "~1.10.2",
+    "cloudinary": "^1.8.0",
+    "coffee-script": "^1.8.0",
+    "connect-mongo": "^0.8.2",
+    "cookie-parser": "~1.3.3",
+    "csurf": "^1.8.3",
+    "debug": "~2.1.1",
+    "ecstatic": "^2.1.0",
+    "express": "~4.11.1",
+    "express-session": "^1.12.0",
+    "firebase": "^3.7.4",
+    "firebase-admin": "^4.1.4",
+    "franc": "^1.1.1",
+    "glob": "^5.0.15",
+    "glog": "^1.7.0",
+    "gm": "^1.21.1",
+    "helmet": "^1.3.0",
+    "i18n": "^0.6.0",
+    "ip2country": "^0.3.30",
+    "iso-639-3": "^0.2.0",
+    "jade": "~1.9.1",
+    "jimp": "^0.2.27",
+    "jsondiffpatch": "^0.1.37",
+    "lodash": "^3.10.1",
+    "mongoose": "^4.2.4",
+    "morgan": "~1.5.1",
+    "node-readability": "^2.2.0",
+    "nodemon": "^1.11.0",
+    "passport": "^0.3.0",
+    "passport-facebook": "^2.0.0",
+    "puid": "^1.0.5",
+    "reading-time": "^0.1.0",
+    "request": "^2.65.0",
+    "serve-favicon": "~2.2.0",
+    "sitemap": "^1.6.0",
+    "socket.io": "^1.4.5",
+    "ua-parser-js": "^0.7.10",
+    "unfluff": "^1.0.0"
+  }
 }

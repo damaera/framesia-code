@@ -1,0 +1,66 @@
+extends layout/index
+
+block meta
+  title #{__('Search')} #{query} &middot; Framesia
+  meta(name="robots" content="noindex")
+
+block content
+  .b-post
+    //- if type == '' || type == 'post' || type == 'topic'
+    .i-wrap__left
+      .i-wrap--640
+        br
+        br
+        p.b-graf--h3 "#{query}"
+        br
+        br
+        .divider
+
+        .js-article-feed.is-empty(data-query="#{query}")
+        .js-article-spinner.spinner
+          .bar1
+          .bar2
+          .bar3
+        .is-center
+          br
+          br
+          br
+          button.i-button.i-button--w-green.js-load-more-article-feed.is-hidden #{__('Load more')}
+          br
+          br
+          br
+
+      
+    .i-wrap__right
+      div
+        .b-graf--sc.is-center #{__('Topics')}
+        .js-topic-feed.is-empty(data-query="#{query}")
+        .js-topic-spinner.spinner
+          .bar1
+          .bar2
+          .bar3
+        .divider
+      div
+        .b-graf--sc.is-center #{__('Collections')}
+        .js-colright-feed.is-empty(data-query="#{query}")
+        .js-colright-spinner.spinner
+          .bar1
+          .bar2
+          .bar3
+        .divider
+      div
+        .b-graf--sc.is-center #{__('Users')}
+        .js-user-feed.is-empty(data-query="#{query}")
+        .js-user-spinner.spinner
+          .bar1
+          .bar2
+          .bar3
+        .divider
+    .clear
+    //- else if type == 'collection'
+    //-   .i-wrap--640
+    //-     | #{type}
+    //- else if type == 'user'
+    //-   .i-wrap--640
+    //-     | #{type}
+

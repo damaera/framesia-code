@@ -1,0 +1,31 @@
+style.
+  body { font-family:monospace }
+  table { min-width: 500px }
+  th, td { padding: 5px 10px; }
+  img { width: 30px; border-radius: 20px; }
+
+table
+  tr
+    th title
+    th count
+    th reasons
+    th reporter
+  each post in posts
+    tr
+      td 
+        a(href="/p/#{post.slug}") #{post.title}
+      td #{post.count}
+      td
+        ul
+          each reason in post.reasons
+            li #{reason}
+      td
+        each user in post.users
+          a(href="/u/#{user}")
+            img(src="#{IMG_URL}c_fill,w_50/ava/#{user}.jpg")
+      td
+        form(method="post" action="/x/block-article")
+          input(type="hidden" name="_csrf" value="#{CSRF}" )
+          input(type="hidden" name="article_id" value="#{post._id}")
+          input(type="hidden" name="block_type" value="Post")
+          input(type="submit" value="block")

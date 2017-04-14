@@ -1,0 +1,124 @@
+extends layout/index
+
+block meta
+  title #{__('Collection people')}
+  meta(name="robots" content="noindex")
+
+block content
+  .i-wrap.i-wrap--full.bg-white: .i-wrap--640.js-collection-people
+    br
+      
+    h2.i-head--2 #{__('%s\'s contributor', collection.name)}&hellip;
+
+    
+    //- label.text-bold #{__('Owner')}
+    //- .i-user
+    //-   a(href="/u/#{collection.owner.username}")
+    //-     span.i-user__ava
+    //-       img(src="#{IMG_URL}ava/#{collection.owner._id}-50.jpg")
+    //-   a(href="/u/#{collection.owner.username}") 
+    //-     .i-user__name #{collection.owner.name}
+    //-     .i-user__mod #{member.description}
+    //-     .i-user__username @#{collection.owner.username}
+
+    h2.i-head--3 #{__('Admin')}
+    br
+    each admin in collection.admin
+      .i-user.fl
+        a(href="/u/#{admin.username}")
+          span.i-user__ava
+            img(src="#{IMG_URL}c_fill,w_50/ava/#{admin._id}.jpg")
+        a(href="/u/#{admin.username}") 
+          .i-user__right
+            .i-user__name #{admin.name}
+            .i-user__desc #{admin.description}
+            .i-user__username @#{admin.username}
+      .pull-right(style="margin-top:10px")
+        if USER
+          if is_owner
+            if !admin._id.equals(collection.owner._id)
+              button.i-button.i-button--small.i-button--w-red.js-remove-admin(data-user-id="#{admin._id}") #{__('Remove admin')}
+          else if admin._id == USER._id
+            button.i-button.i-button--small.i-button--w-red.js-quit-collection(data-user-id="#{admin._id}") #{__('Quit')}
+      .clear
+      .divider
+    br
+
+    if is_admin
+      form(method="post" action="/c/invite-people/#{collection._id}")
+
+        label.text-bold #{__('Invite people to become member')}
+        input.i-input.js-auto-user(name="invite" type="text" placeholder="#{__('Invite using username and divided by space, example: ')}@#{USER.username} @framesia" pattern="^((@[a-zA-Z0-9-]{3,16}) ?)+$" autocomplete="off")
+
+        input.i-button.i-button--green.pull-right(type="submit" value="#{__('Submit')}")
+        .clear
+        br
+        br
+      if collection.member_requested.length > 0
+        h2.i-head--3 #{__('Member requested')}
+      each member in collection.member_requested
+        .i-user.fl
+          a(href="/u/#{member.username}")
+            span.i-user__ava
+              img(src="#{IMG_URL}c_fill,w_50/ava/#{member._id}.jpg")
+          a(href="/u/#{member.username}") 
+            .i-user__right
+              .i-user__name #{member.name}
+              .i-user__desc #{member.description}
+              .i-user__username @#{member.username}
+        .pull-right(style="margin-top:10px")
+          button.i-button.i-button--small.i-button--w-green.js-accept-request(data-user-id="#{member._id}") #{__('Accept')}
+          button.i-button.i-button--small.i-button--w-red.js-remove-request(data-user-id="#{member._id}") #{__('Remove')}
+        .clear
+        .divider
+
+    h2.i-head--3 #{__('Member')}
+    br
+    each member in collection.member
+      .i-user.fl
+        a(href="/u/#{member.username}")
+          span.i-user__ava
+            img(src="#{IMG_URL}c_fill,w_50/ava/#{member._id}.jpg")
+        a(href="/u/#{member.username}") 
+          .i-user__right
+            .i-user__name #{member.name}
+            .i-user__desc #{member.description}
+            .i-user__username @#{member.username}
+      .pull-right(style="margin-top:10px")
+        if is_owner
+          button.i-button.i-button--small.i-button--w-blue.js-make-admin(data-user-id="#{member._id}") #{__('Make admin')}
+        if is_admin
+          button.i-button.i-button--small.i-button--w-red.js-remove-member(data-user-id="#{member._id}") #{__('Remove member')}
+        else if member._id == USER._id
+          button.i-button.i-button--small.i-button--w-red.js-quit-collection #{__('Quit')}
+      .clear
+      .divider
+    else
+      .i-user__mod #{__('No member')}
+    br
+    
+    if is_admin
+      form.js-form-make-admin(method="post" action="/c/make-admin/#{collection._id}")
+        input.js-input-make-admin(name="user" type="hidden")
+        input.is-hidden(type="submit")
+
+      form.js-form-remove-admin(method="post" action="/c/remove-admin/#{collection._id}")
+        input.js-input-remove-admin(name="user" type="hidden")
+        input.is-hidden(type="submit")
+
+      form.js-form-remove-member(method="post" action="/c/remove-member/#{collection._id}")
+        input.js-input-remove-member(name="user" type="hidden")
+        input.is-hidden(type="submit")
+
+      form.js-form-accept-request(method="post" action="/c/accept-member/#{collection._id}")
+        input.js-input-accept-request(name="user" type="hidden")
+        input(name="answer" value="yes" type="hidden")
+        input.is-hidden(type="submit")
+
+      form.js-form-remove-request(method="post" action="/c/accept-member/#{collection._id}")
+        input.js-input-remove-request(name="user" type="hidden")
+        input(name="answer" value="no" type="hidden")
+        input.is-hidden(type="submit")
+    
+    form.js-form-quit-collection(method="post" action="/c/quit-collection/#{collection._id}")
+      input.is-hidden(type="submit")

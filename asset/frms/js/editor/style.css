@@ -1,0 +1,105 @@
+::-moz-selection { background: #6c9; }
+::selection { background: #6c9; }
+body, html{
+  padding: 0;
+  margin: 0;
+  font-family: Georgia;
+  text-rendering: optimizeLegibility;
+  color: #444;
+  line-height: 1.6;
+}
+
+* {
+  transition: all 0.2s;
+  /*background: rgba(96,192,144,0.05) !important;*/
+}
+header {
+  padding: 1em;
+  text-align: center;
+  background: #fff;
+  position: fixed;
+  width: 100%;
+  top: 0;
+}
+button {
+  background: #f6f6f6;
+  padding: .5em;
+  font-size: 1em;
+  font-weight: bold;
+  font-family: Georgia;
+  color: #444;
+  outline: none;
+  border: none;
+}
+.red {
+  color: red;
+}
+.is-active {
+  background: #6c9;
+}
+.js-editable {
+  width: 600px;
+  margin: 3em auto;
+  padding: 1em;
+  outline: none;
+}
+h1, h2 {
+  font-family: Segoe UI;
+  word-break: break-all;
+  line-height: 1;
+  font-weight: 800;
+  margin-bottom: 5px;
+}
+h1 {
+  font-size: 3em;
+}
+h2 {
+  font-size: 2em;
+}
+h1 b, h1 strong,
+h2 b, h2 strong,
+h1 i, h1 em,
+h2 i, h2 em {
+  font-style: normal;
+  font-weight: bold;
+}
+ul, ol, p {
+  word-break: break-all;
+  font-size: 20px;
+  /*padding: .5em;*/
+  margin: 0;
+  margin-bottom: 20px;
+}
+.is-center {
+  text-align: center;
+}
+hr {
+  border: none;
+  margin: 30px auto;
+  border-bottom: solid 1px #ddd;
+  width: 120px;
+}
+figure {
+  float: left;
+  margin: 0;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  max-width: 50%;
+}
+blockquote {
+  color: #999;
+  font-family: Segoe UI;
+  margin: 0;
+  padding: 10px 20px;
+  width: 100%;
+  border-left: solid 3px #666;
+  font-size: 1.3em;
+}
+blockquote.is-second {
+  font-family: Georgia;
+  color: #444;
+  border: none;
+  font-style: italic;
+  padding: 20px;
+  font-size: 2em;
+}

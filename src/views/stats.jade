@@ -1,0 +1,41 @@
+extends layout/index
+
+block meta
+  title Stats #{query} &middot; Framesia
+  meta(name="robots" content="noindex")
+
+block content
+  .i-wrap--640
+    br
+    br
+    h1.b-graf--h2 #{__('Stats')}
+    p.b-graf--h3 #{__('Your article statistics')}
+    br
+    br
+  .i-wrap--full.bg-white: .i-wrap--640
+    div.pull-right
+      a(href="?since=today")
+        button.i-button.i-button--small #{__('Today')}
+      a(href="?since=weekly")
+        button.i-button.i-button--small #{__('This week')}
+      a(href="?since=monthly")
+        button.i-button.i-button--small #{__('This month')}
+    br
+    br
+    br
+    br
+    table.i-table
+      tr
+        th #{__('Title')}
+        th #{__('Views')}
+        th #{__('Reads')}
+        th #{__('Loves')}
+      each post in posts
+        tr
+          td: a(href="/p/#{post.slug}") #{post.title}
+          td #{post.views}
+          td #{post.reads}
+          td #{post.loves}
+    br
+    br
+  

@@ -1,0 +1,54 @@
+extends layout/index
+
+block meta
+  title #{__('Editing Article')}
+  meta(name="robots" content="noindex")
+
+block editorContent
+  include ./blocks/article.jade
+
+block editorCover
+  if article.is_cover == true
+    if article.is_cover_full == true
+      .b-article__cover.js-cover.is-not-cover.is-cover-full
+        img.b-article__cover__img.js-img-cover(src="#{IMG_URL}post/#{article._id}-jumbo-cover.jpg")
+        .b-article__shadow.js-cover-shadow
+        .b-article__btn-wrapper
+          button.b-article__btn.js-add-cover.icon-add-img
+          button.b-article__btn.js-del-cover.icon-del
+        input.js-input-cover.is-hidden(type="file")
+    else
+      .b-article__cover.js-cover.is-not-cover.is-cover-not-full
+        img.b-article__cover__img.js-img-cover(src="#{IMG_URL}post/#{article._id}-jumbo-cover.jpg")
+        .b-article__shadow.js-cover-shadow.is-hidden
+        .b-article__btn-wrapper
+          button.b-article__btn.js-add-cover.icon-add-img
+          button.b-article__btn.js-del-cover.icon-del
+        input.js-input-cover.is-hidden(type="file")
+  else
+    .b-article__cover.js-cover.is-not-cover
+      img.b-article__cover__img.js-img-cover
+      .b-article__shadow.js-cover-shadow.is-hidden
+      .b-article__btn-wrapper
+        button.b-article__btn.js-add-cover.icon-add-img
+        button.b-article__btn.js-del-cover.icon-del.is-hidden
+      input.js-input-cover.is-hidden(type="file")
+
+block editorTitle
+  .b-article__title.js-article-title(class="#{article.is_title_center ? 'is-center' : '' } #{article.is_cover_full ? 'is-with-cover' : '' }")
+    textarea.b-article__head__textarea.b-graf.b-graf--h1.js-title-input(placeholder="#{__('Article title')}" rows="1" maxlength="100" onload="auto_grow(this)" onkeyup="auto_grow(this)") #{article.title}
+    .b-article__meta
+      div
+        span.b-article__date-head
+          +time(new Date)
+          span  &middot;  
+          span #{__('By')} 
+            a.user(href="/u/#{USER.username}") #{USER.name}
+          br
+        span.b-article__tags-head
+          input.tags-wrap(data-tags="#{ JSON.stringify(article.tags) }" placeholder="Topics, Max 3")
+        .clear
+
+block content
+  include ./blocks/editor.jade
+  

@@ -1,0 +1,153 @@
+extends layout/index
+
+block meta
+  title #{__('Article')}
+  meta(name="robots" content="noindex")
+
+block content
+  .i-wrap.i-wrap--full.bg-white: .i-wrap--640.js-collection-articles
+    br
+    br
+    br
+    if isAdmin
+      if collection.is_anyone_can_request
+        .b-graf--h3 #{__('Requested articles')}
+        if collection.articles_request
+          each req in collection.articles_request
+            .divider
+            .b-post__repost__content
+              h3.b-post__title !{req.title}
+              p.b-post__subtitle !{req.subtitle}
+              p.i-user--inline.i-user--inline__mod #{__('By')}  
+                a(href="/u/#{req.user.username}")
+                  span.text-red #{req.user.name}
+              div(style='padding:5px 0;')
+                a(href="/p/#{req.slug}")
+                  button.i-button.i-button--small.i-button--w-blue #{__('View')}
+                button.i-button.i-button--small.i-button--w-green.js-accept-article(data-article-id="#{req._id}") #{__('Accept')}
+                button.i-button.i-button--small.i-button--w-red.pull-right.js-reject-article(data-article-id="#{req._id}") #{__('Remove')}
+      br
+      br
+      br
+      if collection.main_featured_article
+        .b-graf--h3 #{__('Main featured articles')}
+        - var post = collection.main_featured_article
+        .divider
+        .b-post__repost__content
+          h3.b-post__title !{post.title}
+          p.b-post__subtitle !{post.subtitle}
+          if post.user
+            p.i-user--inline.i-user--inline__mod #{__('By')}  
+              a(href="/u/#{post.user.username}")
+                span.text-red #{post.user.name}
+          div(style='padding:5px 0;')
+            a(href="/p/#{post.slug}")
+              button.i-button.i-button--small.i-button--w-blue #{__('View')}
+            button.i-button.i-button--small.i-button--w-red.pull-right.js-remove-main-featured(data-article-id="#{post._id}") #{__('Remove main featured')}
+        br
+        br
+        br
+      if collection.featured_articles.length > 0
+        .b-graf--h3 #{__('Featured articles')}
+        each post in collection.featured_articles
+          if collection.main_featured_article
+            if post._id.equals(collection.main_featured_article._id)
+            else
+              .divider
+              .b-post__repost__content
+                h3.b-post__title !{post.title}
+                p.b-post__subtitle !{post.subtitle}
+                if post.user
+                  p.i-user--inline.i-user--inline__mod #{__('By')}
+                    a(href="/u/#{post.user.username}")
+                      span.text-red #{post.user.name}
+                div(style='padding:5px 0;')
+                  a(href="/p/#{post.slug}")
+                    button.i-button.i-button--small.i-button--w-blue #{__('View')}
+                  button.i-button.i-button--small.i-button--w-green.js-main-featured(data-article-id="#{post._id}") #{__('Make main featured')}
+                  button.i-button.i-button--small.i-button--w-red.pull-right.js-remove-featured(data-article-id="#{post._id}") #{__('Remove featured')}
+          else
+            .divider
+            .b-post__repost__content
+              h3.b-post__title !{post.title}
+              p.b-post__subtitle !{post.subtitle}
+              if post.user
+                p.i-user--inline.i-user--inline__mod #{__('By')}  
+                  a(href="/u/#{post.user.username}")
+                    span.text-red #{post.user.name}
+              div(style='padding:5px 0;')
+                a(href="/p/#{post.slug}")
+                  button.i-button.i-button--small.i-button--w-blue #{__('View')}
+                button.i-button.i-button--small.i-button--w-green.js-main-featured(data-article-id="#{post._id}") #{__('Make main featured')}
+                button.i-button.i-button--small.i-button--w-red.pull-right.js-remove-featured(data-article-id="#{post._id}") #{__('Remove featured')}
+        br
+        br
+        br
+      .b-graf--h3 #{__('Published articles')}
+      each post in posts
+        if !post.is_featured
+          .divider
+          .b-post__repost__content
+            h3.b-post__title !{post.title}
+            p.b-post__subtitle !{post.subtitle}
+            if post.user
+              p.i-user--inline.i-user--inline__mod #{__('By')}  
+                a(href="/u/#{post.user.username}")
+                  span.text-red #{post.user.name}
+            div(style='padding:5px 0;')
+              a(href="/p/#{post.slug}")
+                button.i-button.i-button--small.i-button--w-blue #{__('View')}
+              button.i-button.i-button--small.i-button--w-green.js-make-featured(data-article-id="#{post._id}") #{__('Make featured')}
+              button.i-button.i-button--small.i-button--w-red.pull-right.js-remove-article(data-article-id="#{post._id}") #{__('Remove')}
+
+
+      form.js-form-make-featured(method="post" action="/c/make-featured/#{collection._id}")
+        input.js-input-make-featured(name="article" type="hidden")
+        input.is-hidden(type="submit")
+
+      form.js-form-main-featured(method="post" action="/c/main-featured/#{collection._id}")
+        input.js-input-main-featured(name="article" type="hidden")
+        input.is-hidden(type="submit")
+
+      form.js-form-remove-featured(method="post" action="/c/remove-featured/#{collection._id}")
+        input.js-input-remove-featured(name="article" type="hidden")
+        input.is-hidden(type="submit")
+
+      form.js-form-remove-main-featured(method="post" action="/c/remove-main-featured/#{collection._id}")
+        input.js-input-remove-main-featured(name="article" type="hidden")
+        input.is-hidden(type="submit")
+
+      form.js-form-accept-article(method="post" action="/c/accept-article/#{collection._id}")
+        input.js-input-accept-article(name="article" type="hidden")
+        input(name="answer" value="yes" type="hidden")
+        input.is-hidden(type="submit")
+
+      form.js-form-reject-article(method="post" action="/c/accept-article/#{collection._id}")
+        input.js-input-reject-article(name="article" type="hidden")
+        input(name="answer" value="no" type="hidden")
+        input.is-hidden(type="submit")
+
+      form.js-form-remove-article(method="post" action="/c/remove-article/#{collection._id}")
+        input.js-input-remove-article(name="article" type="hidden")
+        input.is-hidden(type="submit")
+    else
+      .b-graf--h3 #{__('Your articles')}
+      each post in posts
+        .divider
+        .b-post__repost__content
+          h3.b-post__title !{post.title}
+          p.b-post__subtitle !{post.subtitle}
+          //- p.i-user--inline.i-user--inline__mod #{__('By')}  
+          //-   a(href="/u/#{USER.username}")
+          //-     span.text-red #{post.user.name}
+          div(style='padding:5px 0;')
+            a(href="/p/#{post.slug}")
+              button.i-button.i-button--small.i-button--w-blue #{__('View')}
+            button.i-button.i-button--small.i-button--w-red.pull-right.js-remove-article(data-article-id="#{post._id}") #{__('Remove')}
+      form.js-form-remove-article(method="post" action="/c/remove-article/#{collection._id}")
+        input.js-input-remove-article(name="article" type="hidden")
+        input.is-hidden(type="submit")
+          
+    br
+    br
+    br

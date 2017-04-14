@@ -1,0 +1,36 @@
+//- extends layout/index
+
+
+block meta
+  title #{message}
+  meta(name="robots" content="noindex")
+
+block content
+  style.
+    .error {
+      padding: 70px;
+    }
+    .error h1 {
+      font-family: monospace;
+      font-weight: 900;
+      font-size: 2em;
+      line-height: 1;
+      white-space: pre;
+    }
+    .error h2 {
+      font-family: monospace;
+      font-weight: 900;
+      font-size: 2em;
+      line-height: 1;
+    }
+    .error pre {
+      font-weight: bold;
+      font-size: 1.2em;
+      line-height: 1.4;
+      word-wrap: break-word;
+    }
+  div.error
+    h2 #{error.status}
+    h1 #{message}
+    pre #{error.stack}
+  

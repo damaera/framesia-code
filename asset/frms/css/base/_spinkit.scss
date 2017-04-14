@@ -1,0 +1,40 @@
+.spinner {
+  margin: 100px auto;
+  width: 40px;
+  height: 40px;
+  position: relative;
+}
+
+.bar1, .bar2, .bar3 {
+  // display: inline-block;
+  // position: absolute;
+  height: 0;
+  width: 40px;
+	border-right: 5px solid transparent;
+  border-top: 10px solid $red;
+  margin-bottom: 5px;
+  animation: wut 2s infinite;
+  border-top-color: transparent;
+}
+
+.bar3 {
+  border-top: 10px solid $green;
+  animation: wut2 2s infinite;
+  animation-delay: .6s;
+  border-top-color: transparent;
+}
+
+.bar2 {
+  animation-delay: .3s;
+}
+
+@keyframes wut {
+  0%, 100% { width: 0; border-top-color: transparent;  }
+  10% { width: 40px; border-top-color: $red; }
+  80% { width: 40px; border-top-color: $red; }
+}
+@keyframes wut2 {
+  0%, 100% { width: 0; border-top-color: transparent;  }
+  10% { width: 25px; border-top-color: $green; }
+  80% { width: 25px; border-top-color: $green; }
+}

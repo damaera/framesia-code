@@ -1,0 +1,1 @@
+node-sass -w --output-style compressed main.scss main.css

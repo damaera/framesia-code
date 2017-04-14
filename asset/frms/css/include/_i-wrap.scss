@@ -1,0 +1,61 @@
+.i-wrap {
+  margin: 20px auto;
+  background: $white;
+
+  &--640 {
+    position: relative;
+    max-width: 640px;
+    margin: 0 auto;
+
+    @include screen(mobile) {
+      // padding: 0 20px;
+      width: 100%;
+    };
+  }
+
+  &--960 {
+    width: 960px;
+    margin: 0 auto;
+  }
+
+  &--full {
+    width: 100%;
+    margin: 0 auto;
+    // min-width: 1000px;
+  }
+
+  &__left {
+    float: left;
+    width: calc(100% - 360px);
+    margin: 0 auto;
+    padding: 0 20px;
+    // min-width: 640px;
+    background: $white;
+
+    @include screen(mobile) {
+      width: 100%;
+    };
+
+    @include screen(tablet) {
+      width: calc(100% - 280px);
+
+    };
+  }
+
+  &__right {
+    width: 360px;
+    padding: 100px 20px;
+    float: right;
+    margin-top: -60px;
+    min-height: 100vh;
+    background: $white-grey;
+    // color: $white;
+    // border-left: solid 1px $white-grey;
+    @include screen(mobile) {
+      width: 100%;
+    };
+    @include screen(tablet) {
+      width: 280px;
+    };
+  }
+}

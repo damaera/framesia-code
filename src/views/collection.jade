@@ -1,0 +1,157 @@
+extends layout/index
+
+
+block meta
+  title #{collection.name} &middot; Collections Framesia
+  meta(name="description" content="#{collection.description}")
+  meta(name="keywords" content="#{collection.tags.join(',')}")
+
+block content
+  .i-wrap--full
+    .i-wrap__right
+      .is-center
+        img.b-profile__ava(style="border-radius:3px" src="#{IMG_URL}col/#{collection._id}.jpg" alt="#{collection.name} Framesia")
+        div(style="font-size:11px;")
+          h2.b-profile__name #{collection.name}
+          p.b-profile__desc #{collection.description}
+        .divider
+        if USER
+          button.b-profile__follow.i-button.i-button--green.js-follow(data-follow-id="#{collection._id}" data-follow-type="Collection") #{__('Follow')}
+        span.b-profile__follow
+          span 
+            b #{collection.follower_count} 
+            | #{__('Follower')}
+        .tag-col
+          if collection.tags
+            each tag in collection.tags
+              .nsg-tag #{tag}
+        a(href="/c/#{collection.username}/people")
+          button.i-button.i-button--text #{__('People')}
+        if USER
+          if collection.is_admin
+            a(href="/c/#{collection.username}/edit") 
+              button.i-button.i-button--text #{__('Edit collection')}
+            a(href="/c/#{collection.username}/articles") 
+              button.i-button.i-button--text #{__('Articles')}
+          else
+            if collection.is_had_posted
+              a(href="/c/#{collection.username}/articles") 
+                button.i-button.i-button--text #{__('Articles')}
+            if collection.is_anyone_can_join && !collection.is_member
+              button.i-button.i-button--text.js-request-join(data-collection-id="#{collection._id}") #{__('Request to join')}
+
+      .divider
+      include ./blocks/footer-menu.jade
+    .i-wrap__left
+      .b-post
+        br
+        .i-wrap--640
+          if collection.main_featured_article
+            .divider
+            .b-graf--sc.is-center #{__('Featured')}
+            br
+            br
+            - var post = collection.main_featured_article
+            a(href="/p/#{post.slug}")
+              div.b-post__repost--main
+                .b-article__cover.is-cover-full.b-post__repost--main__cover
+                  img.b-article__cover__img(src="#{IMG_URL}post/#{post._id}-big-cover.jpg")
+                  .b-article__shadow.js-cover-shadow
+                .b-post__repost--main__content
+                  h3.b-post__title !{post.title}
+                  p.b-post__subtitle !{post.subtitle}
+                  if post.user
+                    p.i-user--inline #{__('By')}  
+                      a(href="/u/#{post.user.username}")
+                        span #{post.user.name}
+          if collection.featured_articles.length > 0
+            if !collection.main_featured_article
+              .divider
+              .b-graf--sc.is-center #{__('Featured')}
+              br
+              br
+            each post in collection.featured_articles
+              if collection.main_featured_article
+                if post._id.equals(collection.main_featured_article._id)
+                else
+                  a(href="/p/#{post.slug}")
+                    if post.is_cover == true
+                      .b-post__repost--half
+                        .is-half.img
+                          img(src="#{IMG_URL}/post/#{post._id}-medium-cover.jpg")
+                        .is-half
+                          .b-post__repost__content
+                            h3.b-post__title !{post.title}
+                            p.b-post__subtitle !{post.subtitle}
+                            p.i-user--inline.i-user--inline__mod #{__('By')}  
+                              a(href="/u/#{post.user.username}")
+                                span.text-red #{post.user.name}
+                              span(style="margin:5px") &middot;
+                              b #{post.love_count || 0} 
+                                span.text-red &#9825;
+                        .clear
+                      .clear
+                    else
+                      .b-post__repost--half
+                        .b-post__repost__content
+                          h3.b-post__title !{post.title}
+                          p.b-post__subtitle !{post.subtitle}
+                          p.i-user--inline.i-user--inline__mod #{__('By')}  
+                            a(href="/u/#{post.user.username}")
+                              span.text-red #{post.user.name}
+                            span(style="margin:5px") &middot;
+                            b #{post.love_count || 0} 
+                              span.text-red &#9825;
+                        .clear
+              else
+                a(href="/p/#{post.slug}")
+                  if post.is_cover == true
+                    .b-post__repost--half
+                      .is-half.img
+                        img(src="#{IMG_URL}/post/#{post._id}-medium-cover.jpg")
+                      .is-half
+                        .b-post__repost__content
+                          h3.b-post__title !{post.title}
+                          p.b-post__subtitle !{post.subtitle}
+                          if post.user
+                            p.i-user--inline.i-user--inline__mod #{__('By')}  
+                              a(href="/u/#{post.user.username}")
+                                span.text-red #{post.user.name}
+                              span(style="margin:5px") &middot;
+                              b #{post.love_count || 0} 
+                                span.text-red &#9825;
+                      .clear
+                    .clear
+                  else
+                    .b-post__repost--half
+                      .b-post__repost__content
+                        h3.b-post__title !{post.title}
+                        p.b-post__subtitle !{post.subtitle}
+                        if post.user
+                          p.i-user--inline.i-user--inline__mod #{__('By')}  
+                            a(href="/u/#{post.user.username}")
+                              span.text-red #{post.user.name}
+                            span(style="margin:5px") &middot;
+                            b #{post.love_count || 0} 
+                              span.text-red &#9825;
+                      .clear
+          br
+          br
+          br
+          .divider
+          .b-graf--sc.is-center #{__('Lastest')}
+          .js-article-feed.is-empty(data-collection-name="#{collection.username}")
+          .js-article-spinner.spinner
+            .dot1
+            .dot2
+          .is-center
+            br
+            br
+            br
+            button.i-button.i-button--w-green.js-load-more-article-feed.is-hidden #{__('Load more')}
+            br
+            br
+            br
+          //- include ./blocks/post.jade
+          
+        .clear

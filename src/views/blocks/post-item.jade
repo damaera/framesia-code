@@ -1,0 +1,36 @@
+include ../util/time.jade
+
+each item in post
+  .b-post__item(data-edited-at="#{item.edited_at}")
+    div.i-user__mod
+      span #{__('Created at')} 
+        +time(item.created_at)
+      span &nbsp;&nbsp;&middot;&nbsp;&nbsp;
+      span #{__('Last edited at')} 
+        +time(item.edited_at)
+      span &nbsp;&nbsp;&middot;&nbsp;&nbsp;
+      span #{item.word_count} #{__('words')}
+      span &nbsp;&nbsp;&middot;&nbsp;&nbsp;
+      - var readTime = Math.round(item.reading_time / 60000)
+      span #{ readTime == 0 ? 1 : readTime } #{__('min read')}
+      br
+      br
+    a(href="/p/#{item._id}")
+      h2.b-post__title !{item.title}
+      p.b-post__subtitle !{item.subtitle}
+    a(href="/p/#{item._id}/edit")
+      button.i-button.i-button--small.i-button--w-blue #{__('Edit')}
+    if !item.is_published
+      button.i-button.i-button--small.i-button--w-green.js-publish-article #{__('Publish')}
+    button.i-button.i-button--small.i-button--w-red.pull-right.js-delete-article #{__('Delete')}
+    
+    form.js-delete-article-form(method="POST", action="/p/delete-article")
+      input(name="id" type="hidden", value="#{item._id}")
+      if item.is_published
+        input(name="url" type="hidden", value="/me/articles")
+      else
+        input(name="url" type="hidden", value="/me/drafts")
+    
+    if !item.is_published
+      form.js-publish-article-form(method="POST", action="/p/publish-article")
+        input(name="id" type="hidden", value="#{item._id}")

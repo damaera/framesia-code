@@ -1,0 +1,21 @@
+.b-menu {
+
+  padding: 30px 0 10px 0;
+  margin-bottom: 20px;
+
+  border-bottom: solid 1px $white-grey;
+
+  &__item {
+
+    margin-right: 20px;
+    padding: 10px 0;
+
+    color: $light-grey;
+    font-size: 1.1em;
+
+    &.is-selected {
+      color: $dark-grey;
+      border-bottom: solid 4px $red;
+    }
+  }
+}

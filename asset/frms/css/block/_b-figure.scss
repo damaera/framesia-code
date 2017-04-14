@@ -1,0 +1,104 @@
+.b-figure {
+  &--left, &--right, &--center {
+    max-width: 450px;
+    text-align: center;
+
+    img {
+      width: auto !important;
+      height: auto !important;
+      max-width: 100%;
+    }
+    @include screen(mobile){
+      max-width: 100%;
+    };
+  }
+  &--left {
+    margin: 5px 30px 0 -160px;
+    float: left;
+
+    @include screen(mobile){
+      margin: 5px auto;
+    };
+    @include screen(tablet){
+      margin-left: -40px;
+    };
+  }
+  &--right {
+    margin: 5px -160px 0 30px;
+    float: right;
+
+    @include screen(mobile){
+      margin: 5px auto;
+    };
+    @include screen(tablet){
+      margin-right: -40px;
+    };
+  }
+  &--center {
+    max-width: 640px;
+    margin: 20px auto 0 auto;
+    float: none;
+
+    @include screen(mobile){
+      max-width: 100%;
+    };
+  }
+  &--full {
+    margin: 20px -160px 0 -160px;
+    text-align: center;
+    max-width: 960px;
+    float: none;
+
+    @include screen(mobile){
+      margin: 20px auto 0 auto;
+      max-width: 100%;
+      // height: auto;
+      img {
+        height: auto;
+      }
+    };
+    @include screen(tablet){
+      max-width: 720px;
+      margin-left: -40px;
+      margin-right: -40px;
+      img {
+        height: auto;
+      }
+    };
+  }
+  // &--multi {
+  //   margin: 20px -160px;
+  //   width: 960px;
+  //
+  //   text-align: center;
+  //   img {
+  //     // margin-right: 10px;
+  //     // margin-bottom: 10px;
+  //     &.is-last {
+  //       margin-right: 0;
+  //     }
+  //   }
+  // }
+  &__img {
+    max-width: 100%;
+
+    background: $white-grey;
+
+    cursor: pointer;
+
+    &.is-selected {
+      opacity: 0.8;
+    }
+  }
+
+  &__figcaption {
+    margin: 0 auto;
+    padding: 1em 2em;
+    // max-width: 480px;
+
+    font-size: 1.1em;
+
+    color: $light-grey;
+    // outline: none;
+  }
+}

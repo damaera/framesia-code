@@ -1,0 +1,266 @@
+.b-graf {
+  margin-bottom: 30px;
+
+  font-size: 18px;
+  line-height: 1.8;
+  font-family: $font-stack-serif;
+  word-wrap: break-word;
+  letter-spacing: -.01em;
+
+  @include screen(mobile){
+    font-size: 16px;
+    letter-spacing: -.01em;
+  };
+
+  b, em, i, strong, a {
+    background: none;
+  }
+
+  a {
+    text-decoration: underline;
+    // background-image: linear-gradient(to bottom, rgba(0,0,0,0) 50%, $dark-grey 50%);
+    // background-size: 2px 2.2px;
+    // background-repeat: repeat-x;
+    // background-position: 0 1.15em;
+    // color: inherit;
+  }
+
+  &.is-indent2 {
+    text-indent: -0.64em;
+    &.is-center {
+      text-indent: 0;
+    }
+  }
+
+  &.is-indent1 {
+    text-indent: -0.32em;
+    &.is-center {
+      text-indent: 0;
+    }
+  }
+
+  &--placeholder {
+    color: $light-grey;
+  }
+
+  // .is-small-caps {
+  //   text-transform: lowercase;
+  //   font-family: 'Alegreya SC';
+  // }
+
+  &--h1, &--h2, &--h3, &--quote1 {
+    margin: 0 0 15px -.04em;
+
+    font-family: $font-stack-sans;
+    font-weight: 900;
+
+    line-height: 1.4;
+
+    // .is-small-caps {
+    //   text-transform: uppercase;
+    //   font-family: inherit;
+    // }
+    &.is-indent2 {
+      text-indent: -.38em;
+    }
+    &.is-indent1 {
+      text-indent: -.22em;
+    }
+  }
+
+  &--h1 {
+    margin: 0;
+    font-size: 4em;
+    line-height: 1.1;
+    @include screen(mobile){
+      font-size: 2.5em;
+    };
+  }
+
+  &--h2 {
+    margin-top: -75px;
+    padding-top: 75px;
+
+    font-size: 2.7em;
+    line-height: 1.1;
+
+    @include screen(mobile){
+      font-size: 2em;
+    };
+
+    b, em, i, strong, a{
+      font-weight: 900;
+      font-style: normal;
+      background: none;
+    }
+  }
+
+  &--h3 {
+    margin-top: -75px;
+    padding-top: 75px;
+
+    font-size: 2.1em;
+    letter-spacing: -.01em;
+
+    font-weight: 400;
+    line-height: 1.1;
+
+    color: $light-grey;
+
+    @include screen(mobile){
+      font-size: 1.8em;
+    };
+    // color: $red;
+    b, em, i, strong, a{
+      font-weight: 400;
+      font-style: normal;
+      background: none;
+    }
+
+  }
+
+  &--h4 {
+    font-size: 1.6em;
+    line-height: 1.1;
+    font-weight: 900;
+  }
+
+  &--h6 {
+    font-size: 1.2em;
+    line-height: 1.1;
+    font-weight: 400;
+    color: $light-grey;
+    margin-bottom: 20px;
+  }
+
+  &--quote1 {
+    padding: 0 20px;
+    // margin: 10px 0 30px 0;
+
+    width: 100%;
+
+    font-size: 1.6em;
+    // font-family: $font-stack-serif;
+    font-weight: normal;
+    // letter-spacing: -.03em;
+    // line-height: 1.3;
+
+    color: $light-grey;
+    // border-left: solid 2px $light-grey;
+    @include screen(mobile){
+      font-size: 1.4em;
+    };
+
+    &.is-center {
+      border: none;
+    }
+  }
+
+  &--quote2 {
+    width: 100%;
+    // margin: 10px 0 ;
+    padding: 0;
+
+    font-size: 1.4em;
+    // font-family: $font-stack-serif;
+    line-height: 1.8;
+    // letter-spacing: -.0em;
+
+    @include screen(mobile){
+      font-size: 1.25em;
+    };
+
+    color: #444;
+  }
+
+  &--code, &--code * {
+    width: 100%;
+    padding: 30px;
+
+    font-size: 16px;
+    font-family: monospace;
+    white-space: pre-wrap;
+
+    background: rgba(0,0,0,0.05);
+    color: #666;
+
+    * {
+      margin: 0;
+      padding: 0;
+      background: none;
+    }
+
+    // .is-small-caps {
+    //   font-family: monospace;
+    //   text-transform: uppercase;
+    //   background: none;
+    // }
+  }
+
+  &--sc {
+    text-transform: uppercase;
+    font-size: .75em;
+    letter-spacing: .2em;
+    margin: 15px 0;
+    font-weight: bold;
+  }
+
+  &--olist, &--ulist {
+    margin-left: 30px;
+    li {
+      margin-bottom: 10px;
+    }
+  }
+
+  &--ulist {
+    list-style-type: none;
+    li::before{
+      margin-left: -21px;
+      padding-top: 6px;
+      padding-right: 15px;
+      font-size: 20px;
+      content: '•';
+    }
+  }
+
+  &--divider {
+    margin: 50px auto;
+    width: 150px;
+
+    border-bottom: solid 1px $very-light-grey;
+    clear: both;
+  }
+
+  &--drop-cap {
+    float: left;
+
+    margin-left: -3px;
+    margin-bottom: -10px;
+    margin-right: 5px;
+
+    font-size: 3.8em;
+    font-weight: 900;
+    font-family: $font-stack-sans;
+    line-height: .9;
+    // @include screen(mobile){
+    //   margin-bottom: 2px;
+    //   font-size: 3.4em;
+    // };
+  }
+
+  &--frame {
+    overflow: hidden;
+    &--yt {
+      max-width: 100%;
+    }
+    &--twit {
+      max-width: 100%;
+      margin: 10px auto;
+    }
+    &--sc, &--gmap {
+      margin: 20px 0;
+      width: 640px;
+      max-width: 100%;
+    }
+  }
+}

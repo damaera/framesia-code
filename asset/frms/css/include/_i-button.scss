@@ -1,0 +1,81 @@
+.i-button {
+  margin-top: 10px;
+  margin-right: 10px;
+  padding: .5em 1.2em;
+
+  font-size: 1em;
+  font-weight: 400;
+
+  border-radius: 2px;
+
+  outline: none;
+  cursor: pointer;
+
+  color: $light-grey;
+  background: $white-grey;
+  border: solid 1px $white-grey;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+
+  &--small {
+    font-size: .7em;
+    margin-top: 3px;
+    margin-bottom: 3px;
+  }
+  &--blank {
+    color: $dark-grey;
+    border: none;
+    background: none;
+  }
+  &--large {
+    font-size: 1.2em;
+  }
+  &--comment {
+    position: relative;
+    // top: -10px;
+    margin: 0;
+  }
+
+  &:hover {
+    opacity: .8;
+  }
+
+  &--text {
+    font-size: .8em;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    color: $light-grey;
+    background: none;
+    border: none;
+  }
+
+  &--blue {
+    color: $white;
+    background: $blue;
+    border: none;
+  }
+  &--green {
+    color: $white;
+    background: linear-gradient(to bottom right, $green, $green1);
+    border: none;
+  }
+  &--w-green {
+    border: solid 1px $green;
+    color: $green;
+    background: none;
+  }
+  &--w-blue {
+    border: solid 1px $blue;
+    color: $blue;
+    background: none;
+  }
+  &--w-red {
+    border: solid 1px $red;
+    color: $red;
+    background: none;
+  }
+  &--fb {
+    color: $white;
+    background: $facebook;
+    border: none;
+  }
+}

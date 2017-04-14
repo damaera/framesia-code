@@ -1,0 +1,118 @@
+body {
+  position: relative;
+  transition: margin .3s;
+}
+body.is-show {
+  margin-left: -360px;
+  .b-header.is-fixed {
+    width: calc(100% + 360px);
+  }
+}
+
+.b-comment {
+  position: fixed;
+  top: 0;
+  right: -360px;
+  display: table;
+  z-index: 8888;
+
+  width: 360px;
+  height: 100vh;
+
+  border-left: solid 1px $white-grey;
+  background: lighten($white-grey, 2);
+  transition: right .2s;
+
+  &.is-show {
+    right: 0;
+  }
+
+  &.is-not-user {
+    .b-comment__list {
+      top: 0 !important;
+    }
+  }
+
+  &__close {
+    padding: 10px;
+    position: absolute;
+    right: 0;
+    cursor: pointer;
+    font-size: 2em;
+    outline: none;
+    color: $light-grey;
+  }
+  &__head {
+    padding: 20px;
+  }
+
+  &__input {
+    border-bottom: solid 1px $white-grey;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+  }
+  &__button {
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+  &__textarea {
+    width: calc(100%);
+    padding: 10px 15px;
+
+    // font-size: 1em;
+
+    border-radius: 2px;
+    outline: none;
+
+    background: $white-grey;
+    color: $dark-grey;
+
+    &:focus {
+      padding-left: 2em;
+    }
+  }
+
+  &__list {
+    width: 100%;
+    position: absolute;
+    top: 200px;
+    bottom: 0;
+    padding-left: 20px;
+    padding-bottom: 50px;
+    overflow-y: auto;
+    // position: ;
+  }
+
+  &__item {
+    position: relative;
+    // font-size: 1.1em;
+    border-bottom: solid 1px $white-grey;
+    padding: 10px 0;
+  }
+
+  &__content, &__reply {
+    margin-left: 40px;
+    // padding: 5px 0;
+  }
+
+  &__reply {
+    border-top: solid 1px $white-grey;
+  }
+
+  &__date {
+    margin-left: 5px;
+    font-size: .9em;
+  }
+
+  .b-post__button-wrap {
+    margin-top: 5px;
+  }
+
+
+  .is-private {
+    position: absolute;
+    right: 0;
+    top: 5px;
+  }
+}

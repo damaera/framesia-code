@@ -1,0 +1,31 @@
+.b-welcome {
+  padding: 160px 20px 120px 20px;
+  // color: $red;
+  margin-top: -60px;
+  color: $white;
+  z-index: 9;
+  position: relative;
+  background: url('/asset/frms/img/Planets.svg');
+  background-size: cover;
+  background-position: center;s
+
+  * {
+    background: none;
+  }
+
+  &__cover {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba($dark-grey, .1);
+  }
+
+
+  .b-graf--quote1 {
+    // color: $dark-grey;
+    color: $white;
+  }
+
+}

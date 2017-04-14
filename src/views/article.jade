@@ -1,0 +1,244 @@
+extends layout/index
+
+include ./util/time.jade
+include ./util/read.jade
+
+block meta
+  title #{article.title} &middot; Framesia
+  meta(name="description" content="#{article.subtitle}")
+  meta(name="keywords" content="#{article.tags.join(',')}")
+  meta(name="author" content="#{user.name}")
+
+block content
+  .b-article
+    .b-article__meta
+      .i-wrap--640
+        //- .i-user
+        //-   span.i-user__ava
+        //-     img(src="#{IMG_URL}ava/#{user._id}-50.jpg")
+        //-   p.i-user__name: a(href="/u/#{user.username}") #{user.name}
+        //-   p.i-user__mod
+        //-     if article.is_published
+        //-       +time(article.published_at)
+        //-     else
+        //-       +time(article.created_at)
+        //-     span &nbsp;&nbsp;&middot;&nbsp;&nbsp;
+        //-     span #{Math.floor(article.reading_time / 60000) + 1} #{__('min read')}
+        //-     span &nbsp;&nbsp;&middot;&nbsp;&nbsp;
+        //-     span #{article.language_detected}
+        //-     if article.is_response
+        //-       p.i-user__mod #{__('In response to')}...
+        //-   .clear
+        .b-article__menu
+          if USER
+            if user._id == USER._id
+              button.b-article__menu__btn.js-down-article
+                i.f-icon-down
+              .i-drop.i-drop--article.js-drop-article.is-hidden
+                if !article.is_response
+                  .i-drop__item.js-add-to-collection(data-article-id="#{article._id}") #{__('Add to collection')}
+                  .divider
+                a(href="/p/#{article._id}/edit")
+                  .i-drop__item.js-edit-article #{__('Edit')}
+                //- .i-drop__item.js-delete-article #{__('Delete')}
+                //-   form.js-delete-article-form(method="POST", action="/p/delete-article")
+                //-     input(name="id" type="hidden", value="#{article._id}")
+            //- else
+            //-   button.b-article__menu__btn.js-down-article
+            //-     i.f-icon-down
+            //-   .i-drop.i-drop--article.js-drop-article.is-hidden
+            //-     if !article.is_response
+            //-       .i-drop__item.js-invite-to-collection(data-article-id="#{article._id}") #{__('Invite to my collection')}
+            //-       .divider
+            //-     .i-drop__item.js-report-article #{__('Report')}
+
+    .b-article__head
+      
+      if article.is_cover
+        if article.is_cover_full
+          .b-article__cover.is-cover-full
+            img.b-article__cover__img(src="#{IMG_URL}post/#{article._id}-cover.jpg")
+            .b-article__shadow.js-cover-shadow
+        else
+          .b-article__cover.is-cover-not-full
+            img.b-article__cover__img(src="#{IMG_URL}post/#{article._id}-cover.jpg")
+      else
+        .b-article__cover
+
+      .b-article__title(class="#{article.is_title_center ? 'is-center' : '' } #{article.is_cover_full ? 'is-with-cover' : '' }")
+        h1.b-graf.b-graf--h1.b-article__head__textarea #{article.title}
+        .b-article__meta
+          div
+            span.b-article__date-head
+              +time(article.published_at)
+              span  &middot;  
+              span #{__('By')} 
+                a.user(href="/u/#{article.user.username}") #{article.user.name}
+              span  &middot;  
+              +read(article.reading_time)
+              span  &middot;  
+              span #{article.language_detected}
+              br
+            span.b-article__tags-head.nsg-editor
+              span.nsg-tags.nsg-tags-before
+                each tag in article.tags
+                  span.nsg-tag: a(href="/s?tag=#{tag}") #{tag}
+              .clear
+    if article.is_response
+      .i-wrap--640
+        .b-article__respond
+          .b-post__repost
+            if article.response._id
+              .b-graf--sc #{__('In response to')}
+              a(href="/p/#{article.response.slug}")
+                .b-post__repost__content
+                  h3.b-post__title !{article.response.title}
+                  p.b-post__subtitle !{article.response.subtitle}
+                  p.i-user--inline.i-user--inline__mod #{__('By')}  
+                    a(href="/u/#{article.response.user.username}")
+                      span.text-red #{article.response.user.name}
+            else
+              p.b-post__subtitle #{__('Article not found, maybe deleted')}
+
+    .b-article__content(class="#{article.is_published ? 'js-article' : 'js-draft'}" data-article-id="#{article._id}" data-reading-time="#{article.reading_time}")
+      include ./blocks/article.jade
+
+    span.b-toc.js-toc.is-with-header
+      button.js-close-toc.f-icon-more(onclick="this.parentNode.classList.toggle('is-show')")
+      .b-graf--sc #{__('Table of Contents')}
+      .title: a(href="#") #{article.title}
+
+    if article.is_published
+      if USER
+        .b-article__button-wrap.js-article-button(data-article-id="#{article._id}")
+          button.b-article__button.js-article-love(data-article-id="#{article._id}")
+            b #{article.love_count || 0}
+            i.f-icon-love
+          button.b-article__button.js-article-comment(data-article-id="#{article._id}")
+            b #{article.comment_count || 0}
+            i.f-icon-comment
+          button.b-article__button.js-article-repost(data-article-id="#{article._id}")
+            b #{article.repost_count || 0}
+            i.f-icon-repost
+          a(href="#responses")
+            button.b-article__button.js-article-response
+              b #{__n('%d response', article.response_count || 0)}
+          .clear
+      else
+        .b-article__button-wrap
+          button.b-article__button
+            b #{article.love_count || 0}
+            i.f-icon-love
+          button.b-article__button.js-article-comment(data-article-id="#{article._id}")
+            b #{article.comment_count || 0}
+            i.f-icon-comment
+          button.b-article__button
+            b #{article.repost_count || 0}
+            i.f-icon-repost
+          a(href="#responses")
+            button.b-article__button
+              b #{__n('%d response', article.response_count || 0)}
+            .clear
+    else
+      .b-article__button-wrap.js-article-button(data-article-id="#{article._id}")
+        button.b-article__button.js-article-comment(data-article-id="#{article._id}")
+          i.f-icon-comment
+        .clear
+  .b-article__tags
+    .i-wrap--640
+      .is-half
+        .tag-col
+          each tag in article.tags
+            a(href="/s?q=#{tag}")
+              .nsg-tag #{tag} 
+        .clear
+      .is-half
+        .pull-right.tag-col
+          a.js-share-fb(href="https://www.facebook.com/dialog/share?app_id=1512739612352179&display=popup" target="_blank") #{__('Share')}
+            | <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+            |    width="40px" height="14px" viewBox="0 0 266.893 266.895" enable-background="new 0 0 266.893 266.895"
+            |    xml:space="preserve">
+            | <path id="Blue_1_" fill="#999" d="M248.082,262.307c7.854,0,14.223-6.369,14.223-14.225V18.812
+            |   c0-7.857-6.368-14.224-14.223-14.224H18.812c-7.857,0-14.224,6.367-14.224,14.224v229.27c0,7.855,6.366,14.225,14.224,14.225
+            |   H248.082z"/>
+            | <path id="f" fill="#FFF" d="M182.409,262.307v-99.803h33.499l5.016-38.895h-38.515V98.777c0-11.261,3.127-18.935,19.275-18.935
+            |   l20.596-0.009V45.045c-3.562-0.474-15.788-1.533-30.012-1.533c-29.695,0-50.025,18.126-50.025,51.413v28.684h-33.585v38.895h33.585
+            |   v99.803H182.409z"/>
+            | </svg>
+          button.i-button.i-button--blank.js-report-article(style="margin:0") #{__('Report')}
+          form.js-form-report-article.is-hidden(method="post" action="/p/report-article")
+            input(type="hidden" value="#{article._id}" name="article_id")
+            input.js-input-report-article(type="hidden" name="reason")
+            input(type="submit")
+          script.
+            document.querySelector('.js-share-fb').href += "&href=" + encodeURIComponent(window.location.href)
+      .clear
+  .b-article__footer
+    .i-wrap--640
+      .i-user--footer
+        span.i-user--footer__ava
+          img(src="#{IMG_URL}ava/#{user._id}.jpg")
+        div
+          p.i-user--footer__name: a(href="/u/#{user.username}") #{user.name}
+          p.i-user--footer__desc #{user.description}
+          p.i-user--footer__username: a(href="/u/#{user.username}") @#{user.username}
+          
+        .clear
+        .divider
+      div
+        if article.is_published
+          each collection in article.collections
+            .footer-collection
+              span.i-user__ava--sq
+                img(src="#{IMG_URL}c_fill,w_50/col/#{collection._id}.jpg")
+              span.i-user--footer__name.text-green: a(href="/c/#{collection.username}") #{collection.name}
+              p.i-user--footer__username: a(href="/c/#{collection.username}") #{collection.username}
+          .clear
+          .divider
+      .clear
+        
+  if responses
+    .b-article__responses(id="responses")
+      .i-wrap--640
+        .b-graf--sc.fl #{__('Responses')}
+        a(href="/p/new-article?respond=#{article._id}").pull-right
+          button.i-button.i-button--green(style="margin:0;margin-top:-5px") #{__('Write response')}
+        .clear
+        each response in responses
+          .b-article__respond
+            .b-post__repost
+              if response._id
+                a(href="/p/#{response.slug}")
+                  .b-post__repost__content
+                    h3.b-post__title #{response.title}
+                    p.b-post__subtitle #{response.subtitle}
+                    span.i-user--inline.i-user--inline__mod #{__('By')}  
+                      a(href="/u/#{response.user.username}")
+                        span.text-red #{response.user.name}
+                    span(style="margin:5px") &middot;
+                    b #{response.love_count || 0} 
+                      span.text-red &#9825;
+      if article.response_count > 2
+        .is-center
+          button.i-button.i-button--w-green #{__('View all responses')}
+      br
+      br
+      br
+      
+  
+  .b-article__comment-btn
+  .b-article__comment
+    include ./blocks/comment.jade
+    .clear
+
+  script(src="#{ASSET_URL}js/iframeResizer.min.js")
+  script.
+    var resizeIframe = function(obj) {
+      iFrameResize({
+        resizedCallback: function (res){
+          console.log(res)
+          res.iframe.height = res.height
+        }
+      })    
+    }
+  

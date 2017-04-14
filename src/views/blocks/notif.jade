@@ -1,0 +1,56 @@
+include ../util/time.jade
+
+each notif in notifs
+  - var url = ''
+  - var text = ''
+  - var data = ''
+  case notif.notif_type
+    when 'love-post'
+      - url = '/p/' + notif.object.post_id.slug
+      - text = __('loved your article')
+      - data = notif.object.post_id.title
+    when 'love-comment'
+      - url = '/p/' + notif.object.post_id.slug + '?comment=' + notif.object.comment_id
+      - text = __('loved your comment')
+      - data = notif.object.comment_id.content
+
+    when 'follow'
+      - url = '/u/' + notif.from.username
+      - text = __('following you')
+
+    when 'comment'
+      - url = '/p/' + notif.object.post_id.slug + '?comment=' + notif.object.comment_id
+      - text = __('commented your article')
+      - data = notif.object.comment_id.content
+
+    when 'mention-comment'
+      - url = '/p/' + notif.object.post_id.slug + '?comment=' + notif.object.comment_id
+      - text = __('mentioned you')
+      - data = notif.object.comment_id.content
+
+    when 'repost'
+      - url = '/p/' + notif.object.post_id.slug
+      - text = __('reposted your article')
+      - data = notif.object.post_id.title
+
+    when 'respond'
+      - url = '/p/' + notif.object.post_id.slug
+      - text = __('responded your article')
+      - data = notif.object.post_id.title
+    when ''
+      - url = '/p/' + notif.object.post_id.slug
+      - text = __('responded your article')
+      - data = notif.object.post_id.title
+
+  .b-notif__item(data-notif-id="#{notif._id}" class="#{ notif.is_read == true ? 'is-read' : '' }")
+    a(href="#{url}")
+      span.i-user--inline__ava
+        img(src="#{IMG_URL}c_fill,w_50/ava/#{notif.from._id}.jpg")
+      span.b-notif__user #{notif.from.name} 
+      span  #{text}
+      span  &middot;  
+      +time(notif.created_at)
+      br
+      div.b-notif__data
+        b #{data}
+      .clear

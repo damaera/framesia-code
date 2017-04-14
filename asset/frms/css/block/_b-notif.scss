@@ -1,0 +1,32 @@
+.b-notif {
+  padding: 0;
+  width: 300px;
+
+  &__item {
+    font-size: .9rem !important;
+    padding: 10px 20px;
+    border-bottom: solid 1px $white-grey;
+
+    background: lighten($white-grey, 2);
+    color: $light-grey !important;
+    margin-bottom: 10px;
+
+    &.is-read {
+      background: $white;
+    }
+
+  }
+  &__user {
+    color: $red !important;
+    margin-top: 5px;
+  }
+  &__data {
+    color: $dark-grey;
+    padding-left: 40px;
+  }
+
+  &__title {
+    color: $dark-grey;
+    margin-bottom: 3px;
+  }
+}

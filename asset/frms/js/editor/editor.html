@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script type="text/javascript">
+
+  var LANG_CATALOG = {}
+  // WebFontConfig = {
+  //   google: { families: [
+  //     'Lato:400,900:latin',
+  //     'Alegreya:400,400italic,700:latin',
+  //     'Alegreya+SC:400:latin'
+  //   ] }
+  // };
+  // (function() {
+  //   var wf = document.createElement('script');
+  //   wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+  //     '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+  //   wf.type = 'text/javascript';
+  //   wf.async = 'true';
+  //   var s = document.getElementsByTagName('script')[0];
+  //   s.parentNode.insertBefore(wf, s);
+  // })();
+  function resizeIframe(obj) {
+    obj.height = obj.contentWindow.document.body.scrollHeight + 'px';
+  }
+  var auto_grow = function (el) {
+    console.log(el);
+    el.style.height = '6px'
+    console.log(el.scrollHeight)
+    el.style.height = el.scrollHeight + "px"
+  }
+  </script>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+  <title>document</title>
+  <link rel="stylesheet" href="../../css/main.css">
+</head>
+<body>
+<header class="b-header">
+  <!-- <a href="#">Home</a> -->
+</header>
+<div class="b-toolbar js-toolbar">
+  <button class="b-toolbar__item js-bold icon-bold is-first"></button>
+  <button class="b-toolbar__item js-italic icon-italic"></button>
+  <button class="b-toolbar__item js-link icon-link"></button>
+
+  <button class="b-toolbar__item js-heading1 icon-h1"></button>
+  <button class="b-toolbar__item js-heading2 icon-h2"></button>
+  <!-- swap quote2 and quote1 -->
+  <button class="b-toolbar__item js-quote1 icon-quote1"></button>
+  <button class="b-toolbar__item js-quote2 icon-quote2"></button>
+
+  <button class="b-toolbar__item js-code icon-code"></button>
+  <button class="b-toolbar__item js-center icon-center"></button>
+  <button class="b-toolbar__item js-drop-cap icon-drop-cap"></button>
+
+  <button class="b-toolbar__item js-hr icon-hr"></button>
+  <button class="b-toolbar__item js-img icon-add-img"></button>
+  <button class="b-toolbar__item js-help icon-help is-last"></button>
+
+  <button class="js-open is-hidden"></button>
+  <button class="js-save is-hidden"></button>
+
+  <!-- <button class="b-toolbar__item js-open">o</button>
+  <button class="b-toolbar__item js-save">s</button> -->
+
+  <!-- <input class="js-input-img" type="file" multiple="true" style="display: none;"> -->
+  <input class="js-input-img" type="file" style="display: none;">
+</div>
+
+<div class="b-article">
+  <div class="b-article__head js-article-head">
+    <div class="b-article__wrapper">
+      <h1 class="b-graf b-graf--h1">
+        <!-- <textarea class="b-article__head__textarea js-title-input" placeholder="Masukkan Judulnya." rows="1" maxlength="70"></textarea> -->
+        <textarea class="b-article__head__textarea js-title-input is-center" placeholder="Masukkan Judulnya." rows="1" maxlength="70" onload="auto_grow(this)" onkeyup="auto_grow(this)">For the brave souls who get this far</textarea>
+      </h1>
+    </div>
+    <div class="b-article__cover js-cover is-not-cover">
+      <img class="b-article__img js-img-cover"/>
+      <div class="b-article__btn-wrapper">
+        <button class="b-article__btn js-add-cover icon-add-img"></button>
+        <button class="b-article__btn js-del-cover icon-del is-hidden"></button>
+      </div>
+      <input class="js-input-cover" type="file" style="display: none;">
+    </div>
+  </div>
+  <div class="b-article__content js-editable" contentEditable="true">
+    <!-- <p class="b-graf b-graf--placeholder is-placeholder">tulis artikelnya&hellip;</p> -->
+    <p class="b-graf is-center">You are the chosen ones, the valiant knights of programming who toil away, without rest, fixing our most awful code.</p>
+    <h3 class="b-graf b-graf--h3 is-center">To you, true saviors, kings of men, I say this:</h3>
+    <blockquote class="b-graf b-graf--quote2 is-second is-center is-indent2"><em>“Never gonna give you up, never gonna let you down, never gonna run around and desert you. Never gonna make you cry, never gonna say goodbye. Never gonna tell a lie and hurt you.”</em></blockquote>
+  </div>
+  <div class="clear"></div>
+</div>
+
+<span class="b-tooltip js-tooltip-link"></span>
+
+<span class="b-tooltip js-tooltip-input-link">
+  <input class="js-input-link" type="text" placeholder="valid link">
+</span>
+
+<span class="b-tooltip js-tooltip-image">
+  <button class="b-tooltip__btn js-img-left icon-img-left"></button>
+  <button class="b-tooltip__btn js-img-center icon-img-center"></button>
+  <button class="b-tooltip__btn js-img-right icon-img-right"></button>
+  <button class="b-tooltip__btn js-img-full icon-img-full"></button>
+  <button class="b-tooltip__btn js-img-link icon-link"></button>
+  <button class="b-tooltip__btn js-img-del icon-del"></button>
+</span>
+
+</script>
+<script src="../main.js"></script>
+</body>
+</html>

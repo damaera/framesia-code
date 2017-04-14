@@ -1,0 +1,8 @@
+each item in post
+  a(href="/p/#{item.slug}")
+    .b-notif__item
+      h5.b-notif__title #{item.title}
+      p.b-notif__subtitle #{item.subtitle}
+      a(href="/u/#{item.user.username}")
+        .b-notif__user #{item.user.name} 
+      .clear

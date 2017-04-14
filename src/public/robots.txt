@@ -1,0 +1,5 @@
+User-Agent: *
+Disallow: /me/
+Disallow: /x/
+Disallow: /*/*/edit
+Sitemap: https://framesia.com/sitemap.xml

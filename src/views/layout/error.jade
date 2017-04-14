@@ -1,0 +1,48 @@
+doctype html
+html
+  head
+    meta(http-equiv="Content-Type" content="text/html;charset=UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    block meta
+      title Framesia
+      meta(name="description" content="Welcome to Framesia, place to write, read, collect, and share stories, ideas, knowledge or passion with the world.")
+      meta(name="keywords" content="Framesia, blogging, platform, write")
+    link(rel="shortcut icon" type="image/x-icon" href="/favicon.ico")
+    script.
+      WebFontConfig = { google: { families: ['Lato:400,900:latin', 'Alegreya:400,400italic,700:latin', 'Alegreya+SC:400:latin'] }
+      };
+      (function() {
+        var wf = document.createElement('script');
+        wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+          '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+        wf.type = 'text/javascript';
+        wf.async = 'true';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(wf, s);
+      })();
+    block css
+      link(rel="stylesheet", type="text/css", href="#{ASSET_URL}css/main.css")
+      
+  body(class="#{is_comment_cb ? 'is-show' : ''}")
+    include ../blocks/header.jade
+    block content
+    script.
+      var LANG_CATALOG = !{JSON.stringify(CATALOG)}
+      var CSRF = "!{CSRF}"
+    
+    script(src="/socket.io/socket.io.js")
+    script.
+      var socket = io.connect()
+      socket.on('notif', function (data) {
+        var $notif = document.querySelector('.js-down-notif')
+        if ($notif) {
+          $notif.classList.add('is-notif')
+        }
+      })
+      socket.on('read-notif', function (data) {
+        var $notif = document.querySelector('.js-down-notif')
+        if ($notif) {
+          $notif.classList.remove('is-notif')
+        }
+      })
+    script(src="#{ASSET_URL}js/main.js")

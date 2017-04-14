@@ -1,0 +1,34 @@
+// CONFIG
+// $green: linear-gradient(to bottom right, #16222A, #3A6073);
+$green: #2F80ED;
+$green1: #2F80ED;
+
+$red1: #cb2d3e;
+$red: #ef473a;
+
+$blue: #2F80ED;
+$yellow: #ffcc73;
+
+// color
+$white: #fff;
+
+$facebook: linear-gradient(to bottom right, #3b5999, #5870D4);
+// $facebook: #3b5999;
+
+$header-bg: rgba(51,51,51,.9);
+
+$grey: #374046;
+$dark-grey: darken($grey, 10);
+$light-grey: lighten($grey, 25);
+$very-light-grey: lighten($light-grey, 35);
+$white-grey: lighten($very-light-grey, 10);
+
+$font-stack-sans: 'Muli', 'Segoe UI', 'Helvetica Neue', 'Helvetica', sans-serif;
+$font-stack-serif: 'Muli', 'Segoe UI', 'Helvetica Neue', 'Helvetica', sans-serif;
+// $font-stack-serif: 'Gentium Book Basic', 'Palatino Linotype', 'Georgia', serif;
+
+// $font-stack-sans: 'Lato', 'Segoe UI', 'Helvetica Neue', 'Helvetica', sans-serif;
+// $font-stack-serif: 'Merriweather', 'Palatino Linotype', 'Georgia', serif;
+
+
+$ease-quad: cubic-bezier(0.770, 0.000, 0.175, 1.000);

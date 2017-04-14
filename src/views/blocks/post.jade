@@ -1,0 +1,169 @@
+include ../util/time.jade
+include ../util/read.jade
+
+each item in post
+  .b-post__item(data-published-at="#{item.published_at}")
+    if item.is_repost == true
+      .b-post__head
+        .i-user--inline
+          span.i-user--inline__ava: a(href="/u/#{item.user.username}")
+            img(src="#{IMG_URL}c_fill,w_50/ava/#{item.user._id}.jpg")
+          span.i-user--inline__name: a(href="/u/#{item.user.username}") #{item.user.name}
+          span.i-user--inline__mod
+            span   
+              i.f-icon-repost
+              |  #{__('suggested')}  
+            +time(item.published_at)
+            span &nbsp;&nbsp;&middot;&nbsp;&nbsp;
+            +read(item.repost.reading_time)
+          .clear
+      .b-post__repost
+        a(href="/p/#{item.repost.slug}")
+          .b-post__repost__content
+            h3.b-post__title !{item.repost.title}
+            p.b-post__subtitle !{item.repost.subtitle}
+            p.i-user--inline.i-user--inline__mod #{__('By')}  
+              a(href="/u/#{item.repost.user.username}")
+                span.text-red #{item.repost.user.name}
+              span(style="margin:5px") &middot;
+              b #{item.repost.love_count || 0} 
+                span.text-red &#9825;
+      .clear
+    else if item.is_response == true
+      .b-post__head
+        .i-user--inline
+          span.i-user--inline__ava: a(href="/u/#{item.user.username}")
+            img(src="#{IMG_URL}c_fill,w_50/ava/#{item.user._id}.jpg")
+          span.i-user--inline__name: a(href="/u/#{item.user.username}") #{item.user.name}
+          span.i-user--inline__mod
+            span   
+              i.f-icon-reply
+              |  #{__('responded')}  
+            +time(item.published_at)
+            span &nbsp;&nbsp;&middot;&nbsp;&nbsp;
+            +read(item.reading_time)
+          .clear
+      .b-post__response
+        a(href="/p/#{item.slug}")
+          .b-post__response__content
+            h3.b-post__title !{item.response.title}
+            p.i-user--inline.i-user--inline__mod #{__('By')}  
+              a(href="/u/#{item.response.user.username}")
+                span.text-red #{item.response.user.name}
+              span(style="margin:5px") &middot;
+              b #{item.response.love_count || 0} 
+                span.text-red &#9825;
+      if item.is_cover
+        .b-post__right
+          a(href="/p/#{item.slug}")
+            img.b-post__cover(src="#{IMG_URL}post/#{item._id}-cover.jpg", alt="")
+      .b-post__left(class=item.is_cover ? "" : "is-full")
+        a(href="/p/#{item.slug}")
+          h3.b-post__title !{item.title}
+          p.b-post__subtitle !{item.subtitle}
+          //- button.i-button.i-button--small.i-button--w-green Selengkapnya
+        .b-post__button-wrap
+          button.b-post__button.js-article-love(class=item.is_loving ? "is-loving" : "" data-article-id="#{item._id}")
+            b #{item.love_count}
+            i.f-icon-love         
+          //- button.b-post__button
+          //-   b #{item.comment_count}
+          //-   i.f-icon-comment
+          //- button.b-post__button.js-article-repost(class=item.is_reposting ? "is-repost" : "" data-article-id="#{item._id}")
+          //-   b #{item.repost_count}
+          //-   i.f-icon-repost
+          //- button.b-post__button.pull-right.js-bookmark(data-article-id="#{item._id}")
+          //-   i.f-icon-bookmark
+      .clear
+    else if item.is_repost_link == true
+      .b-post__head
+        .i-user--inline
+          span.i-user--inline__ava: a(href="/u/#{item.user.username}")
+            img(src="#{IMG_URL}c_fill,w_50/ava/#{item.user._id}.jpg")
+          span.i-user--inline__name: a(href="/u/#{item.user.username}") #{item.user.name}
+          span.i-user--inline__mod
+            span   
+              i.f-icon-repost
+              |  #{__('suggested')}  
+            +time(item.published_at)
+            span &nbsp;&nbsp;&middot;&nbsp;&nbsp;
+          .clear
+      .b-post__repost
+        a(href="/p/#{item.repost_link.slug}")
+          .b-post__repost__content
+            h3.b-post__title !{item.repost_link.title}
+            p.b-post__subtitle !{item.repost_link.subtitle}
+            p.i-user--inline.i-user--inline__mod
+              a(href="http://#{item.repost_link.url}")
+                span.text-red #{item.repost_link.source ? item.repost_link.source : item.repost_link.hostname}
+              span(style="margin:5px") &middot;
+    else if item.is_link == true
+      //- .b-post__head
+        //- .i-user--inline
+        //-   span.i-user--inline__ava: a(href="/u/#{item.user.username}")
+        //-     img(src="#{IMG_URL}ava/#{item.user._id}-50.jpg")
+        //-   span.i-user--inline__name: a(href="/u/#{item.user.username}") #{item.user.name}
+        //-   span.i-user--inline__mod
+        //-     span   
+        //-       i.f-icon-repost
+        //-       |  #{__('suggested')}  
+        //-     +time(item.published_at)
+        //-     span &nbsp;&nbsp;&middot;&nbsp;&nbsp;
+        //-   .clear
+      .b-post__repost
+        a(href="/p/#{item.slug}")
+          .b-post__repost__content
+            h3.b-post__title !{item.title}
+            p.b-post__subtitle !{item.subtitle}
+            p.i-user--inline.i-user--inline__mod
+              a(href="http://#{item.url}")
+                span.text-red #{item.source ? item.source : item.hostname}
+              span(style="margin:5px") &middot;
+    else
+      .b-post__head
+        if item.from_collection
+          if item.from_collection.length > 0
+            .b-post__from
+              each col in item.from_collection
+                a(href="/c/#{col.username}")
+                  i.f-icon-book
+                  b #{col.name}
+          
+        .i-user--inline
+          span.i-user--inline__ava: a(href="/u/#{item.user.username}")
+            img(src="#{IMG_URL}c_fill,w_50/ava/#{item.user._id}.jpg")
+          span.i-user--inline__name: a(href="/u/#{item.user.username}") #{item.user.name}
+          span.i-user--inline__mod
+            span  #{__('published')}  
+            +time(item.published_at)
+            //- span &nbsp;&nbsp;&middot;&nbsp;&nbsp;
+            //- span #{item.word_count} #{__('words')}
+            span &nbsp;&nbsp;&middot;&nbsp;&nbsp;
+            +read(item.reading_time)
+            //- span &nbsp;&nbsp;&middot;&nbsp;&nbsp;
+            //- span #{item.language_detected}
+          .clear
+      if item.is_cover
+        .b-post__right
+          a(href="/p/#{item.slug}")
+            img.b-post__cover(src="#{IMG_URL}c_fill,w_240,h_160/post/#{item._id}-cover.jpg", alt="")
+      .b-post__left(class=item.is_cover ? "" : "is-full")
+        a(href="/p/#{item.slug}")
+          h3.b-post__title !{item.title}
+          p.b-post__subtitle !{item.subtitle}
+          //- button.i-button.i-button--small.i-button--w-green Selengkapnya
+        .b-post__button-wrap
+          button.b-post__button.js-article-love(class=item.is_loving ? "is-loving" : "" data-article-id="#{item._id}")
+            b #{item.love_count}
+            i.f-icon-love
+          //- button.b-post__button
+          //-   i.f-icon-mark
+          //- button.b-post__button.js-article-repost(class=item.is_reposting ? "is-repost" : "" data-article-id="#{item._id}")
+          //-   b #{item.repost_count}
+          //-   i.f-icon-repost
+          //- button.b-post__button.pull-right.js-bookmark(data-article-id="#{item._id}")
+            //- i.f-icon-bookmark
+      .clear
+//- 
+//- else
+//-   .b-post__item.i-block-empty #{__('No articles')}

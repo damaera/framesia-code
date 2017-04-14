@@ -1,0 +1,35 @@
+extends layout/index
+
+
+block meta
+  title #{__('Your article')}
+  meta(name="robots" content="noindex")
+
+block content
+  .i-wrap--640
+    br
+    br
+    h1.b-graf--h2 #{__('Liked article')}
+    p.b-graf--h3 #{__('Liked by you')}
+    br
+    br
+  .b-post
+    br
+    .i-wrap--640
+      a(href="/p/new-article")
+        button.i-button.i-button--green #{__('Create new article')}
+      .js-loved-article-feed.is-empty
+      .js-loved-article-spinner.spinner
+        .bar1
+        .bar2
+        .bar3
+      .is-center
+        br
+        br
+        br
+        button.i-button.i-button--w-green.js-load-more-loved-article-feed.is-hidden #{__('Load more')}
+        br
+        br
+        br
+      //- include ./blocks/post.jade
+    br

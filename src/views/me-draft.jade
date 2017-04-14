@@ -1,0 +1,35 @@
+extends layout/index
+
+
+block meta
+  title #{__('Your article')}
+  meta(name="robots" content="noindex")
+
+block content
+  .i-wrap--640
+    br
+    br
+    h1.b-graf--h2 #{__('Draft')}
+    p.b-graf--h3 #{__('Unreleased article')}
+    br
+    br
+  .b-post
+    br
+    .i-wrap--640
+      a(href="/p/new-article")
+        button.i-button.i-button--green #{__('Create new article')}
+      .js-article2-feed.is-empty(data-draft='true')
+      .js-article2-spinner.spinner
+        .bar1
+        .bar2
+        .bar3
+      .is-center
+        br
+        br
+        br
+        button.i-button.i-button--w-green.js-load-more-article2-feed.is-hidden #{__('Load more')}
+        br
+        br
+        br
+      //- include ./blocks/post-item.jade
+    br

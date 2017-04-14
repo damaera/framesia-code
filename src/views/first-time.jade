@@ -1,0 +1,31 @@
+extends layout/index
+
+block content
+  form.i-wrap--640(action="/u/edit" method="post")
+    h2.i-head--2
+      | #{__('Almost')}&hellip;
+    h3.i-head--3
+      | #{__('One more step')}, 
+      span.text-red.text-bold #{USER.name}
+      | . #{__('Choose username and tell us about you.')}
+
+    label.text-bold #{__('Name')}
+    input.i-input(name="name" value="#{USER.name}" type="text" placeholder="#{__('Fullname')}" minLength="3" maxLength="30" pattern="[a-zA-Z ]{3,30}" required autocomplete="off")
+      
+    label.text-bold #{__('Change profile picture')}
+    br
+    img.js-first-time-ava(src="#{USER.picture}", alt="", height="200")
+    input.js-first-time-ava-input.is-hidden(type="file")
+    input.js-first-time-ava-data.is-hidden(name="picture" type="text")
+    br
+    br
+
+    label.text-bold.js-username-user #{__('Username')}
+    input.i-input(name="username" type="text" placeholder="#{__('Choose proper username (Alphabet, number or \'-\', max 16)')" minLength="3" maxLength="16" pattern="[a-zA-Z0-9\-]{3,16}" required autocomplete="off" value="")
+    
+    label.text-bold #{__('About you')}
+    textarea.i-input.i-input--textarea(name="description" type="text" placeholder="#{__('Description about you, max 200')}" rows="3" minLength="3" maxLength="200" required autocomplete="off")
+
+    input.i-button.i-button--green.pull-right(type="submit" value="Submit")
+    br
+    br

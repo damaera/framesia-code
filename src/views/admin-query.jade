@@ -1,0 +1,60 @@
+style.
+  pre {outline: 1px solid #ccc; padding: 5px; margin: 5px; word-wrap: break-word; white-space: pre-wrap; }
+  .string { color: green; }
+  .number { color: darkorange; }
+  .boolean { color: blue; }
+  .null { color: magenta; }
+  .key { color: red; }
+  .is-half { width: 50%; float: left }
+  .clear { clear: both }
+  .is1 { position: fixed; width: 30%; }
+  .is2 { width: 65%; margin-left: 35%; }
+  textarea { min-width: 100%; max-width: 100%; }
+
+.is-half.is1
+  form
+    select(name="collection")
+      option(value="comment") Comment
+      option(value="collection") Collection
+      option(value="follow") Follow
+      option(value="love") Love
+      option(value="post") Post
+      option(value="stat") Stat
+    br
+
+    textarea(name="query") !{query}
+    br
+    input(type="submit")
+.is-half.is2
+.clear
+
+script.
+  document.querySelector('select').value = "#{collection}"
+script.
+  function output(inp) {
+    document.querySelector('.is-half.is2').appendChild(document.createElement('pre')).innerHTML = inp;
+  }
+
+  function syntaxHighlight(json) {
+      json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+          var cls = 'number';
+          if (/^"/.test(match)) {
+              if (/:$/.test(match)) {
+                  cls = 'key';
+              } else {
+                  cls = 'string';
+              }
+          } else if (/true|false/.test(match)) {
+              cls = 'boolean';
+          } else if (/null/.test(match)) {
+              cls = 'null';
+          }
+          return '<span class="' + cls + '">' + match + '</span>';
+      });
+  }
+
+  var obj = !{result}
+  var str = JSON.stringify(obj, undefined, 2);
+
+  output(syntaxHighlight(str));

@@ -1,0 +1,32 @@
+.b-tooltip {
+  position: absolute;
+  display: none;
+  z-index: 8000;
+
+  padding: 10px;
+
+  font-size: .9em;
+
+  background: rgba($dark-grey, 0.9);
+  color: $white;
+  border-radius: 4px;
+
+  // &--input-link {
+  //
+  // }
+
+  &__btn {
+    padding: 0 10px;
+
+    font-size: 1.2em;
+    font-weight: bold;
+
+    outline: none;
+
+    cursor: pointer;
+
+    &.is-active {
+      color: $green;
+    }
+  }
+}

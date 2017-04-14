@@ -1,0 +1,36 @@
+<svg width="600" height="600" viewBox="0 0 600 600" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:figma="http://www.figma.com/figma/ns">
+<title>Frame</title>
+<desc>Created using Figma</desc>
+<g id="Canvas" transform="translate(-332 287)" figma:type="canvas">
+<mask id="mask0_alpha" mask-type="alpha">
+<path d="M 332 -287L 932 -287L 932 313L 332 313L 332 -287Z" fill="#FFFFFF"/>
+</mask>
+<g id="Frame" mask="url(#mask0_alpha)" figma:type="frame">
+<g id="Subtract" figma:type="vector-operation">
+<use xlink:href="#path0_fill" transform="translate(432 113)" fill="url(#paint0_linear)"/>
+</g>
+<g id="Subtract" figma:type="vector-operation">
+<use xlink:href="#path1_fill" transform="translate(432 -37)" fill="url(#paint1_linear)"/>
+</g>
+<g id="Subtract" figma:type="vector-operation">
+<use xlink:href="#path1_fill" transform="translate(432 -187)" fill="url(#paint2_linear)"/>
+</g>
+</g>
+</g>
+<defs>
+<linearGradient id="paint0_linear" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(383 -4.6151e-06 -5.45375e-06 952.776 2.72687e-06 -426.388)">
+<stop offset="0" stop-color="#2F80ED"/>
+<stop offset="1" stop-color="#56CCF2"/>
+</linearGradient>
+<linearGradient id="paint1_linear" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(399 8.88564e-06 -2.81811e-05 1265.44 1.63189e-05 -582.722)">
+<stop offset="0" stop-color="#141E30"/>
+<stop offset="1" stop-color="#243B55"/>
+</linearGradient>
+<linearGradient id="paint2_linear" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(399 8.88564e-06 -2.81811e-05 1265.44 1.63189e-05 -582.722)">
+<stop offset="0" stop-color="#141E30"/>
+<stop offset="1" stop-color="#243B55"/>
+</linearGradient>
+<path id="path0_fill" fill-rule="evenodd" d="M 246.764 0C 248.251 0 249.218 1.56463 248.553 2.89443L 200.553 98.8944C 200.214 99.572 199.521 100 198.764 100L 2 100C 0.895431 100 0 99.1046 0 98L 0 2C 0 0.895431 0.895431 0 2 0L 246.764 0Z"/>
+<path id="path1_fill" fill-rule="evenodd" d="M 350.553 98.8944C 350.214 99.572 349.521 100 348.764 100L 2 100C 0.895431 100 0 99.1046 0 98L 0 2C 0 0.895431 0.895431 0 2 0L 396.764 0C 398.251 0 399.218 1.56463 398.553 2.89443L 350.553 98.8944Z"/>
+</defs>
+</svg>

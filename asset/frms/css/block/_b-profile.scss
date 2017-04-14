@@ -1,0 +1,67 @@
+.b-profile {
+  padding: 40px 0;
+  border-bottom: solid 1px $white-grey;
+
+
+  &__left {
+    width: 200px;
+  }
+
+  &__right {
+    max-width: calc(100% - 200px);
+    text-align: left;
+    @include screen(mobile) {
+      text-align: center;
+    }
+  }
+
+  &__left, &__right {
+
+    float: left;
+
+    @include screen(mobile) {
+      max-width: 100%;
+      width: 100%;
+    }
+  }
+
+  &__ava {
+    width: 160px;
+    height: 160px;
+    border-radius: 80px;
+    margin-bottom: 30px;
+  }
+
+  &__name {
+    font-size: 2.2em;
+    font-weight: 900;
+  }
+
+  &__desc {
+    font-size: 1.4em;
+    margin: 15px 0;
+  }
+
+  &__username {
+    margin-top: 5px;
+    font-size: 1.2em;
+    color: $red;
+    font-weight: normal;
+    margin-right: 10px;
+  }
+
+  &__follow {
+    span {
+      opacity: .7;
+      margin-right: 15px;
+    }
+    b {
+      margin-right: 5px;
+      opacity: 1;
+      font-size: 1.2em;
+      font-weight: 900;
+    }
+  }
+
+
+}

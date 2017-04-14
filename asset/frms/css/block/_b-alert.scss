@@ -1,0 +1,111 @@
+.sweet-overlay {
+  background: rgba($white,.9);
+  outline: none;
+}
+
+.sweet-alert {
+  font-family: $font-stack-sans;
+
+  border-radius: 2px;
+  border: solid 1px $white-grey;
+  box-shadow: 0 3px 5px $white-grey;
+  color: $dark-grey;
+  // max-height: 100vh;
+
+  h2, p, h3 {
+    color: $dark-grey !important;
+  }
+
+  p {
+    max-height: 70vh;
+    overflow: auto;
+  }
+
+  table {
+    width: 100%;
+    td {
+      padding: 5px;
+      span {
+        padding: 4px 10px;
+
+        font-family: monospace;
+        // font-size: .8em;
+        font-weight: bold;
+        text-transform: uppercase;
+
+        background: $white-grey;
+        border: solid 1px $white-grey;
+      }
+      .btn {
+        color: $red;
+      }
+    }
+  }
+
+  button {
+    font-weight: bold;
+
+    border-radius: 2px;
+    &:hover, &:focus {
+      opacity: .8;
+    }
+
+    &.confirm {
+      background: $green !important;
+    }
+    &.cancel {
+      background: none;
+      color: $light-grey;
+      &:hover {
+        background: $white-grey;
+      }
+    }
+  }
+
+  .sa-icon:not(.sa-custom) {
+
+  }
+
+  input {
+    border-radius: 2px;
+    border: solid 1px $white-grey;
+    box-shadow: none !important;
+    background: $white-grey;
+
+    &:focus {
+      padding-left: 20px;
+      border: solid 1px $green;
+    }
+  }
+
+  fieldset {
+    .sa-input-error {
+      display: none;
+    }
+  }
+
+  .sa-error-container {
+    &.show {
+      background: $white-grey;
+      ~ fieldset input {
+
+      }
+    }
+
+    .icon {
+      background: $red;
+    }
+    p {
+
+    }
+  }
+}
+
+.la-ball-fall {
+  background: none;
+}
+
+
+.sa-icon.sa-success {
+  background: none;
+}

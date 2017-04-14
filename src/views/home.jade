@@ -1,0 +1,148 @@
+extends layout/index
+
+
+block content
+  .b-welcome
+    .b-welcome__cover
+    .i-wrap--640.is-center
+      h2.b-graf--h2 #{__('Frame your thoughts.')}
+      h3.b-graf--quote1.is-center #{__('Welcome to Framesia. Read more, write more and discuss the discoveries. A discoveries platform.')}
+      a(href="/a/facebook")
+        button.i-button.i-button--large.i-button--fb #{__('Sign in with Facebook')}
+      a(href="/p/try-editor")
+        button.i-button.i-button--large.i-button--green #{__('Try our editor')}
+  .i-wrap__left(style="padding:0")
+    .i-wrap--640
+      if collection
+        .js-bigarticle
+          if collection.main_featured_article
+            .b-graf--sc.is-center #{__('Editor picks')}
+            br
+            br
+            - var post = collection.main_featured_article
+            a(href="/p/#{post.slug}")
+              div.b-post__repost--main
+                .b-article__cover.is-cover-full.b-post__repost--main__cover
+                  img.b-article__cover__img(src="#{IMG_URL}post/#{post._id}-big-cover.jpg")
+                  .b-article__shadow.js-cover-shadow
+                .b-post__repost--main__content
+                  h3.b-post__title !{post.title}
+                  p.b-post__subtitle !{post.subtitle}
+                  p.i-user--inline #{__('By')}  
+                    a(href="/u/#{post.user.username}")
+                      span #{post.user.name}
+          if collection.featured_articles
+            if !collection.main_featured_article
+              .b-graf--sc.is-center #{__('Editor picks')}
+              br
+              br
+            each post in collection.featured_articles
+              if collection.main_featured_article
+                if post._id.equals(collection.main_featured_article._id)
+                else
+                  a(href="/p/#{post.slug}")
+                    if post.is_cover == true
+                      .b-post__repost--half
+                        .is-half.img
+                          img(src="#{IMG_URL}/post/#{post._id}-medium-cover.jpg")
+                        .is-half
+                          .b-post__repost__content
+                            h3.b-post__title !{post.title}
+                            p.b-post__subtitle !{post.subtitle}
+                            p.i-user--inline.i-user--inline__mod #{__('By')}  
+                              a(href="/u/#{post.user.username}")
+                                span.text-red #{post.user.name}
+                              span(style="margin:5px") &middot;
+                              b #{post.love_count || 0} 
+                                span.text-red &#9825;
+                        .clear
+                      .clear
+                    else
+                      .b-post__repost--half
+                        .b-post__repost__content
+                          h3.b-post__title !{post.title}
+                          p.b-post__subtitle !{post.subtitle}
+                          p.i-user--inline.i-user--inline__mod #{__('By')}  
+                            a(href="/u/#{post.user.username}")
+                              span.text-red #{post.user.name}
+                            span(style="margin:5px") &middot;
+                            b #{post.love_count || 0} 
+                              span.text-red &#9825;
+                        .clear
+              else
+                a(href="/p/#{post.slug}")
+                  if post.is_cover == true
+                    .b-post__repost--half
+                      .is-half.img
+                        img(src="#{IMG_URL}/post/#{post._id}-medium-cover.jpg")
+                      .is-half
+                        .b-post__repost__content
+                          h3.b-post__title !{post.title}
+                          p.b-post__subtitle !{post.subtitle}
+                          p.i-user--inline.i-user--inline__mod #{__('By')}  
+                            a(href="/u/#{post.user.username}")
+                              span.text-red #{post.user.name}
+                            span(style="margin:5px") &middot;
+                            b #{post.love_count || 0} 
+                              span.text-red &#9825;
+                      .clear
+                    .clear
+                  else
+                    .b-post__repost--half
+                      .b-post__repost__content
+                        h3.b-post__title !{post.title}
+                        p.b-post__subtitle !{post.subtitle}
+                        p.i-user--inline.i-user--inline__mod #{__('By')}  
+                          a(href="/u/#{post.user.username}")
+                            span.text-red #{post.user.name}
+                          span(style="margin:5px") &middot;
+                          b #{post.love_count || 0} 
+                            span.text-red &#9825;
+                      .clear
+        br
+        br
+        .divider
+        br
+        br
+      .js-article
+        .b-graf--sc.is-center #{__('Lastest')}
+        .divider
+        br
+        br
+        .js-article-feed.is-empty(data-home="true")
+        .js-article-spinner.spinner
+          .bar1
+          .bar2
+          .bar3
+      .is-center
+        br
+        br
+        br
+        button.i-button.i-button--green.js-load-more-article-feed.is-hidden #{__('Load more')}
+        br
+        br
+        br
+  .i-wrap__right
+    .js-topic
+      .b-graf--sc.is-center #{__('Trending topics')}
+      .js-topic-feed.is-empty
+      .js-topic-spinner.spinner
+        .bar1
+        .bar2
+        .bar3
+    .divider
+    .js-trenda
+      .b-graf--sc.is-center #{__('Trending articles')}
+      br
+      .js-trenda-feed.is-empty
+      .js-trenda-spinner.spinner
+        .bar1
+        .bar2
+        .bar3
+    .divider
+    .is-center
+      br
+      a(href="/trending")
+        button.i-button.i-button--small.i-button--green #{__('Load more')}
+      br
+    include ./blocks/footer-menu.jade
