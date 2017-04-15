@@ -95,18 +95,18 @@ routes app, passport, io
 
 
 app.use (err, req, res, next) ->
-#   if err.code isnt 'EBADCSRFTOKEN'
-#   then next err
-#   else
-#     res.status 403
-#     res.send 'csrf'
+  if err.code isnt 'EBADCSRFTOKEN'
+  then next err
+  else
+    res.status 403
+    res.send 'csrf'
 
 
-# # catch 404 and forward to error handler
-# app.use (req, res, next) ->
-#   err = new Error 'Not Found'
-#   err.status = 404
-#   next err
+# catch 404 and forward to error handler
+app.use (req, res, next) ->
+  err = new Error 'Not Found'
+  err.status = 404
+  next err
 
 # error handlers
 
