@@ -6,21 +6,31 @@ lastScrollTop = 0
 prevDirection = 'down'
 
 window.addEventListener 'scroll', (e) ->
-  st = window.pageYOffset or document.documentElement.scrollTop
-  if st > lastScrollTop
-    direction = 'down'
-  else
-    direction = 'up'
-
-
-  if prevDirection isnt direction
-    if direction is 'down'
-      $header.classList.remove 'is-fixed'
-      if st > 100
-        $header.style.top = '-60px'
+  if !($ '.b-toolbar').length
+    st = window.pageYOffset or document.documentElement.scrollTop
+    if st > lastScrollTop
+      direction = 'down'
     else
-      $header.classList.add 'is-fixed'
-      $header.style.top = '0'
+      direction = 'up'
 
-  lastScrollTop = st
-  prevDirection = direction
+    if prevDirection isnt direction
+      if direction is 'down'
+        $header.classList.remove 'is-fixed'
+        if st > 100
+          $header.style.top = '-60px'
+      else
+        $header.classList.add 'is-fixed'
+        $header.style.top = '0'
+
+    lastScrollTop = st
+    prevDirection = direction
+
+  # no bg in header
+  if $('.b-welcome')
+    if (window.scrollY is 0)
+      $('.b-header').classList.add 'no-bg'
+    window.onscroll = (e) ->
+      if (window.scrollY is 0)
+        $('.b-header').classList.add 'no-bg'
+      else
+        $('.b-header').classList.remove 'no-bg'
