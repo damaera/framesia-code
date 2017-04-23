@@ -5,9 +5,15 @@
   color: $white;
   z-index: 9;
   position: relative;
-  background: url('/asset/frms/img/Planets.svg');
+  background: linear-gradient(to right top, #111030, #1B1A4C);
+  background-image: url('/asset/frms/img/Planets.svg');
   background-size: cover;
-  background-position: center;s
+  background-position: center;
+
+  &:after {
+    border-bottom: solid 100px transparent;
+    border-left: solid 100px #fff;
+  }
 
   * {
     background: none;

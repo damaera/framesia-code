@@ -24,7 +24,7 @@ body {
 
   // color: rgba($dark-grey, 0);
   color: rgba($dark-grey, 1);
-  background: $white-grey;
+  background: $white;
 }
 
 .wf-loading * {
@@ -47,16 +47,16 @@ body {
 }
 
 ::-webkit-input-placeholder {
-   color: rgba($very-light-grey, 0.7);
+   color: rgba($very-light-grey, 0.8);
 }
 :-moz-placeholder { /* Firefox 18- */
-   color: rgba($very-light-grey, 0.7);
+   color: rgba($very-light-grey, 0.8);
 }
 ::-moz-placeholder {  /* Firefox 19+ */
-   color: rgba($very-light-grey, 0.7);
+   color: rgba($very-light-grey, 0.8);
 }
 :-ms-input-placeholder {
-   color: rgba($very-light-grey, 0.7);
+   color: rgba($very-light-grey, 0.8);
 }
 
 iframe {
@@ -182,11 +182,13 @@ td{
   left: -240px;
   width: 240px;
   padding: 20px;
-  z-index: 500;
+  z-index: 1001;
+  
 
-
-  background: $dark-grey;
-  color: $white;
+  background: $white-grey;
+  color: $dark-grey;
+  box-shadow: 0 10px 10px rgba($very-light-grey, .5);
+  border-right: solid 1px $white-grey;
 
   height: 100vh;
   transition: top 0.15s, left 0.2s;
@@ -199,15 +201,15 @@ td{
 
     button {
       background: $red !important;
-      left: 240px !important;
+      left: 220px !important;
     }
   }
 
   &.is-with-header {
-    top: 60px;
+    // padding-top: 70px;
 
     button {
-      top: 60px !important;
+      top: 70px !important;
     }
   }
 
@@ -243,13 +245,15 @@ td{
 
   button {
     outline: none;
-    width: 40px;
-    height: 40px;
-    line-height: 40px;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
     font-size: 22px;
     position: fixed;
-    top: 0;
-    left: 0;
+    color: $white;
+    border-radius: 100px;
+    top: 10px;
+    left: 10px;
     cursor: pointer;
     background: $green;
     transition: top 0.15s, left 0.2s;

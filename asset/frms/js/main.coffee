@@ -2,10 +2,10 @@
   swal = require 'sweetalert'
   request = require 'superagent'
 
-  { $, $$ } = require './helper/selector.coffee'
+  { $, $$ } = require './helper/selector.coffee' 
 
-  # pace = require './vendor/pace.js'
-  # pace.start()
+  pace = require './vendor/pace.js'
+  pace.start()
 
   swal.setDefaults
     title: "Framesia"
@@ -73,6 +73,27 @@
   require './include/report.coffee'
   require './include/makeTableOfContent.coffee'
 
+  require './include/comment2.coffee'
+
+  $$loginButton = $$ '.js-login-button'
+  for $loginButton in $$loginButton
+    $loginButton.onclick = (e) ->
+      swal
+        title: "Sign in to Framesia"
+        text: """
+          <p>Welcome to Framesia</p>
+          <a href='/a/facebook'>
+            <button class='i-button i-button--green'>Sign in with Facebook</button>
+          </a>
+          <br>
+          <a href='/a/google'>
+            <button class='i-button i-button--red'>Sign in with Google</button>
+          </a>
+        """
+        html: true
+        showCancelButton: false
+        showConfirmButton: false
+
   $$imgCoverFull = $$ ('.is-cover-full img')
   for $imgCoverFull in $$imgCoverFull
     $container = $imgCoverFull.parentNode
@@ -110,4 +131,5 @@
   window.location.hash = ""
   document.body.scrollTop = scroll.top
   document.body.scrollLeft = scroll.left
+
 )()

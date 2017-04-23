@@ -6,6 +6,8 @@ setCaret = require '../helper/setCaret.coffee'
 { p, h2, h3, blockquote } = require '../helper/elementList.coffee'
 
 $editable = $ '.js-editable'
+
+shortid = require 'shortid'
 #
 # makeImageControl = ($tt, el) ->
 #   bodyRect = document.body.getBoundingClientRect()
@@ -112,6 +114,7 @@ $editable.addEventListener 'keydown', (e) ->
     # e.preventDefault()
     $thisEl.parentNode.classList.remove 'is-placeholder'
     $thisEl.parentNode.classList.remove 'b-graf--placeholder'
+    $thisEl.parentNode.setAttribute 'data-id', shortid.generate()
     $thisEl.parentNode.innerHTML = '<br>'
 
   else

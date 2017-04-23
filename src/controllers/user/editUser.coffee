@@ -6,7 +6,7 @@ User = require '../../models/user'
 # gm = require 'gm'
 
 # jimp = require 'jimp'
-{ upload } = require '../../cloudinary'
+{ upload, image } = require '../../cloudinary'
 
 base64Image = require '../../util/base64Image'
 
@@ -23,6 +23,7 @@ module.exports = (req, res, next) ->
       user.picture = undefined
       user.language_chosen = post.language_chosen
       user.country_chosen = post.country_chosen
+      user.update_at = Date.now()
 
       uNameRegex = new RegExp "^#{user.username}$", 'i'
 
@@ -38,7 +39,8 @@ module.exports = (req, res, next) ->
                   if err
                   then next new Error err.message
                   else res.redirect '/'
-            upload post.picture, callback, { public_id: "ava/#{user._id}" }
+            upload post.picture, callback, { public_id: "/ava/#{user._id}" }
+
             # buffer = (base64Image post.picture).data
             # if buffer
             #   jimp.read buffer, (err, img) ->

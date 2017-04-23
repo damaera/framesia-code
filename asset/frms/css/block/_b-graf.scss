@@ -1,5 +1,6 @@
 .b-graf {
   margin-bottom: 30px;
+  position: relative;
 
   font-size: 18px;
   line-height: 1.8;
@@ -17,7 +18,8 @@
   }
 
   a {
-    text-decoration: underline;
+    text-decoration: none;
+    color: $green;
     // background-image: linear-gradient(to bottom, rgba(0,0,0,0) 50%, $dark-grey 50%);
     // background-size: 2px 2.2px;
     // background-repeat: repeat-x;
@@ -41,6 +43,31 @@
 
   &--placeholder {
     color: $light-grey;
+  }
+
+  .comment {
+    background: none;
+    color: $light-grey;
+    opacity: 0;
+    // display: none;
+    text-align: center;
+    line-height: 40px;
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    transition: right .1s, opacity .2s;
+    cursor: pointer;
+    border-radius: 2px;
+    background-color: $white-grey;
+    border: solid 1px $very-light-grey;
+  }
+  &:hover .comment {
+    display: inline;
+    opacity: .9;
+    right: -30px;
   }
 
   // .is-small-caps {

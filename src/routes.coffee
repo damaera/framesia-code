@@ -39,6 +39,8 @@ module.exports = (app, passport, io) ->
   # a for auth
   app.get '/a/facebook', passport.authenticate 'facebook'
   app.get '/a/facebook/callback', (passport.authenticate 'facebook', { failureRedirect: '/', successRedirect: '/' })
+  app.get '/a/google', passport.authenticate 'google'
+  app.get '/a/google/callback', (passport.authenticate 'google', { failureRedirect: '/', successRedirect: '/' })
 
 
   socketViewArticle = require './controllers/socket/viewArticle'

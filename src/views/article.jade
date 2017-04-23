@@ -32,8 +32,7 @@ block content
         .b-article__menu
           if USER
             if user._id == USER._id
-              button.b-article__menu__btn.js-down-article
-                i.f-icon-down
+              button.b-article__menu__btn.js-down-article.f-icon-down
               .i-drop.i-drop--article.js-drop-article.is-hidden
                 if !article.is_response
                   .i-drop__item.js-add-to-collection(data-article-id="#{article._id}") #{__('Add to collection')}
@@ -231,14 +230,25 @@ block content
     include ./blocks/comment.jade
     .clear
 
-  script(src="#{ASSET_URL}js/iframeResizer.min.js")
-  script.
-    var resizeIframe = function(obj) {
-      iFrameResize({
-        resizedCallback: function (res){
-          console.log(res)
-          res.iframe.height = res.height
-        }
-      })    
-    }
+  //- script(src="#{ASSET_URL}js/iframeResizer.min.js")
+  //- script.
+  //-   var resizeIframe = function(obj) {
+  //-     iFrameResize({
+  //-       resizedCallback: function (res){
+  //-         console.log(res)
+  //-         res.iframe.height = res.height
+  //-       }
+  //-     })    
+  //-   }
   
+  script.
+    (function(w, d){
+      var id='embedly-platform', n = 'script';
+      if (!d.getElementById(id)){
+        w.embedly = w.embedly || function() {(w.embedly.q = w.embedly.q || []).push(arguments);};
+        var e = d.createElement(n); e.id = id; e.async=1;
+        e.src = ('https:' === document.location.protocol ? 'https' : 'http') + '://cdn.embedly.com/widgets/platform.js';
+        var s = d.getElementsByTagName(n)[0];
+        s.parentNode.insertBefore(e, s);
+      }
+    })(window, document);

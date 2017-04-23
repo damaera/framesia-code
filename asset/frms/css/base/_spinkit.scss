@@ -11,7 +11,7 @@
   height: 0;
   width: 40px;
 	border-right: 5px solid transparent;
-  border-top: 10px solid $red;
+  border-top: 10px solid $green;
   margin-bottom: 5px;
   animation: wut 2s infinite;
   border-top-color: transparent;
@@ -30,8 +30,8 @@
 
 @keyframes wut {
   0%, 100% { width: 0; border-top-color: transparent;  }
-  10% { width: 40px; border-top-color: $red; }
-  80% { width: 40px; border-top-color: $red; }
+  10% { width: 40px; border-top-color: $green; }
+  80% { width: 40px; border-top-color: $green; }
 }
 @keyframes wut2 {
   0%, 100% { width: 0; border-top-color: transparent;  }

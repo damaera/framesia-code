@@ -22,6 +22,8 @@ loadImage = require 'blueimp-load-image-npm'
 #     o.functionToLoop iterator, i
 #   iterator()
 
+shortid = require 'shortid'
+
 purifyHtml = (html) ->
   html
     .replace /</g, '&lt;'
@@ -42,8 +44,6 @@ purifyImage = (data) ->
 toDom = (json) ->
   tmpDom = document.createElement 'DIV'
   $title.value = json.title
-
-  console.log 1
 
   if json.isTitleCenter
   then $title.classList.add 'is-center'
@@ -163,7 +163,10 @@ toJson = () ->
       data = {}
       if $child.classList.contains 'is-center'
       then data.center = true
-      # else data.center = false
+
+      if $child.hasAttribute 'data-id'
+      then data.id = $child.getAttribute 'data-id'
+      else data.id = shortid.generate()
 
       if $child.classList.contains 'is-indent2'
       then data.indent = 2
@@ -252,10 +255,12 @@ toJson = () ->
           if $grandChild.nodeName is 'LI'
             data.list.push purifyHtml $grandChild.innerHTML
 
-      else if $child.nodeName is 'IFRAME'
-        data.type = 'IFRAME'
-        data.frameId = $child.getAttribute 'data-frame-id'
-        data.origin = $child.getAttribute 'data-origin'
+      else if $child.nodeName is 'DIV'
+        if $child.classList.contains 'embed'
+          data.type = 'EMBED'
+          data.url = $child.getAttribute 'data-href'
+        # data.type = 'IFRAME'
+        # data.origin = $child.getAttribute 'data-origin'
 
       domJson.data.push data
       domJson.img = imgs

@@ -1,0 +1,8 @@
+{
+  "hosting": {
+    "public": "asset",
+    "ignore": [
+      "**/node_modules/**"
+    ]
+  }
+}

@@ -15,7 +15,7 @@ $form-element-min-height: if(unitless($root-line-height), #{$root-line-height}em
 $media-element-vertical-align: middle !default;
 $monospace-font-family: monospace !default;
 $nav-list-style: none !default;
-$selection-background-color: $green !default;
+$selection-background-color: rgba($green, .5) !default;
 $selection-text-shadow: none !default;
 $small-font-size: 75% !default;
 $table-border-collapse: collapse !default;

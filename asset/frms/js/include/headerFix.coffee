@@ -5,8 +5,17 @@ $header = $ '.b-header'
 lastScrollTop = 0
 prevDirection = 'down'
 
+if ($ '.b-toolbar')
+  $header.classList.add 'is-fixed'
+
+if ($ '.b-welcome')
+  if (window.scrollY < 40)
+    $('.b-header').classList.add 'no-bg'
+  else
+    $('.b-header').classList.remove 'no-bg'
+
 window.addEventListener 'scroll', (e) ->
-  if !($ '.b-toolbar').length
+  if !($ '.b-toolbar')
     st = window.pageYOffset or document.documentElement.scrollTop
     if st > lastScrollTop
       direction = 'down'
@@ -25,12 +34,9 @@ window.addEventListener 'scroll', (e) ->
     lastScrollTop = st
     prevDirection = direction
 
-  # no bg in header
-  if $('.b-welcome')
-    if (window.scrollY is 0)
-      $('.b-header').classList.add 'no-bg'
-    window.onscroll = (e) ->
-      if (window.scrollY is 0)
+    # no bg in header
+    if $('.b-welcome') or $('.is-cover-full')
+      if (window.scrollY < 400)
         $('.b-header').classList.add 'no-bg'
       else
         $('.b-header').classList.remove 'no-bg'

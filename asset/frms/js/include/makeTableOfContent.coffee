@@ -7,9 +7,10 @@ $toc = $ '.js-toc'
 
 $header = $ '.b-header'
 
+if ($ '.b-article__menu')
+  ($ '.b-article__menu').classList.add 'is-with-header'
 if $jsArticle
   articleId = $jsArticle.getAttribute 'data-article-id'
-  console.log articleId
 
   if articleId
 
@@ -17,8 +18,12 @@ if $jsArticle
       isHeaderFixed = $header.classList.contains 'is-fixed'
       if isHeaderFixed
         $toc.classList.add 'is-with-header'
+        if ($ '.b-article__menu')
+          ($ '.b-article__menu').classList.add 'is-with-header'
       else
         $toc.classList.remove 'is-with-header'
+        if ($ '.b-article__menu')
+          ($ '.b-article__menu').classList.remove 'is-with-header'
 
     $$allHeading = $$ 'h2, h3'
 

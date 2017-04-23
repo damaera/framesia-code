@@ -21,8 +21,10 @@ repostArticle = require './repostArticle'
 repostArticleLink = require './repostArticleLink'
 reportArticle = require './reportArticle'
 
+Post = require '../../models/post'
 
 # GET new article
+
 router.get '/new-article', getNewArticle
 
 router.get '/new-collection', (req, res, next) ->

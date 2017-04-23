@@ -44,6 +44,8 @@ oldValue = JSON.stringify toJson()
 document.addEventListener 'keyup', (e) ->
   data1 = toJson()
 
+  # console.log data1
+
   # getDelta data1, e.key
 
   clearTimeout timer

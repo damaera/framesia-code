@@ -24,8 +24,8 @@ $article-padding: 20px;
 
   background: $white;
   overflow-y: hidden;
+  
   // box-shadow: 0 10px 10px $white-grey;
-
   &__meta {
     font-style: italic;
     font-family: $font-stack-serif;
@@ -78,17 +78,24 @@ $article-padding: 20px;
 
   &__btn-wrapper {
     position: absolute;
-    top: 30px;
+    top: 70px;
     text-align: center;
     width: 100%;
-    opacity: 0;
+    opacity: .4;
 
     button {
-      padding: 15px;
       margin: 15px;
       outline: none;
-      font-size: 2em;
+      width: 50px;
+      height: 50px;
+      text-align: center;
+      line-height: 50px;
+      font-size: 1.5em;
+      color: $white;
       cursor: pointer;
+      background: linear-gradient(to right, $dark-grey, lighten($dark-grey, 5));
+      border-radius: 100px;
+      box-shadow: 0 0 5px rgba($white-grey, .3);
     }
   }
 
@@ -136,7 +143,7 @@ $article-padding: 20px;
     // }
 
     &.is-cover-not-full {
-      padding: 30px 0;
+      padding: 80px 0 0 0;
       height: auto;
     }
     &.is-cover {
@@ -148,7 +155,7 @@ $article-padding: 20px;
       height: auto !important;
     }
     &:hover .b-article__btn-wrapper{
-      opacity: 1;
+      opacity: .9;
     }
   }
 
@@ -163,9 +170,9 @@ $article-padding: 20px;
   }
 
   &__menu {
-    position: absolute;
-    right: 0;
-    top: 40px;
+    position: fixed;
+    right: 10px;
+    top: 10px;
     z-index: 40;
 
     font-size: 1.4em;
@@ -173,12 +180,31 @@ $article-padding: 20px;
     font-style: normal;
 
     background: none;
+    transition: top .2s;
+
+    &.is-with-header {
+      top: 70px;
+    }
 
     &__btn {
+      position: absolute;
+      right: 0;
+      background: linear-gradient(to right, $dark-grey, lighten($dark-grey, 5));
+      width: 50px;
+      height: 50px;
+      line-height: 50px;
+      text-align: center;
       cursor: pointer;
       outline: none;
+      color: $white;
+      border-radius: 100px;
+      opacity: .6;
+      &:hover {
+        opacity: .9;
+      }
       i {
-        padding: 10px;
+        line-height: 50px;
+        // padding: 10px;
       }
     }
   }

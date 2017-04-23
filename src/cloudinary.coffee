@@ -7,3 +7,4 @@ cloudinary.config
 
 module.exports =
   upload: cloudinary.uploader.upload
+  image: cloudinary.image

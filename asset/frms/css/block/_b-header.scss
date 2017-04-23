@@ -14,11 +14,11 @@
 
   // background: $header-bg;
   // color: $white-grey;
-  // background: $dark-grey;
+  background: rgba($white, .9);
   // background: linear-gradient(rgba($dark-grey, .6), rgba($dark-grey, 0));
 
-  color: $white;
-  // color: $dark-grey;
+  // color: $white;
+  color: $light-grey;
   // color: $header-bg;
   // border-bottom: solid 1px $white-grey;
 
@@ -30,7 +30,11 @@
   //   min-width: 320px;
   // };
 
-  transition: top .2s;
+  transition: all .2s;
+
+  &.no-bg {
+    background: none;
+  }
 
   a {
     color: inherit;
@@ -61,6 +65,7 @@
     // margin-left: -320px;
     margin: 3px 0;
     // z-index: 0;
+    background: $white;
 
     width: 40px;
     @include screen(desktop) {
@@ -84,11 +89,13 @@
       margin: 0;
     }
   }
+
   &__nav {
     text-align: right;
     float: right;
     width: 180px;
   }
+
   &__login {
     position: relative;
     top: -7px;
@@ -114,7 +121,7 @@
 
     background: none;
     outline: none;
-    text-shadow: 0 0 10px rgba($dark-grey, .5);
+    // text-shadow: 0 0 10px rgba($dark-grey, .5);
 
     cursor: pointer;
 

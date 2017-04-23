@@ -25,13 +25,21 @@ UserSchema = new Schema
     match: /^[a-zA-Z0-9-]{3,20}$/
 
   picture: String
+
   facebook_id:
     type: String
     unique: true
+  google_id:
+    type: String
+  email:
+    type: String
+
   joined_at:
     type: Date
     default: Date.now()
-  updated_at: Date
+  updated_at:
+    type: Date
+    default: Date.now()
   is_new: Boolean
   description:
     trim: true

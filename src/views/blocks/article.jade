@@ -1,43 +1,65 @@
+- var isEdit = /^\/p\/([a-z0-9A-Z]+\/edit)$/.test(PATH)
+mixin comment(id)
+  if !isEdit
+    //- span(
+    //-   data-id="#{id}"
+    //-   class= "comment #{id} f-icon-comment js-comment2"
+    //- )
+
 each item in article.content
   case item.type
     when 'P'
       p.b-graf(
+        data-id="#{item.id}"
         class= item.center ? "is-center" : ""
         class= item.indent ? "is-indent#{item.indent}" : ""
       )
         if item.isDropCap
           span.b-graf.b-graf--drop-cap.is-drop-cap #{item.dropCapChar}
         | !{item.content}
+        +comment(item.id)
     when 'H2'
       h2.b-graf.b-graf--h2(
+        data-id="#{item.id}"
         class= item.center ? "is-center" : ""
         class= item.indent ? "is-indent#{item.indent}" : ""
       ) !{item.content}
+        +comment(item.id)
     when 'H3'
       h3.b-graf.b-graf--h3(
+        data-id="#{item.id}"
         class= item.center ? "is-center" : ""
         class= item.indent ? "is-indent#{item.indent}" : ""
       ) !{item.content}
+        +comment(item.id)
     when 'QUOTE1'
       blockquote.b-graf.b-graf--quote1(
+        data-id="#{item.id}"
         class= item.center ? "is-center" : ""
         class= item.indent ? "is-indent#{item.indent}" : ""
       ) !{item.content}
+        +comment(item.id)
     when 'QUOTE2'
       blockquote.b-graf.b-graf--quote2.is-second(
+        data-id="#{item.id}"
         class= item.center ? "is-center" : ""
         class= item.indent ? "is-indent#{item.indent}" : ""
       ) !{item.content}
+        +comment(item.id)
     when 'PRE'
-      pre.b-graf.b-graf--code(class= item.center ? "is-center" : "") !{item.content}
+      pre.b-graf.b-graf--code(class= item.center ? "is-center" : "")
+        !{item.content}
+        +comment(item.id)
     when 'UL'
       ul.b-graf.b-graf--ulist
         each list in item.list
           li.b-graf--li !{list}
+        +comment(item.id)
     when 'OL'
       ol.b-graf.b-graf--olist
         each list in item.list
           li.b-graf--li !{list}
+        +comment(item.id)
     when 'FIGURE'
       figure.b-figure(class="b-figure--#{item.figureAlign}")
         if item.img.link
@@ -58,110 +80,118 @@ each item in article.content
             alt= item.caption === '' ? article.title : item.caption
           )
         figcaption.b-figure__figcaption !{item.caption}
-    when 'IFRAME'
-      if item.origin === 'youtube'
-        iframe.b-graf.b-graf--frame--yt(
-          contentEditable='false'
-          width='640'
-          height='360'
-          src="https://www.youtube.com/embed/#{item.frameId}"
-          frameborder='0'
-          data-frame-id="#{item.frameId}"
-          data-origin='youtube'
+    when 'EMBED'
+      div.embed(data-href="#{item.url}")
+        a.b-graf--embed.embedly-card(
+          href="#{item.url}"
+          data-card-controls=0
+          data-card-chrome=0
+          data-card-width="100%"
         )
-      else if item.origin === 'soundcloud'
-        iframe.b-graf.b-graf--frame--sc(
-          contentEditable='false'
-          width='100%'
-          height='166'
-          scrolling='no'
-          frameborder='no'
-          data-frame-id="#{item.frameId}"
-          data-origin='soundcloud' src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/#{item.frameId}&amp;color=F2635E&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false"
-        )
-      else if item.origin === 'twitter'
-        iframe.b-graf.b-graf--frame--twit(
-          contentEditable='false'
-          width='100%'
-          scrolling='no'
-          frameborder='no'
-          data-frame-id="#{item.frameId}"
-          data-origin='twitter' src="/e/twitter?id=#{item.frameId}"
-          onload='resizeIframe(this)'
-        )
-      else if item.origin === 'facebook-post'
-        - var frameIdSplit = item.frameId.split('/')
-        iframe.b-graf.b-graf--frame--fb-post(
-          contentEditable='false'
-          width='100%'
-          scrolling='no'
-          frameborder=0
-          border=0
-          data-frame-id="#{item.frameId}"
-          data-origin='facebook-post' src="/e/fb-post?user=#{frameIdSplit[0]}+id=#{frameIdSplit[1]}"
-          onload='resizeIframe(this)'
-        )
-      else if item.origin === 'facebook-video'
-        - var frameIdSplit = item.frameId.split('/')
-        iframe.b-graf.b-graf--frame--fb-video(
-          contentEditable='false'
-          width='640'
-          height='360'
-          scrolling='no'
-          frameborder=0
-          border=0
-          data-frame-id="#{item.frameId}"
-          data-origin='facebook-video' src="/e/fb-video?user=#{frameIdSplit[0]}+id=#{frameIdSplit[1]}"
-        )
-      else if item.origin === 'google-map'
-        iframe.b-graf.b-graf--frame--gmap(
-          contentEditable='false'
-          scrolling='no'
-          width='100%'
-          height='450'
-          border=0
-          data-frame-id="#{item.frameId}"
-          data-origin='google-map' src="https://www.google.com/maps/embed?#{item.frameId}"
-          allowfullscreen
-        )
-      else if item.origin === 'google-sheet'
-        iframe.b-graf.b-graf--frame--gsheet(
-          contentEditable='false'
-          width='100%'
-          height='450'
-          border=0
-          data-frame-id="#{item.frameId}"
-          data-origin='google-sheet' src="https://docs.google.com/spreadsheets/d/#{item.frameId}/pubhtml?widget=true&amp;headers=false"
-          frameborder=0 marginheight=0 marginwidth=0
-        )
-      else if item.origin === 'google-slide'
-        iframe.b-graf.b-graf--frame--gslide(
-          contentEditable='false'
-          scrolling='no'
-          width='100%'
-          height='389'
-          data-frame-id="#{item.frameId}"
-          data-origin='google-slide' src="https://docs.google.com/presentation/d/#{item.frameId}/embed?start=false&loop=false"
-          allowfullscreen='true' mozallowfullscreen='true' webkitallowfullscreen='true' frameborder=0 marginheight=0 marginwidth=0
-        )
-      else if item.origin === 'google-doc'
-        iframe.b-graf.b-graf--frame--gdoc(
-          contentEditable='false'
-          width='100%'
-          height='450'
-          data-frame-id="#{item.frameId}"
-          data-origin='google-doc' src="https://docs.google.com/document/d/#{item.frameId}/pub?embedded=true"
-          frameborder=0 marginheight=0 marginwidth=0
-        )
-      else if item.origin === 'google-form'
-        iframe.b-graf.b-graf--frame--gform(
-          contentEditable='false'
-          width='100%'
-          height='450'
-          data-frame-id="#{item.frameId}"
-          data-origin='google-doc' src="https://docs.google.com/document/d/#{item.frameId}/viewform?embedded=true"
-          frameborder=0 marginheight=0 marginwidth=0
-        )
+    //- when 'IFRAME'
+    //-   if item.origin === 'youtube'
+    //-     iframe.b-graf.b-graf--frame--yt(
+    //-       contentEditable='false'
+    //-       width='640'
+    //-       height='360'
+    //-       src="https://www.youtube.com/embed/#{item.frameId}"
+    //-       frameborder='0'
+    //-       data-frame-id="#{item.frameId}"
+    //-       data-origin='youtube'
+    //-     )
+    //-   else if item.origin === 'soundcloud'
+    //-     iframe.b-graf.b-graf--frame--sc(
+    //-       contentEditable='false'
+    //-       width='100%'
+    //-       height='166'
+    //-       scrolling='no'
+    //-       frameborder='no'
+    //-       data-frame-id="#{item.frameId}"
+    //-       data-origin='soundcloud' src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/#{item.frameId}&amp;color=F2635E&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false"
+    //-     )
+    //-   else if item.origin === 'twitter'
+    //-     iframe.b-graf.b-graf--frame--twit(
+    //-       contentEditable='false'
+    //-       width='100%'
+    //-       scrolling='no'
+    //-       frameborder='no'
+    //-       data-frame-id="#{item.frameId}"
+    //-       data-origin='twitter' src="/e/twitter?id=#{item.frameId}"
+    //-       onload='resizeIframe(this)'
+    //-     )
+    //-   else if item.origin === 'facebook-post'
+    //-     - var frameIdSplit = item.frameId.split('/')
+    //-     iframe.b-graf.b-graf--frame--fb-post(
+    //-       contentEditable='false'
+    //-       width='100%'
+    //-       scrolling='no'
+    //-       frameborder=0
+    //-       border=0
+    //-       data-frame-id="#{item.frameId}"
+    //-       data-origin='facebook-post' src="/e/fb-post?user=#{frameIdSplit[0]}+id=#{frameIdSplit[1]}"
+    //-       onload='resizeIframe(this)'
+    //-     )
+    //-   else if item.origin === 'facebook-video'
+    //-     - var frameIdSplit = item.frameId.split('/')
+    //-     iframe.b-graf.b-graf--frame--fb-video(
+    //-       contentEditable='false'
+    //-       width='640'
+    //-       height='360'
+    //-       scrolling='no'
+    //-       frameborder=0
+    //-       border=0
+    //-       data-frame-id="#{item.frameId}"
+    //-       data-origin='facebook-video' src="/e/fb-video?user=#{frameIdSplit[0]}+id=#{frameIdSplit[1]}"
+    //-     )
+    //-   else if item.origin === 'google-map'
+    //-     iframe.b-graf.b-graf--frame--gmap(
+    //-       contentEditable='false'
+    //-       scrolling='no'
+    //-       width='100%'
+    //-       height='450'
+    //-       border=0
+    //-       data-frame-id="#{item.frameId}"
+    //-       data-origin='google-map' src="https://www.google.com/maps/embed?#{item.frameId}"
+    //-       allowfullscreen
+    //-     )
+    //-   else if item.origin === 'google-sheet'
+    //-     iframe.b-graf.b-graf--frame--gsheet(
+    //-       contentEditable='false'
+    //-       width='100%'
+    //-       height='450'
+    //-       border=0
+    //-       data-frame-id="#{item.frameId}"
+    //-       data-origin='google-sheet' src="https://docs.google.com/spreadsheets/d/#{item.frameId}/pubhtml?widget=true&amp;headers=false"
+    //-       frameborder=0 marginheight=0 marginwidth=0
+    //-     )
+    //-   else if item.origin === 'google-slide'
+    //-     iframe.b-graf.b-graf--frame--gslide(
+    //-       contentEditable='false'
+    //-       scrolling='no'
+    //-       width='100%'
+    //-       height='389'
+    //-       data-frame-id="#{item.frameId}"
+    //-       data-origin='google-slide' src="https://docs.google.com/presentation/d/#{item.frameId}/embed?start=false&loop=false"
+    //-       allowfullscreen='true' mozallowfullscreen='true' webkitallowfullscreen='true' frameborder=0 marginheight=0 marginwidth=0
+    //-     )
+    //-   else if item.origin === 'google-doc'
+    //-     iframe.b-graf.b-graf--frame--gdoc(
+    //-       contentEditable='false'
+    //-       width='100%'
+    //-       height='450'
+    //-       data-frame-id="#{item.frameId}"
+    //-       data-origin='google-doc' src="https://docs.google.com/document/d/#{item.frameId}/pub?embedded=true"
+    //-       frameborder=0 marginheight=0 marginwidth=0
+    //-     )
+    //-   else if item.origin === 'google-form'
+    //-     iframe.b-graf.b-graf--frame--gform(
+    //-       contentEditable='false'
+    //-       width='100%'
+    //-       height='450'
+    //-       data-frame-id="#{item.frameId}"
+    //-       data-origin='google-doc' src="https://docs.google.com/document/d/#{item.frameId}/viewform?embedded=true"
+    //-       frameborder=0 marginheight=0 marginwidth=0
+    //-     )
     when 'HR'
       hr.b-graf.b-graf--divider(
         contentEditable='false'

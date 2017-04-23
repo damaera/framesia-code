@@ -15,6 +15,8 @@ app = express()
 http = (require 'http').Server app
 io = (require 'socket.io')(http)
 
+{ dbUrl } = require './config'
+
 # createServer = require "auto-sni"
 
 mongoose = require 'mongoose'
@@ -23,6 +25,10 @@ passport = require 'passport'
 FacebookStrategy = (require 'passport-facebook').Strategy
 passportFacebook = require './middleware/passportFacebook'
 passportFacebook passport, FacebookStrategy, app
+
+GoogleStrategy = (require 'passport-google-oauth').OAuth2Strategy
+passportGoogle = require './middleware/passportGoogle'
+passportGoogle passport, GoogleStrategy, app
 
 i18n.configure
   locales: ['en', 'id', 'ja']
@@ -41,7 +47,7 @@ app.use favicon "#{__dirname}/favicon.ico"
 app.use logger 'dev'
 
 # app.use '/fr-img', express.static __dirname + '../fr-img/'
-# app.use '/asset/frms', express.static __dirname + '../asset/frms'
+app.use '/asset/frms', express.static __dirname + '../asset/frms'
 
 csrfProtection = csrf { cookie: true }
 
@@ -54,7 +60,7 @@ app.use session {
   resave: false
   secret: 'donquixote doflamingo'
   store: new MongoStore {
-    url: 'mongodb://damn:123qwe@ds149030.mlab.com:49030/frms/frms-sess'
+    url: "#{dbUrl}/frms-sess"
   }
 }
 
@@ -73,14 +79,14 @@ connect = () ->
     server:
       socketOptions:
         keepAlive: 1
-  mongoose.connect 'mongodb://damn:123qwe@ds149030.mlab.com:49030/frms', options
+  mongoose.connect "#{dbUrl}", options
 connect()
 
 console.log __dirname
 
 mongoose.connection.on 'error', console.log
 mongoose.connection.on 'disconnected', connect
-#
+
 # io.on 'connection', (socket) ->
 #   socket.join
 #   (io.to socket.id).emit 'notif', socket.id

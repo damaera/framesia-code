@@ -78,4 +78,9 @@
     background: $facebook;
     border: none;
   }
+  &--red {
+    color: $white;
+    background: linear-gradient(to bottom right, $red1, $red);
+    border: none;
+  }
 }

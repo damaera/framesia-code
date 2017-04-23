@@ -4,7 +4,7 @@ request =  require 'superagent'
 swal = require 'sweetalert'
 horsey = require 'horsey'
 
-imgUrl = "http://localhost:80/fr-img/"
+imgUrl = "https://res.cloudinary.com/frms/image/upload/"
 
 $addCollection = $ '.js-add-to-collection'
 
