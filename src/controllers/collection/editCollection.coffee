@@ -49,6 +49,8 @@ module.exports = (req, res, next) ->
         delete post.picture
         col.tags = post.tags.split ','
 
+        col.edited_at = new Date()
+
         colNameRegex = new RegExp "^#{col.username}$", 'i'
 
         Collection.findOne { username: colNameRegex, _id: { $ne: col._id }}

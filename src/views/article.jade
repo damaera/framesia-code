@@ -56,11 +56,11 @@ block content
       if article.is_cover
         if article.is_cover_full
           .b-article__cover.is-cover-full
-            img.b-article__cover__img(src="#{IMG_URL}post/#{article._id}-cover.jpg")
+            img.b-article__cover__img(src="#{IMG_URL}v#{Math.floor(new Date(article.edited_at) / 1000) || 1)}/post/#{article._id}-cover.jpg")
             .b-article__shadow.js-cover-shadow
         else
           .b-article__cover.is-cover-not-full
-            img.b-article__cover__img(src="#{IMG_URL}post/#{article._id}-cover.jpg")
+            img.b-article__cover__img(src="#{IMG_URL}v#{Math.floor(new Date(article.edited_at) / 1000) || 1}/post/#{article._id}-cover.jpg")
       else
         .b-article__cover
 
@@ -176,7 +176,7 @@ block content
     .i-wrap--640
       .i-user--footer
         span.i-user--footer__ava
-          img(src="#{IMG_URL}ava/#{user._id}.jpg")
+          img(src="#{IMG_URL}v#{Math.floor(new Date(user.updated_at) / 1000) || 1}/ava/#{user._id}.jpg")
         div
           p.i-user--footer__name: a(href="/u/#{user.username}") #{user.name}
           p.i-user--footer__desc #{user.description}
@@ -189,7 +189,7 @@ block content
           each collection in article.collections
             .footer-collection
               span.i-user__ava--sq
-                img(src="#{IMG_URL}c_fill,w_50/col/#{collection._id}.jpg")
+                img(src="#{IMG_URL}c_fill,w_50/v#{Math.floor(new Date(collection.edited_at) / 1000) || 1}/col/#{collection._id}.jpg")
               span.i-user--footer__name.text-green: a(href="/c/#{collection.username}") #{collection.name}
               p.i-user--footer__username: a(href="/c/#{collection.username}") #{collection.username}
           .clear

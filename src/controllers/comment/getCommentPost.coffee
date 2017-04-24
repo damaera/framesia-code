@@ -45,7 +45,7 @@ module.exports = (req, res, next) ->
       .sort '-_id'
       .limit 2
       .lean()
-      .populate 'user', '_id username name'
+      .populate 'user', '_id username name updated_at'
       .exec (err, comments) ->
         if req.user
           userId = req.user._id

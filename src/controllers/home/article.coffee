@@ -5,10 +5,10 @@ Comment = require '../../models/comment'
 module.exports = (req, res, next) ->
   populateQuery =
     path: 'response'
-    select: '_id title subtitle slug user love_count comment_count repost_count'
+    select: '_id title subtitle slug user love_count comment_count repost_count edited_at'
     populate:
       path: 'user'
-      select: '_id name username'
+      select: '_id name username updated_at'
       model: 'User'
   { username, slug } = req.params
 
@@ -36,8 +36,8 @@ module.exports = (req, res, next) ->
             Comment.find {
               post: post._id
             }
-            .populate 'user', '_id name username'
-            .populate 'replies.user', '_id name username'
+            .populate 'user', '_id name username updated_at'
+            .populate 'replies.user', '_id name username updated_at'
             .lean()
             .exec (err, comments) ->
               res.render 'article', { user: user, article: post, comments: comments }

@@ -11,17 +11,17 @@ module.exports = (req, res, next) ->
 
   populateQuery1 =
     path: 'featured_articles'
-    select: '_id title slug subtitle user is_cover'
+    select: '_id title slug subtitle user is_cover edited_at'
     populate:
       path: 'user'
-      select: '_id name username'
+      select: '_id name username updated_at'
       model: 'User'
   populateQuery2 =
     path: 'main_featured_article'
-    select: '_id title slug subtitle user is_cover'
+    select: '_id title slug subtitle user is_cover edited_at'
     populate:
       path: 'user'
-      select: '_id name username'
+      select: '_id name username updated_at'
       model: 'User'
 
   Collection.findOne { username: colNameRegex }

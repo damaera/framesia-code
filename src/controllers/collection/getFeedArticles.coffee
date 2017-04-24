@@ -24,8 +24,8 @@ module.exports = (req, res, next) ->
         dataFind.published_at = { $lt: last }
 
       Post.find dataFind
-      .select '_id title subtitle slug user love_count published_at reading_time tags is_cover is_link source hostname url'
-      .populate 'user', '_id name username'
+      .select '_id title subtitle slug user love_count published_at reading_time tags is_cover is_link source hostname url edited_at'
+      .populate 'user', '_id name username updated_at'
       .sort '-published_at'
       .limit 7
       .lean()

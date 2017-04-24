@@ -13,10 +13,10 @@ module.exports = (req, res, next) ->
 
     populateQuery =
       path: 'articles_request'
-      select: '_id title subtitle slug user published_at is_cover love_count reading_time is_repost repost is_response response tags collections'
+      select: '_id title subtitle slug user published_at is_cover love_count reading_time is_repost repost is_response response tags collections edited_at'
       populate:
         path: 'user'
-        select: '_id name username'
+        select: '_id name username updated_at'
         model: 'User'
 
     Collection.findOne {

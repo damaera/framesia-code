@@ -12,7 +12,7 @@ module.exports = (req, res, next) ->
       ]
 
     Collection.find findData
-    .select 'name username'
+    .select 'name username edited_at'
     .lean()
     .exec (err, collections) ->
       res.json collections

@@ -82,7 +82,6 @@ connect = () ->
   mongoose.connect "#{dbUrl}", options
 connect()
 
-console.log __dirname
 
 mongoose.connection.on 'error', console.log
 mongoose.connection.on 'disconnected', connect

@@ -44,7 +44,7 @@ include ../util/time.jade
             
             .i-user--inline
               span.i-user--inline__ava
-                img(src="#{IMG_URL}ava/#{comment.user._id}-50.jpg")
+                img(src="#{IMG_URL}c_fill,w_50/v#{Math.floor(new Date(comment.user.updated_at) / 1000) || 1}/ava/#{comment.user._id}.jpg")
               span.i-user--inline__name
                 a(href="/#{comment.user.username}") #{comment.user.name}
               span.b-comment__date.i-user--inline__mod

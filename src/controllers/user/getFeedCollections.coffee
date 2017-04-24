@@ -26,7 +26,7 @@ module.exports = (req, res, next) ->
               { member: user._id }
             ]
           }
-          .select 'name username description'
+          .select 'name username description updated_at'
           .lean()
           .exec (err, cols) ->
             res.json { collections: cols }

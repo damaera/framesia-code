@@ -65,7 +65,7 @@ each item in article.content
         if item.img.link
           a(href="#{item.img.href}")
             img.b-figure__img.is-img.is-saved(
-              src="#{IMG_URL}post/#{article._id}-#{item.img.id}.jpg"
+              src="#{IMG_URL}v#{Math.floor(new Date(article.edited_at) / 1000) || 1}/post/#{article._id}-#{item.img.id}.jpg"
               width="#{item.img.width}"
               height="#{item.img.height}"
               image-id="#{item.img.id}"
@@ -73,7 +73,7 @@ each item in article.content
             )
         else
           img.b-figure__img.is-img.is-saved(
-            src="#{IMG_URL}post/#{article._id}-#{item.img.id}.jpg"
+            src="#{IMG_URL}v#{Math.floor(new Date(article.edited_at) / 1000) || 1}/post/#{article._id}-#{item.img.id}.jpg"
             width="#{item.img.width}"
             height="#{item.img.height}" 
             image-id="#{item.img.id}"

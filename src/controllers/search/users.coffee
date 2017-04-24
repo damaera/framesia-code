@@ -17,7 +17,7 @@ module.exports = (req, res, next) ->
     score: { $meta: 'textScore' }
 
   User.find findData, findScore
-  .select 'name username description'
+  .select 'name username description updated_at'
   .skip last
   .limit 7
   .sort { score: { $meta: 'textScore' }}

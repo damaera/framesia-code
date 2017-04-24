@@ -14830,7 +14830,7 @@ module.exports = function template(locals) {
 var buf = [];
 var jade_mixins = {};
 var jade_interp;
-;var locals_for_with = (locals || {});(function (IMG_URL, collections, undefined) {
+;var locals_for_with = (locals || {});(function (Date, IMG_URL, Math, collections, undefined) {
 if ( collections)
 {
 // iterate collections
@@ -14841,7 +14841,7 @@ if ( collections)
     for (var $index = 0, $$l = $$obj.length; $index < $$l; $index++) {
       var collection = $$obj[$index];
 
-buf.push("<br/><span height=\"100%\" class=\"i-user__ava--sq\"><img" + (jade.attr("src", "" + (IMG_URL) + "c_fill,w_50/col/" + (collection._id) + ".jpg", true, false)) + "/></span><span class=\"i-user--footer__name text-green\"><a" + (jade.attr("href", "/c/" + (collection.username) + "", true, false)) + ">" + (jade.escape((jade_interp = collection.name) == null ? '' : jade_interp)) + "</a></span><p class=\"i-user--footer__desc\">" + (jade.escape((jade_interp = collection.description) == null ? '' : jade_interp)) + "</p><p class=\"i-user--footer__username\"><a" + (jade.attr("href", "/c/" + (collection.username) + "", true, false)) + ">/" + (jade.escape((jade_interp = collection.username) == null ? '' : jade_interp)) + "</a></p><div class=\"divider\"></div><br/>");
+buf.push("<br/><span height=\"100%\" class=\"i-user__ava--sq\"><img" + (jade.attr("src", "" + (IMG_URL) + "c_fill,w_50/v" + (Math.floor(new Date(collection.edited_at) / 1000) || 1) + "/col/" + (collection._id) + ".jpg", true, false)) + "/></span><span class=\"i-user--footer__name text-green\"><a" + (jade.attr("href", "/c/" + (collection.username) + "", true, false)) + ">" + (jade.escape((jade_interp = collection.name) == null ? '' : jade_interp)) + "</a></span><p class=\"i-user--footer__desc\">" + (jade.escape((jade_interp = collection.description) == null ? '' : jade_interp)) + "</p><p class=\"i-user--footer__username\"><a" + (jade.attr("href", "/c/" + (collection.username) + "", true, false)) + ">/" + (jade.escape((jade_interp = collection.username) == null ? '' : jade_interp)) + "</a></p><div class=\"divider\"></div><br/>");
     }
 
   } else {
@@ -14849,13 +14849,13 @@ buf.push("<br/><span height=\"100%\" class=\"i-user__ava--sq\"><img" + (jade.att
     for (var $index in $$obj) {
       $$l++;      var collection = $$obj[$index];
 
-buf.push("<br/><span height=\"100%\" class=\"i-user__ava--sq\"><img" + (jade.attr("src", "" + (IMG_URL) + "c_fill,w_50/col/" + (collection._id) + ".jpg", true, false)) + "/></span><span class=\"i-user--footer__name text-green\"><a" + (jade.attr("href", "/c/" + (collection.username) + "", true, false)) + ">" + (jade.escape((jade_interp = collection.name) == null ? '' : jade_interp)) + "</a></span><p class=\"i-user--footer__desc\">" + (jade.escape((jade_interp = collection.description) == null ? '' : jade_interp)) + "</p><p class=\"i-user--footer__username\"><a" + (jade.attr("href", "/c/" + (collection.username) + "", true, false)) + ">/" + (jade.escape((jade_interp = collection.username) == null ? '' : jade_interp)) + "</a></p><div class=\"divider\"></div><br/>");
+buf.push("<br/><span height=\"100%\" class=\"i-user__ava--sq\"><img" + (jade.attr("src", "" + (IMG_URL) + "c_fill,w_50/v" + (Math.floor(new Date(collection.edited_at) / 1000) || 1) + "/col/" + (collection._id) + ".jpg", true, false)) + "/></span><span class=\"i-user--footer__name text-green\"><a" + (jade.attr("href", "/c/" + (collection.username) + "", true, false)) + ">" + (jade.escape((jade_interp = collection.name) == null ? '' : jade_interp)) + "</a></span><p class=\"i-user--footer__desc\">" + (jade.escape((jade_interp = collection.description) == null ? '' : jade_interp)) + "</p><p class=\"i-user--footer__username\"><a" + (jade.attr("href", "/c/" + (collection.username) + "", true, false)) + ">/" + (jade.escape((jade_interp = collection.username) == null ? '' : jade_interp)) + "</a></p><div class=\"divider\"></div><br/>");
     }
 
   }
 }).call(this);
 
-}}.call(this,"IMG_URL" in locals_for_with?locals_for_with.IMG_URL:typeof IMG_URL!=="undefined"?IMG_URL:undefined,"collections" in locals_for_with?locals_for_with.collections:typeof collections!=="undefined"?collections:undefined,"undefined" in locals_for_with?locals_for_with.undefined:typeof undefined!=="undefined"?undefined:undefined));;return buf.join("");
+}}.call(this,"Date" in locals_for_with?locals_for_with.Date:typeof Date!=="undefined"?Date:undefined,"IMG_URL" in locals_for_with?locals_for_with.IMG_URL:typeof IMG_URL!=="undefined"?IMG_URL:undefined,"Math" in locals_for_with?locals_for_with.Math:typeof Math!=="undefined"?Math:undefined,"collections" in locals_for_with?locals_for_with.collections:typeof collections!=="undefined"?collections:undefined,"undefined" in locals_for_with?locals_for_with.undefined:typeof undefined!=="undefined"?undefined:undefined));;return buf.join("");
 };
 },{"jade/runtime":146}],149:[function(require,module,exports){
 var jade = require("jade/runtime");
@@ -14905,7 +14905,7 @@ buf.push("<span>" + (jade.escape((jade_interp = __('Just now')) == null ? '' : j
     for (var $index = 0, $$l = $$obj.length; $index < $$l; $index++) {
       var comment = $$obj[$index];
 
-buf.push("<div" + (jade.attr("id", "" + (comment._id) + "", true, false)) + " class=\"b-comment__item\"><div class=\"i-user--inline\"><span class=\"i-user--inline__ava\"><img" + (jade.attr("src", "" + (IMG_URL) + "c_fill,w_50/ava/" + (comment.user._id) + ".jpg", true, false)) + "/></span><span class=\"i-user--inline__name\"><a" + (jade.attr("href", "/" + (comment.user.username) + "", true, false)) + ">" + (jade.escape((jade_interp = comment.user.name) == null ? '' : jade_interp)) + "</a></span><span class=\"b-comment__date i-user--inline__mod\">");
+buf.push("<div" + (jade.attr("id", "" + (comment._id) + "", true, false)) + " class=\"b-comment__item\"><div class=\"i-user--inline\"><span class=\"i-user--inline__ava\"><img" + (jade.attr("src", "" + (IMG_URL) + "c_fill,w_50/v" + (Math.floor(new Date(comment.user.updated_at) / 1000) || 1) + "/ava/" + (comment.user._id) + ".jpg", true, false)) + "/></span><span class=\"i-user--inline__name\"><a" + (jade.attr("href", "/" + (comment.user.username) + "", true, false)) + ">" + (jade.escape((jade_interp = comment.user.name) == null ? '' : jade_interp)) + "</a></span><span class=\"b-comment__date i-user--inline__mod\">");
 jade_mixins["time"](comment.created_at);
 buf.push("</span></div>");
 if ( !comment.is_published )
@@ -14933,7 +14933,7 @@ buf.push("</div></div></div>");
     for (var $index in $$obj) {
       $$l++;      var comment = $$obj[$index];
 
-buf.push("<div" + (jade.attr("id", "" + (comment._id) + "", true, false)) + " class=\"b-comment__item\"><div class=\"i-user--inline\"><span class=\"i-user--inline__ava\"><img" + (jade.attr("src", "" + (IMG_URL) + "c_fill,w_50/ava/" + (comment.user._id) + ".jpg", true, false)) + "/></span><span class=\"i-user--inline__name\"><a" + (jade.attr("href", "/" + (comment.user.username) + "", true, false)) + ">" + (jade.escape((jade_interp = comment.user.name) == null ? '' : jade_interp)) + "</a></span><span class=\"b-comment__date i-user--inline__mod\">");
+buf.push("<div" + (jade.attr("id", "" + (comment._id) + "", true, false)) + " class=\"b-comment__item\"><div class=\"i-user--inline\"><span class=\"i-user--inline__ava\"><img" + (jade.attr("src", "" + (IMG_URL) + "c_fill,w_50/v" + (Math.floor(new Date(comment.user.updated_at) / 1000) || 1) + "/ava/" + (comment.user._id) + ".jpg", true, false)) + "/></span><span class=\"i-user--inline__name\"><a" + (jade.attr("href", "/" + (comment.user.username) + "", true, false)) + ">" + (jade.escape((jade_interp = comment.user.name) == null ? '' : jade_interp)) + "</a></span><span class=\"b-comment__date i-user--inline__mod\">");
 jade_mixins["time"](comment.created_at);
 buf.push("</span></div>");
 if ( !comment.is_published )
@@ -15052,7 +15052,7 @@ text = __('responded your article')
 data = notif.object.post_id.title
   break;
 }
-buf.push("<div" + (jade.attr("data-notif-id", "" + (notif._id) + "", true, false)) + (jade.cls(['b-notif__item',"" + ( notif.is_read == true ? 'is-read' : '' ) + ""], [null,true])) + "><a" + (jade.attr("href", "" + (url) + "", true, false)) + "><span class=\"i-user--inline__ava\"><img" + (jade.attr("src", "" + (IMG_URL) + "c_fill,w_50/ava/" + (notif.from._id) + ".jpg", true, false)) + "/></span><span class=\"b-notif__user\">" + (jade.escape((jade_interp = notif.from.name) == null ? '' : jade_interp)) + " </span><span> " + (jade.escape((jade_interp = text) == null ? '' : jade_interp)) + "</span><span> &middot;  </span>");
+buf.push("<div" + (jade.attr("data-notif-id", "" + (notif._id) + "", true, false)) + (jade.cls(['b-notif__item',"" + ( notif.is_read == true ? 'is-read' : '' ) + ""], [null,true])) + "><a" + (jade.attr("href", "" + (url) + "", true, false)) + "><span class=\"i-user--inline__ava\"><img" + (jade.attr("src", "" + (IMG_URL) + "c_fill,w_50/ava/v" + (Math.floor(new Date(notif.from.updated_at) / 1000) || 1) + "/" + (notif.from._id) + ".jpg", true, false)) + "/></span><span class=\"b-notif__user\">" + (jade.escape((jade_interp = notif.from.name) == null ? '' : jade_interp)) + " </span><span> " + (jade.escape((jade_interp = text) == null ? '' : jade_interp)) + "</span><span> &middot;  </span>");
 jade_mixins["time"](notif.created_at);
 buf.push("<br/><div class=\"b-notif__data\"><b>" + (jade.escape((jade_interp = data) == null ? '' : jade_interp)) + "</b></div><div class=\"clear\"></div></a></div>");
     }
@@ -15106,7 +15106,7 @@ text = __('responded your article')
 data = notif.object.post_id.title
   break;
 }
-buf.push("<div" + (jade.attr("data-notif-id", "" + (notif._id) + "", true, false)) + (jade.cls(['b-notif__item',"" + ( notif.is_read == true ? 'is-read' : '' ) + ""], [null,true])) + "><a" + (jade.attr("href", "" + (url) + "", true, false)) + "><span class=\"i-user--inline__ava\"><img" + (jade.attr("src", "" + (IMG_URL) + "c_fill,w_50/ava/" + (notif.from._id) + ".jpg", true, false)) + "/></span><span class=\"b-notif__user\">" + (jade.escape((jade_interp = notif.from.name) == null ? '' : jade_interp)) + " </span><span> " + (jade.escape((jade_interp = text) == null ? '' : jade_interp)) + "</span><span> &middot;  </span>");
+buf.push("<div" + (jade.attr("data-notif-id", "" + (notif._id) + "", true, false)) + (jade.cls(['b-notif__item',"" + ( notif.is_read == true ? 'is-read' : '' ) + ""], [null,true])) + "><a" + (jade.attr("href", "" + (url) + "", true, false)) + "><span class=\"i-user--inline__ava\"><img" + (jade.attr("src", "" + (IMG_URL) + "c_fill,w_50/ava/v" + (Math.floor(new Date(notif.from.updated_at) / 1000) || 1) + "/" + (notif.from._id) + ".jpg", true, false)) + "/></span><span class=\"b-notif__user\">" + (jade.escape((jade_interp = notif.from.name) == null ? '' : jade_interp)) + " </span><span> " + (jade.escape((jade_interp = text) == null ? '' : jade_interp)) + "</span><span> &middot;  </span>");
 jade_mixins["time"](notif.created_at);
 buf.push("<br/><div class=\"b-notif__data\"><b>" + (jade.escape((jade_interp = data) == null ? '' : jade_interp)) + "</b></div><div class=\"clear\"></div></a></div>");
     }
@@ -15284,7 +15284,7 @@ buf.push("<span>" + (jade.escape((jade_interp =  readTime ) == null ? '' : jade_
 buf.push("<div" + (jade.attr("data-published-at", "" + (item.published_at) + "", true, false)) + " class=\"b-post__item\">");
 if ( item.is_repost == true)
 {
-buf.push("<div class=\"b-post__head\"><div class=\"i-user--inline\"><span class=\"i-user--inline__ava\"><a" + (jade.attr("href", "/u/" + (item.user.username) + "", true, false)) + "><img" + (jade.attr("src", "" + (IMG_URL) + "c_fill,w_50/ava/" + (item.user._id) + ".jpg", true, false)) + "/></a></span><span class=\"i-user--inline__name\"><a" + (jade.attr("href", "/u/" + (item.user.username) + "", true, false)) + ">" + (jade.escape((jade_interp = item.user.name) == null ? '' : jade_interp)) + "</a></span><span class=\"i-user--inline__mod\"><span>  <i class=\"f-icon-repost\"></i> " + (jade.escape((jade_interp = __('suggested')) == null ? '' : jade_interp)) + "  </span>");
+buf.push("<div class=\"b-post__head\"><div class=\"i-user--inline\"><span class=\"i-user--inline__ava\"><a" + (jade.attr("href", "/u/" + (item.user.username) + "", true, false)) + "><img" + (jade.attr("src", "" + (IMG_URL) + "c_fill,w_50/v" + (Math.floor(new Date(item.user.updated_at) / 1000) || 1) + "/ava/" + (item.user._id) + ".jpg", true, false)) + "/></a></span><span class=\"i-user--inline__name\"><a" + (jade.attr("href", "/u/" + (item.user.username) + "", true, false)) + ">" + (jade.escape((jade_interp = item.user.name) == null ? '' : jade_interp)) + "</a></span><span class=\"i-user--inline__mod\"><span>  <i class=\"f-icon-repost\"></i> " + (jade.escape((jade_interp = __('suggested')) == null ? '' : jade_interp)) + "  </span>");
 jade_mixins["time"](item.published_at);
 buf.push("<span>&nbsp;&nbsp;&middot;&nbsp;&nbsp;</span>");
 jade_mixins["read"](item.repost.reading_time);
@@ -15292,20 +15292,20 @@ buf.push("</span><div class=\"clear\"></div></div></div><div class=\"b-post__rep
 }
 else if ( item.is_response == true)
 {
-buf.push("<div class=\"b-post__head\"><div class=\"i-user--inline\"><span class=\"i-user--inline__ava\"><a" + (jade.attr("href", "/u/" + (item.user.username) + "", true, false)) + "><img" + (jade.attr("src", "" + (IMG_URL) + "c_fill,w_50/ava/" + (item.user._id) + ".jpg", true, false)) + "/></a></span><span class=\"i-user--inline__name\"><a" + (jade.attr("href", "/u/" + (item.user.username) + "", true, false)) + ">" + (jade.escape((jade_interp = item.user.name) == null ? '' : jade_interp)) + "</a></span><span class=\"i-user--inline__mod\"><span>  <i class=\"f-icon-reply\"></i> " + (jade.escape((jade_interp = __('responded')) == null ? '' : jade_interp)) + "  </span>");
+buf.push("<div class=\"b-post__head\"><div class=\"i-user--inline\"><span class=\"i-user--inline__ava\"><a" + (jade.attr("href", "/u/" + (item.user.username) + "", true, false)) + "><img" + (jade.attr("src", "" + (IMG_URL) + "c_fill,w_50/v" + (Math.floor(new Date(item.user.updated_at) / 1000) || 1) + "/ava/" + (item.user._id) + ".jpg", true, false)) + "/></a></span><span class=\"i-user--inline__name\"><a" + (jade.attr("href", "/u/" + (item.user.username) + "", true, false)) + ">" + (jade.escape((jade_interp = item.user.name) == null ? '' : jade_interp)) + "</a></span><span class=\"i-user--inline__mod\"><span>  <i class=\"f-icon-reply\"></i> " + (jade.escape((jade_interp = __('responded')) == null ? '' : jade_interp)) + "  </span>");
 jade_mixins["time"](item.published_at);
 buf.push("<span>&nbsp;&nbsp;&middot;&nbsp;&nbsp;</span>");
 jade_mixins["read"](item.reading_time);
 buf.push("</span><div class=\"clear\"></div></div></div><div class=\"b-post__response\"><a" + (jade.attr("href", "/p/" + (item.slug) + "", true, false)) + "><div class=\"b-post__response__content\"><h3 class=\"b-post__title\">" + (((jade_interp = item.response.title) == null ? '' : jade_interp)) + "</h3><p class=\"i-user--inline i-user--inline__mod\">" + (jade.escape((jade_interp = __('By')) == null ? '' : jade_interp)) + "  <a" + (jade.attr("href", "/u/" + (item.response.user.username) + "", true, false)) + "><span class=\"text-red\">" + (jade.escape((jade_interp = item.response.user.name) == null ? '' : jade_interp)) + "</span></a><span style=\"margin:5px\">&middot;</span><b>" + (jade.escape((jade_interp = item.response.love_count || 0) == null ? '' : jade_interp)) + " <span class=\"text-red\">&#9825;</span></b></p></div></a></div>");
 if ( item.is_cover)
 {
-buf.push("<div class=\"b-post__right\"><a" + (jade.attr("href", "/p/" + (item.slug) + "", true, false)) + "><img" + (jade.attr("src", "" + (IMG_URL) + "ost/" + (item._id) + "-cover.jpg", true, false)) + " alt=\"\" class=\"b-post__cover\"/></a></div>");
+buf.push("<div class=\"b-post__right\"><a" + (jade.attr("href", "/p/" + (item.slug) + "", true, false)) + "><img" + (jade.attr("src", "" + (IMG_URL) + "v" + (Math.floor(new Date(item.edited_at) / 1000) || 1) + "/post/" + (item._id) + "-cover.jpg", true, false)) + " alt=\"\" class=\"b-post__cover\"/></a></div>");
 }
 buf.push("<div" + (jade.cls(['b-post__left',item.is_cover ? "" : "is-full"], [null,true])) + "><a" + (jade.attr("href", "/p/" + (item.slug) + "", true, false)) + "><h3 class=\"b-post__title\">" + (((jade_interp = item.title) == null ? '' : jade_interp)) + "</h3><p class=\"b-post__subtitle\">" + (((jade_interp = item.subtitle) == null ? '' : jade_interp)) + "</p></a><div class=\"b-post__button-wrap\"><button" + (jade.attr("data-article-id", "" + (item._id) + "", true, false)) + (jade.cls(['b-post__button','js-article-love',item.is_loving ? "is-loving" : ""], [null,null,true])) + "><b>" + (jade.escape((jade_interp = item.love_count) == null ? '' : jade_interp)) + "</b><i class=\"f-icon-love\">        </i></button></div></div><div class=\"clear\"></div>");
 }
 else if ( item.is_repost_link == true)
 {
-buf.push("<div class=\"b-post__head\"><div class=\"i-user--inline\"><span class=\"i-user--inline__ava\"><a" + (jade.attr("href", "/u/" + (item.user.username) + "", true, false)) + "><img" + (jade.attr("src", "" + (IMG_URL) + "_fill,w_50/ava/" + (item.user._id) + ".jpg", true, false)) + "/></a></span><span class=\"i-user--inline__name\"><a" + (jade.attr("href", "/u/" + (item.user.username) + "", true, false)) + ">" + (jade.escape((jade_interp = item.user.name) == null ? '' : jade_interp)) + "</a></span><span class=\"i-user--inline__mod\"><span>  <i class=\"f-icon-repost\"></i> " + (jade.escape((jade_interp = __('suggested')) == null ? '' : jade_interp)) + "  </span>");
+buf.push("<div class=\"b-post__head\"><div class=\"i-user--inline\"><span class=\"i-user--inline__ava\"><a" + (jade.attr("href", "/u/" + (item.user.username) + "", true, false)) + "><img" + (jade.attr("src", "" + (IMG_URL) + "_fill,w_50/v" + (Math.floor(new Date(item.user.updated_at) / 1000) || 1) + "/ava/" + (item.user._id) + ".jpg", true, false)) + "/></a></span><span class=\"i-user--inline__name\"><a" + (jade.attr("href", "/u/" + (item.user.username) + "", true, false)) + ">" + (jade.escape((jade_interp = item.user.name) == null ? '' : jade_interp)) + "</a></span><span class=\"i-user--inline__mod\"><span>  <i class=\"f-icon-repost\"></i> " + (jade.escape((jade_interp = __('suggested')) == null ? '' : jade_interp)) + "  </span>");
 jade_mixins["time"](item.published_at);
 buf.push("<span>&nbsp;&nbsp;&middot;&nbsp;&nbsp;</span></span><div class=\"clear\"></div></div></div><div class=\"b-post__repost\"><a" + (jade.attr("href", "/p/" + (item.repost_link.slug) + "", true, false)) + "><div class=\"b-post__repost__content\"><h3 class=\"b-post__title\">" + (((jade_interp = item.repost_link.title) == null ? '' : jade_interp)) + "</h3><p class=\"b-post__subtitle\">" + (((jade_interp = item.repost_link.subtitle) == null ? '' : jade_interp)) + "</p><p class=\"i-user--inline i-user--inline__mod\"><a" + (jade.attr("href", "http://" + (item.repost_link.url) + "", true, false)) + "><span class=\"text-red\">" + (jade.escape((jade_interp = item.repost_link.source ? item.repost_link.source : item.repost_link.hostname) == null ? '' : jade_interp)) + "</span></a><span style=\"margin:5px\">&middot;</span></p></div></a></div>");
 }
@@ -15346,14 +15346,14 @@ buf.push("<a" + (jade.attr("href", "/c/" + (col.username) + "", true, false)) + 
 buf.push("</div>");
 }
 }
-buf.push("<div class=\"i-user--inline\"><span class=\"i-user--inline__ava\"><a" + (jade.attr("href", "/u/" + (item.user.username) + "", true, false)) + "><img" + (jade.attr("src", "" + (IMG_URL) + "c_fill,w_50/ava/" + (item.user._id) + ".jpg", true, false)) + "/></a></span><span class=\"i-user--inline__name\"><a" + (jade.attr("href", "/u/" + (item.user.username) + "", true, false)) + ">" + (jade.escape((jade_interp = item.user.name) == null ? '' : jade_interp)) + "</a></span><span class=\"i-user--inline__mod\"><span> " + (jade.escape((jade_interp = __('published')) == null ? '' : jade_interp)) + "  </span>");
+buf.push("<div class=\"i-user--inline\"><span class=\"i-user--inline__ava\"><a" + (jade.attr("href", "/u/" + (item.user.username) + "", true, false)) + "><img" + (jade.attr("src", "" + (IMG_URL) + "c_fill,w_50/v" + (Math.floor(new Date(item.user.updated_at) / 1000) || 1) + "/ava/" + (item.user._id) + ".jpg", true, false)) + "/></a></span><span class=\"i-user--inline__name\"><a" + (jade.attr("href", "/u/" + (item.user.username) + "", true, false)) + ">" + (jade.escape((jade_interp = item.user.name) == null ? '' : jade_interp)) + "</a></span><span class=\"i-user--inline__mod\"><span> " + (jade.escape((jade_interp = __('published')) == null ? '' : jade_interp)) + "  </span>");
 jade_mixins["time"](item.published_at);
 buf.push("<span>&nbsp;&nbsp;&middot;&nbsp;&nbsp;</span>");
 jade_mixins["read"](item.reading_time);
 buf.push("</span><div class=\"clear\"></div></div></div>");
 if ( item.is_cover)
 {
-buf.push("<div class=\"b-post__right\"><a" + (jade.attr("href", "/p/" + (item.slug) + "", true, false)) + "><img" + (jade.attr("src", "" + (IMG_URL) + "c_fill,w_240,h_160/post/" + (item._id) + "-cover.jpg", true, false)) + " alt=\"\" class=\"b-post__cover\"/></a></div>");
+buf.push("<div class=\"b-post__right\"><a" + (jade.attr("href", "/p/" + (item.slug) + "", true, false)) + "><img" + (jade.attr("src", "" + (IMG_URL) + "c_fill,w_240,h_160/v" + (Math.floor(new Date(item.edited_at) / 1000) || 1) + "/post/" + (item._id) + "-cover.jpg", true, false)) + " alt=\"\" class=\"b-post__cover\"/></a></div>");
 }
 buf.push("<div" + (jade.cls(['b-post__left',item.is_cover ? "" : "is-full"], [null,true])) + "><a" + (jade.attr("href", "/p/" + (item.slug) + "", true, false)) + "><h3 class=\"b-post__title\">" + (((jade_interp = item.title) == null ? '' : jade_interp)) + "</h3><p class=\"b-post__subtitle\">" + (((jade_interp = item.subtitle) == null ? '' : jade_interp)) + "</p></a><div class=\"b-post__button-wrap\"><button" + (jade.attr("data-article-id", "" + (item._id) + "", true, false)) + (jade.cls(['b-post__button','js-article-love',item.is_loving ? "is-loving" : ""], [null,null,true])) + "><b>" + (jade.escape((jade_interp = item.love_count) == null ? '' : jade_interp)) + "</b><i class=\"f-icon-love\"></i></button></div></div><div class=\"clear\"></div>");
 }
@@ -15368,7 +15368,7 @@ buf.push("</div>");
 buf.push("<div" + (jade.attr("data-published-at", "" + (item.published_at) + "", true, false)) + " class=\"b-post__item\">");
 if ( item.is_repost == true)
 {
-buf.push("<div class=\"b-post__head\"><div class=\"i-user--inline\"><span class=\"i-user--inline__ava\"><a" + (jade.attr("href", "/u/" + (item.user.username) + "", true, false)) + "><img" + (jade.attr("src", "" + (IMG_URL) + "c_fill,w_50/ava/" + (item.user._id) + ".jpg", true, false)) + "/></a></span><span class=\"i-user--inline__name\"><a" + (jade.attr("href", "/u/" + (item.user.username) + "", true, false)) + ">" + (jade.escape((jade_interp = item.user.name) == null ? '' : jade_interp)) + "</a></span><span class=\"i-user--inline__mod\"><span>  <i class=\"f-icon-repost\"></i> " + (jade.escape((jade_interp = __('suggested')) == null ? '' : jade_interp)) + "  </span>");
+buf.push("<div class=\"b-post__head\"><div class=\"i-user--inline\"><span class=\"i-user--inline__ava\"><a" + (jade.attr("href", "/u/" + (item.user.username) + "", true, false)) + "><img" + (jade.attr("src", "" + (IMG_URL) + "c_fill,w_50/v" + (Math.floor(new Date(item.user.updated_at) / 1000) || 1) + "/ava/" + (item.user._id) + ".jpg", true, false)) + "/></a></span><span class=\"i-user--inline__name\"><a" + (jade.attr("href", "/u/" + (item.user.username) + "", true, false)) + ">" + (jade.escape((jade_interp = item.user.name) == null ? '' : jade_interp)) + "</a></span><span class=\"i-user--inline__mod\"><span>  <i class=\"f-icon-repost\"></i> " + (jade.escape((jade_interp = __('suggested')) == null ? '' : jade_interp)) + "  </span>");
 jade_mixins["time"](item.published_at);
 buf.push("<span>&nbsp;&nbsp;&middot;&nbsp;&nbsp;</span>");
 jade_mixins["read"](item.repost.reading_time);
@@ -15376,20 +15376,20 @@ buf.push("</span><div class=\"clear\"></div></div></div><div class=\"b-post__rep
 }
 else if ( item.is_response == true)
 {
-buf.push("<div class=\"b-post__head\"><div class=\"i-user--inline\"><span class=\"i-user--inline__ava\"><a" + (jade.attr("href", "/u/" + (item.user.username) + "", true, false)) + "><img" + (jade.attr("src", "" + (IMG_URL) + "c_fill,w_50/ava/" + (item.user._id) + ".jpg", true, false)) + "/></a></span><span class=\"i-user--inline__name\"><a" + (jade.attr("href", "/u/" + (item.user.username) + "", true, false)) + ">" + (jade.escape((jade_interp = item.user.name) == null ? '' : jade_interp)) + "</a></span><span class=\"i-user--inline__mod\"><span>  <i class=\"f-icon-reply\"></i> " + (jade.escape((jade_interp = __('responded')) == null ? '' : jade_interp)) + "  </span>");
+buf.push("<div class=\"b-post__head\"><div class=\"i-user--inline\"><span class=\"i-user--inline__ava\"><a" + (jade.attr("href", "/u/" + (item.user.username) + "", true, false)) + "><img" + (jade.attr("src", "" + (IMG_URL) + "c_fill,w_50/v" + (Math.floor(new Date(item.user.updated_at) / 1000) || 1) + "/ava/" + (item.user._id) + ".jpg", true, false)) + "/></a></span><span class=\"i-user--inline__name\"><a" + (jade.attr("href", "/u/" + (item.user.username) + "", true, false)) + ">" + (jade.escape((jade_interp = item.user.name) == null ? '' : jade_interp)) + "</a></span><span class=\"i-user--inline__mod\"><span>  <i class=\"f-icon-reply\"></i> " + (jade.escape((jade_interp = __('responded')) == null ? '' : jade_interp)) + "  </span>");
 jade_mixins["time"](item.published_at);
 buf.push("<span>&nbsp;&nbsp;&middot;&nbsp;&nbsp;</span>");
 jade_mixins["read"](item.reading_time);
 buf.push("</span><div class=\"clear\"></div></div></div><div class=\"b-post__response\"><a" + (jade.attr("href", "/p/" + (item.slug) + "", true, false)) + "><div class=\"b-post__response__content\"><h3 class=\"b-post__title\">" + (((jade_interp = item.response.title) == null ? '' : jade_interp)) + "</h3><p class=\"i-user--inline i-user--inline__mod\">" + (jade.escape((jade_interp = __('By')) == null ? '' : jade_interp)) + "  <a" + (jade.attr("href", "/u/" + (item.response.user.username) + "", true, false)) + "><span class=\"text-red\">" + (jade.escape((jade_interp = item.response.user.name) == null ? '' : jade_interp)) + "</span></a><span style=\"margin:5px\">&middot;</span><b>" + (jade.escape((jade_interp = item.response.love_count || 0) == null ? '' : jade_interp)) + " <span class=\"text-red\">&#9825;</span></b></p></div></a></div>");
 if ( item.is_cover)
 {
-buf.push("<div class=\"b-post__right\"><a" + (jade.attr("href", "/p/" + (item.slug) + "", true, false)) + "><img" + (jade.attr("src", "" + (IMG_URL) + "ost/" + (item._id) + "-cover.jpg", true, false)) + " alt=\"\" class=\"b-post__cover\"/></a></div>");
+buf.push("<div class=\"b-post__right\"><a" + (jade.attr("href", "/p/" + (item.slug) + "", true, false)) + "><img" + (jade.attr("src", "" + (IMG_URL) + "v" + (Math.floor(new Date(item.edited_at) / 1000) || 1) + "/post/" + (item._id) + "-cover.jpg", true, false)) + " alt=\"\" class=\"b-post__cover\"/></a></div>");
 }
 buf.push("<div" + (jade.cls(['b-post__left',item.is_cover ? "" : "is-full"], [null,true])) + "><a" + (jade.attr("href", "/p/" + (item.slug) + "", true, false)) + "><h3 class=\"b-post__title\">" + (((jade_interp = item.title) == null ? '' : jade_interp)) + "</h3><p class=\"b-post__subtitle\">" + (((jade_interp = item.subtitle) == null ? '' : jade_interp)) + "</p></a><div class=\"b-post__button-wrap\"><button" + (jade.attr("data-article-id", "" + (item._id) + "", true, false)) + (jade.cls(['b-post__button','js-article-love',item.is_loving ? "is-loving" : ""], [null,null,true])) + "><b>" + (jade.escape((jade_interp = item.love_count) == null ? '' : jade_interp)) + "</b><i class=\"f-icon-love\">        </i></button></div></div><div class=\"clear\"></div>");
 }
 else if ( item.is_repost_link == true)
 {
-buf.push("<div class=\"b-post__head\"><div class=\"i-user--inline\"><span class=\"i-user--inline__ava\"><a" + (jade.attr("href", "/u/" + (item.user.username) + "", true, false)) + "><img" + (jade.attr("src", "" + (IMG_URL) + "_fill,w_50/ava/" + (item.user._id) + ".jpg", true, false)) + "/></a></span><span class=\"i-user--inline__name\"><a" + (jade.attr("href", "/u/" + (item.user.username) + "", true, false)) + ">" + (jade.escape((jade_interp = item.user.name) == null ? '' : jade_interp)) + "</a></span><span class=\"i-user--inline__mod\"><span>  <i class=\"f-icon-repost\"></i> " + (jade.escape((jade_interp = __('suggested')) == null ? '' : jade_interp)) + "  </span>");
+buf.push("<div class=\"b-post__head\"><div class=\"i-user--inline\"><span class=\"i-user--inline__ava\"><a" + (jade.attr("href", "/u/" + (item.user.username) + "", true, false)) + "><img" + (jade.attr("src", "" + (IMG_URL) + "_fill,w_50/v" + (Math.floor(new Date(item.user.updated_at) / 1000) || 1) + "/ava/" + (item.user._id) + ".jpg", true, false)) + "/></a></span><span class=\"i-user--inline__name\"><a" + (jade.attr("href", "/u/" + (item.user.username) + "", true, false)) + ">" + (jade.escape((jade_interp = item.user.name) == null ? '' : jade_interp)) + "</a></span><span class=\"i-user--inline__mod\"><span>  <i class=\"f-icon-repost\"></i> " + (jade.escape((jade_interp = __('suggested')) == null ? '' : jade_interp)) + "  </span>");
 jade_mixins["time"](item.published_at);
 buf.push("<span>&nbsp;&nbsp;&middot;&nbsp;&nbsp;</span></span><div class=\"clear\"></div></div></div><div class=\"b-post__repost\"><a" + (jade.attr("href", "/p/" + (item.repost_link.slug) + "", true, false)) + "><div class=\"b-post__repost__content\"><h3 class=\"b-post__title\">" + (((jade_interp = item.repost_link.title) == null ? '' : jade_interp)) + "</h3><p class=\"b-post__subtitle\">" + (((jade_interp = item.repost_link.subtitle) == null ? '' : jade_interp)) + "</p><p class=\"i-user--inline i-user--inline__mod\"><a" + (jade.attr("href", "http://" + (item.repost_link.url) + "", true, false)) + "><span class=\"text-red\">" + (jade.escape((jade_interp = item.repost_link.source ? item.repost_link.source : item.repost_link.hostname) == null ? '' : jade_interp)) + "</span></a><span style=\"margin:5px\">&middot;</span></p></div></a></div>");
 }
@@ -15430,14 +15430,14 @@ buf.push("<a" + (jade.attr("href", "/c/" + (col.username) + "", true, false)) + 
 buf.push("</div>");
 }
 }
-buf.push("<div class=\"i-user--inline\"><span class=\"i-user--inline__ava\"><a" + (jade.attr("href", "/u/" + (item.user.username) + "", true, false)) + "><img" + (jade.attr("src", "" + (IMG_URL) + "c_fill,w_50/ava/" + (item.user._id) + ".jpg", true, false)) + "/></a></span><span class=\"i-user--inline__name\"><a" + (jade.attr("href", "/u/" + (item.user.username) + "", true, false)) + ">" + (jade.escape((jade_interp = item.user.name) == null ? '' : jade_interp)) + "</a></span><span class=\"i-user--inline__mod\"><span> " + (jade.escape((jade_interp = __('published')) == null ? '' : jade_interp)) + "  </span>");
+buf.push("<div class=\"i-user--inline\"><span class=\"i-user--inline__ava\"><a" + (jade.attr("href", "/u/" + (item.user.username) + "", true, false)) + "><img" + (jade.attr("src", "" + (IMG_URL) + "c_fill,w_50/v" + (Math.floor(new Date(item.user.updated_at) / 1000) || 1) + "/ava/" + (item.user._id) + ".jpg", true, false)) + "/></a></span><span class=\"i-user--inline__name\"><a" + (jade.attr("href", "/u/" + (item.user.username) + "", true, false)) + ">" + (jade.escape((jade_interp = item.user.name) == null ? '' : jade_interp)) + "</a></span><span class=\"i-user--inline__mod\"><span> " + (jade.escape((jade_interp = __('published')) == null ? '' : jade_interp)) + "  </span>");
 jade_mixins["time"](item.published_at);
 buf.push("<span>&nbsp;&nbsp;&middot;&nbsp;&nbsp;</span>");
 jade_mixins["read"](item.reading_time);
 buf.push("</span><div class=\"clear\"></div></div></div>");
 if ( item.is_cover)
 {
-buf.push("<div class=\"b-post__right\"><a" + (jade.attr("href", "/p/" + (item.slug) + "", true, false)) + "><img" + (jade.attr("src", "" + (IMG_URL) + "c_fill,w_240,h_160/post/" + (item._id) + "-cover.jpg", true, false)) + " alt=\"\" class=\"b-post__cover\"/></a></div>");
+buf.push("<div class=\"b-post__right\"><a" + (jade.attr("href", "/p/" + (item.slug) + "", true, false)) + "><img" + (jade.attr("src", "" + (IMG_URL) + "c_fill,w_240,h_160/v" + (Math.floor(new Date(item.edited_at) / 1000) || 1) + "/post/" + (item._id) + "-cover.jpg", true, false)) + " alt=\"\" class=\"b-post__cover\"/></a></div>");
 }
 buf.push("<div" + (jade.cls(['b-post__left',item.is_cover ? "" : "is-full"], [null,true])) + "><a" + (jade.attr("href", "/p/" + (item.slug) + "", true, false)) + "><h3 class=\"b-post__title\">" + (((jade_interp = item.title) == null ? '' : jade_interp)) + "</h3><p class=\"b-post__subtitle\">" + (((jade_interp = item.subtitle) == null ? '' : jade_interp)) + "</p></a><div class=\"b-post__button-wrap\"><button" + (jade.attr("data-article-id", "" + (item._id) + "", true, false)) + (jade.cls(['b-post__button','js-article-love',item.is_loving ? "is-loving" : ""], [null,null,true])) + "><b>" + (jade.escape((jade_interp = item.love_count) == null ? '' : jade_interp)) + "</b><i class=\"f-icon-love\"></i></button></div></div><div class=\"clear\"></div>");
 }
@@ -15549,7 +15549,7 @@ module.exports = function template(locals) {
 var buf = [];
 var jade_mixins = {};
 var jade_interp;
-;var locals_for_with = (locals || {});(function (IMG_URL, __, post, undefined) {
+;var locals_for_with = (locals || {});(function (Date, IMG_URL, Math, __, post, undefined) {
 
 
 
@@ -15598,7 +15598,7 @@ var jade_interp;
 buf.push("<a" + (jade.attr("href", "/p/" + (item.slug) + "", true, false)) + (jade.attr("data-published-at", "" + (item.published_at) + "", true, false)) + "><div class=\"b-post__repost--half\">");
 if ( item.is_cover == true)
 {
-buf.push("<div class=\"is-half img\"><img" + (jade.attr("src", "" + (IMG_URL) + "/post/" + (item._id) + "-medium-cover.jpg", true, false)) + "/></div>");
+buf.push("<div class=\"is-half img\"><img" + (jade.attr("src", "" + (IMG_URL) + "/v" + (Math.floor(new Date(item.edited_at) / 1000) || 1) + "/post/" + (item._id) + "-cover.jpg", true, false)) + "/></div>");
 }
 buf.push("<div class=\"is-half\"><div class=\"b-post__repost__content\"><h3 class=\"b-post__title\">" + (((jade_interp = item.title) == null ? '' : jade_interp)) + "</h3><p class=\"b-post__subtitle\">" + (((jade_interp = item.subtitle) == null ? '' : jade_interp)) + "</p><p class=\"i-user--inline i-user--inline__mod\">" + (jade.escape((jade_interp = __('By')) == null ? '' : jade_interp)) + "  <a" + (jade.attr("href", "/u/" + (item.user.username) + "", true, false)) + "><span class=\"text-red\">" + (jade.escape((jade_interp = item.user.name) == null ? '' : jade_interp)) + "</span></a><span style=\"margin:5px\">&middot;</span><b>" + (jade.escape((jade_interp = item.love_count || 0) == null ? '' : jade_interp)) + " <span class=\"text-red\">&#9825;</span></b></p></div></div><div class=\"clear\"></div></div><div class=\"clear\"></div></a>");
     }
@@ -15611,7 +15611,7 @@ buf.push("<div class=\"is-half\"><div class=\"b-post__repost__content\"><h3 clas
 buf.push("<a" + (jade.attr("href", "/p/" + (item.slug) + "", true, false)) + (jade.attr("data-published-at", "" + (item.published_at) + "", true, false)) + "><div class=\"b-post__repost--half\">");
 if ( item.is_cover == true)
 {
-buf.push("<div class=\"is-half img\"><img" + (jade.attr("src", "" + (IMG_URL) + "/post/" + (item._id) + "-medium-cover.jpg", true, false)) + "/></div>");
+buf.push("<div class=\"is-half img\"><img" + (jade.attr("src", "" + (IMG_URL) + "/v" + (Math.floor(new Date(item.edited_at) / 1000) || 1) + "/post/" + (item._id) + "-cover.jpg", true, false)) + "/></div>");
 }
 buf.push("<div class=\"is-half\"><div class=\"b-post__repost__content\"><h3 class=\"b-post__title\">" + (((jade_interp = item.title) == null ? '' : jade_interp)) + "</h3><p class=\"b-post__subtitle\">" + (((jade_interp = item.subtitle) == null ? '' : jade_interp)) + "</p><p class=\"i-user--inline i-user--inline__mod\">" + (jade.escape((jade_interp = __('By')) == null ? '' : jade_interp)) + "  <a" + (jade.attr("href", "/u/" + (item.user.username) + "", true, false)) + "><span class=\"text-red\">" + (jade.escape((jade_interp = item.user.name) == null ? '' : jade_interp)) + "</span></a><span style=\"margin:5px\">&middot;</span><b>" + (jade.escape((jade_interp = item.love_count || 0) == null ? '' : jade_interp)) + " <span class=\"text-red\">&#9825;</span></b></p></div></div><div class=\"clear\"></div></div><div class=\"clear\"></div></a>");
     }
@@ -15619,7 +15619,7 @@ buf.push("<div class=\"is-half\"><div class=\"b-post__repost__content\"><h3 clas
   }
 }).call(this);
 
-buf.push("");}.call(this,"IMG_URL" in locals_for_with?locals_for_with.IMG_URL:typeof IMG_URL!=="undefined"?IMG_URL:undefined,"__" in locals_for_with?locals_for_with.__:typeof __!=="undefined"?__:undefined,"post" in locals_for_with?locals_for_with.post:typeof post!=="undefined"?post:undefined,"undefined" in locals_for_with?locals_for_with.undefined:typeof undefined!=="undefined"?undefined:undefined));;return buf.join("");
+buf.push("");}.call(this,"Date" in locals_for_with?locals_for_with.Date:typeof Date!=="undefined"?Date:undefined,"IMG_URL" in locals_for_with?locals_for_with.IMG_URL:typeof IMG_URL!=="undefined"?IMG_URL:undefined,"Math" in locals_for_with?locals_for_with.Math:typeof Math!=="undefined"?Math:undefined,"__" in locals_for_with?locals_for_with.__:typeof __!=="undefined"?__:undefined,"post" in locals_for_with?locals_for_with.post:typeof post!=="undefined"?post:undefined,"undefined" in locals_for_with?locals_for_with.undefined:typeof undefined!=="undefined"?undefined:undefined));;return buf.join("");
 };
 },{"jade/runtime":146}],156:[function(require,module,exports){
 var jade = require("jade/runtime");
@@ -15661,7 +15661,7 @@ module.exports = function template(locals) {
 var buf = [];
 var jade_mixins = {};
 var jade_interp;
-;var locals_for_with = (locals || {});(function (IMG_URL, undefined, users) {
+;var locals_for_with = (locals || {});(function (Date, IMG_URL, Math, undefined, users) {
 if ( users)
 {
 // iterate users
@@ -15672,7 +15672,7 @@ if ( users)
     for (var $index = 0, $$l = $$obj.length; $index < $$l; $index++) {
       var user = $$obj[$index];
 
-buf.push("<br/><span height=\"100%\" class=\"i-user__ava\"><img" + (jade.attr("src", "" + (IMG_URL) + "c_fill,w_50/ava/" + (user._id) + ".jpg", true, false)) + "/></span><span class=\"i-user--footer__name text-red\"><a" + (jade.attr("href", "/u/" + (user.username) + "", true, false)) + ">" + (jade.escape((jade_interp = user.name) == null ? '' : jade_interp)) + "</a></span><p class=\"i-user--footer__desc\">" + (jade.escape((jade_interp = user.description) == null ? '' : jade_interp)) + "</p><p class=\"i-user--footer__username\"><a" + (jade.attr("href", "/u/" + (user.username) + "", true, false)) + ">/" + (jade.escape((jade_interp = user.username) == null ? '' : jade_interp)) + "</a></p><div class=\"divider\"></div><br/>");
+buf.push("<br/><span height=\"100%\" class=\"i-user__ava\"><img" + (jade.attr("src", "" + (IMG_URL) + "c_fill,w_50/v" + (Math.floor(new Date(user.updated_at) / 1000) || 1) + "/ava/" + (user._id) + ".jpg", true, false)) + "/></span><span class=\"i-user--footer__name text-red\"><a" + (jade.attr("href", "/u/" + (user.username) + "", true, false)) + ">" + (jade.escape((jade_interp = user.name) == null ? '' : jade_interp)) + "</a></span><p class=\"i-user--footer__desc\">" + (jade.escape((jade_interp = user.description) == null ? '' : jade_interp)) + "</p><p class=\"i-user--footer__username\"><a" + (jade.attr("href", "/u/" + (user.username) + "", true, false)) + ">/" + (jade.escape((jade_interp = user.username) == null ? '' : jade_interp)) + "</a></p><div class=\"divider\"></div><br/>");
     }
 
   } else {
@@ -15680,12 +15680,12 @@ buf.push("<br/><span height=\"100%\" class=\"i-user__ava\"><img" + (jade.attr("s
     for (var $index in $$obj) {
       $$l++;      var user = $$obj[$index];
 
-buf.push("<br/><span height=\"100%\" class=\"i-user__ava\"><img" + (jade.attr("src", "" + (IMG_URL) + "c_fill,w_50/ava/" + (user._id) + ".jpg", true, false)) + "/></span><span class=\"i-user--footer__name text-red\"><a" + (jade.attr("href", "/u/" + (user.username) + "", true, false)) + ">" + (jade.escape((jade_interp = user.name) == null ? '' : jade_interp)) + "</a></span><p class=\"i-user--footer__desc\">" + (jade.escape((jade_interp = user.description) == null ? '' : jade_interp)) + "</p><p class=\"i-user--footer__username\"><a" + (jade.attr("href", "/u/" + (user.username) + "", true, false)) + ">/" + (jade.escape((jade_interp = user.username) == null ? '' : jade_interp)) + "</a></p><div class=\"divider\"></div><br/>");
+buf.push("<br/><span height=\"100%\" class=\"i-user__ava\"><img" + (jade.attr("src", "" + (IMG_URL) + "c_fill,w_50/v" + (Math.floor(new Date(user.updated_at) / 1000) || 1) + "/ava/" + (user._id) + ".jpg", true, false)) + "/></span><span class=\"i-user--footer__name text-red\"><a" + (jade.attr("href", "/u/" + (user.username) + "", true, false)) + ">" + (jade.escape((jade_interp = user.name) == null ? '' : jade_interp)) + "</a></span><p class=\"i-user--footer__desc\">" + (jade.escape((jade_interp = user.description) == null ? '' : jade_interp)) + "</p><p class=\"i-user--footer__username\"><a" + (jade.attr("href", "/u/" + (user.username) + "", true, false)) + ">/" + (jade.escape((jade_interp = user.username) == null ? '' : jade_interp)) + "</a></p><div class=\"divider\"></div><br/>");
     }
 
   }
 }).call(this);
 
-}}.call(this,"IMG_URL" in locals_for_with?locals_for_with.IMG_URL:typeof IMG_URL!=="undefined"?IMG_URL:undefined,"undefined" in locals_for_with?locals_for_with.undefined:typeof undefined!=="undefined"?undefined:undefined,"users" in locals_for_with?locals_for_with.users:typeof users!=="undefined"?users:undefined));;return buf.join("");
+}}.call(this,"Date" in locals_for_with?locals_for_with.Date:typeof Date!=="undefined"?Date:undefined,"IMG_URL" in locals_for_with?locals_for_with.IMG_URL:typeof IMG_URL!=="undefined"?IMG_URL:undefined,"Math" in locals_for_with?locals_for_with.Math:typeof Math!=="undefined"?Math:undefined,"undefined" in locals_for_with?locals_for_with.undefined:typeof undefined!=="undefined"?undefined:undefined,"users" in locals_for_with?locals_for_with.users:typeof users!=="undefined"?users:undefined));;return buf.join("");
 };
 },{"jade/runtime":146}]},{},[71]);

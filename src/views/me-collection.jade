@@ -26,7 +26,7 @@ block content
         a(href="/c/#{col.username}")
           .b-collection
             span.i-user__ava--100
-              img(src="#{IMG_URL}col/#{col._id}.jpg")
+              img(src="#{IMG_URL}v#{Math.floor(new Date(col.edited_at) / 1000) || 1}/col/#{col._id}.jpg")
             span.b-graf--h4 #{col.name}
             span   &middot;  
             span.b-graf--h5.text-green #{col.username}
@@ -44,7 +44,7 @@ block content
         a(href="/c/#{col.username}")
           .b-collection
             span.i-user__ava--100
-              img(src="#{IMG_URL}col/#{col._id}.jpg")
+              img(src="#{IMG_URL}v#{Math.floor(new Date(col.edited_at) / 1000) || 1}/col/#{col._id}.jpg")
             span.b-graf--h4 #{col.name}
             span   &middot;  
             span.b-graf--h5.text-green #{col.username}

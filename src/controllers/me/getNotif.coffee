@@ -10,7 +10,7 @@ module.exports = (req, res, next) ->
     findData._id = { $lt: last }
 
   Notif.find findData
-  .populate 'from', 'name username'
+  .populate 'from', 'name username updated_at'
   .populate 'object.post_id', 'slug title'
   .populate 'object.comment_id', 'content'
   .sort '-_id'

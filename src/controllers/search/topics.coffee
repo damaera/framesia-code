@@ -10,10 +10,10 @@ module.exports = (req, res, next) ->
 
   populateQueryResponse =
     path: 'response'
-    select: '_id title subtitle slug user'
+    select: '_id title subtitle slug user edited_at'
     populate:
       path: 'user'
-      select: '_id name username'
+      select: '_id name username updated_at'
       model: 'User'
 
 
@@ -25,8 +25,8 @@ module.exports = (req, res, next) ->
 
     Post
     .find findData
-    .select '_id title subtitle slug user published_at is_cover love_count reading_time is_repost repost is_response response tags'
-    .populate 'user', '_id name username'
+    .select '_id title subtitle slug user published_at is_cover love_count reading_time is_repost repost is_response response tags edited_at'
+    .populate 'user', '_id name username updated_at'
     .populate populateQueryResponse
     .skip last
     .limit 7

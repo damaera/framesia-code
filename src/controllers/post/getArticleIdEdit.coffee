@@ -4,10 +4,10 @@ module.exports = (req, res, next) ->
   if req.user
     populateQuery =
       path: 'response'
-      select: '_id title subtitle slug user love_count comment_count repost_count'
+      select: '_id title subtitle slug user love_count comment_count repost_count edited_at'
       populate:
         path: 'user'
-        select: '_id name username'
+        select: '_id name username updated_at'
         model: 'User'
 
     Post.findOne {

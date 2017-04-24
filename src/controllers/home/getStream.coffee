@@ -21,17 +21,17 @@ module.exports = (req, res, next) ->
 
     populateQuery1 =
       path: 'featured_articles'
-      select: 'title subtitle is_cover is_cover_full user published_at love_count slug'
+      select: 'title subtitle is_cover is_cover_full user published_at love_count slug edited_at'
       populate:
         path: 'user'
-        select: '_id name username'
+        select: '_id name username updated_at'
         model: 'User'
     populateQuery2 =
       path: 'main_featured_article'
-      select: 'title subtitle is_cover is_cover_full user published_at love_count slug'
+      select: 'title subtitle is_cover is_cover_full user published_at love_count slug edited_at'
       populate:
         path: 'user'
-        select: '_id name username'
+        select: '_id name username updated_at'
         model: 'User'
     Collection.findOne {
       username: editorCountry

@@ -10,7 +10,7 @@ block content
   .i-wrap--full
     .i-wrap__right
       .is-center
-        img.b-profile__ava(style="border-radius:3px" src="#{IMG_URL}col/#{collection._id}.jpg" alt="#{collection.name} Framesia")
+        img.b-profile__ava(style="border-radius:3px" src="#{IMG_URL}v#{Math.floor(new Date(collection.edited_at) / 1000) || 1}/col/#{collection._id}.jpg" alt="#{collection.name} Framesia")
         div(style="font-size:11px;")
           h2.b-profile__name #{collection.name}
           p.b-profile__desc #{collection.description}
@@ -55,7 +55,7 @@ block content
             a(href="/p/#{post.slug}")
               div.b-post__repost--main
                 .b-article__cover.is-cover-full.b-post__repost--main__cover
-                  img.b-article__cover__img(src="#{IMG_URL}post/#{post._id}-big-cover.jpg")
+                  img.b-article__cover__img(src="#{IMG_URL}v#{Math.floor(new Date(post.edited_at) / 1000) || 1}/post/#{post._id}-big-cover.jpg")
                   .b-article__shadow.js-cover-shadow
                 .b-post__repost--main__content
                   h3.b-post__title !{post.title}
@@ -78,7 +78,7 @@ block content
                     if post.is_cover == true
                       .b-post__repost--half
                         .is-half.img
-                          img(src="#{IMG_URL}/post/#{post._id}-medium-cover.jpg")
+                          img(src="#{IMG_URL}v#{Math.floor(new Date(post.edited_at) / 1000) || 1}/post/#{post._id}-cover.jpg")
                         .is-half
                           .b-post__repost__content
                             h3.b-post__title !{post.title}
@@ -108,7 +108,7 @@ block content
                   if post.is_cover == true
                     .b-post__repost--half
                       .is-half.img
-                        img(src="#{IMG_URL}/post/#{post._id}-medium-cover.jpg")
+                        img(src="#{IMG_URL}v#{Math.floor(new Date(post.edited_at) / 1000) || 1}/post/#{post._id}-cover.jpg")
                       .is-half
                         .b-post__repost__content
                           h3.b-post__title !{post.title}

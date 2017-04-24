@@ -11,21 +11,23 @@ module.exports = (passport, GoogleStrategy, app) ->
     done null, obj
 
   passport.use new GoogleStrategy {
-    clientID: '350935981608-ok6if6vslgnsa6apkibufd65ojfkiifl.apps.googleusercontent.com'
-    clientSecret: 'RLRxJE6ZLEIHuC5ckC0VybVB'
-    callbackURL: 'http://localhost:8080/a/google/callback'
-    scope: ['profile', 'email']
+    clientID: CONFIG.google.clientID
+    clientSecret: CONFIG.google.clientSecret
+    callbackURL: CONFIG.google.callbackURL
+    scope: CONFIG.google.scope
   }, (token, refreshToken, profile, done) ->
     data = profile._json
-    console.log data
     process.nextTick () ->
-      User
-        .findOne {
+      query = { google_id: data.id }
+      if data.emails[0].value
+        query = {
           $or: [
             { google_id: data.id }
             { email: data.emails[0].value }
           ]
         }
+      User
+        .findOne query
         .exec (err, users) ->
           if users
             if users.email

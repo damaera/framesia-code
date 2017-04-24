@@ -62,8 +62,8 @@ module.exports = (req, res, next) ->
       _id: { $in: articleIds }
       is_published: true
     }
-    .select 'title subtitle slug user is_cover love_count'
-    .populate 'user', 'name username'
+    .select 'title subtitle slug user is_cover love_count edited_at'
+    .populate 'user', 'name username updated_at'
     .lean()
     .exec (err, posts) ->
 

@@ -25,17 +25,23 @@ module.exports = (passport, FacebookStrategy) ->
     #   # email: data.emails
     #   # picture: data.picture.data.url
     # done null, form
-    # console.log data
+    console.log data
     process.nextTick () ->
-      User
-        .findOne {
+
+      query = { facebook_id: data.id }
+      if data.email
+        query = {
           $or: [
             { facebook_id: data.id }
             { email: data.email }
           ]
         }
+
+      User
+        .findOne query
         .exec (err, users) ->
           if users
+            console.log users
             if users.email
               if users.google_id
                 users.facebook_id = data.id

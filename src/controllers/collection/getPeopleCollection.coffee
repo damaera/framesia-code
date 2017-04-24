@@ -8,10 +8,10 @@ module.exports = (req, res, next) ->
   Collection.findOne {
     username: collectionName
   }
-  .populate 'owner', 'name username description'
-  .populate 'admin', 'name username description'
-  .populate 'member', 'name username description'
-  .populate 'member_requested', 'name username description'
+  .populate 'owner', 'name username description updated_at'
+  .populate 'admin', 'name username description updated_at'
+  .populate 'member', 'name username description updated_at'
+  .populate 'member_requested', 'name username description updated_at'
   .lean()
   .exec (err, col) ->
     if not col

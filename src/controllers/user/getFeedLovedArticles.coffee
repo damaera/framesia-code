@@ -27,10 +27,10 @@ module.exports = (req, res, next) ->
 
        populateQuery =
         path: 'to'
-        select: '_id title subtitle slug user is_cover love_count reading_time published_at'
+        select: '_id title subtitle slug user is_cover love_count reading_time published_at edited_at'
         populate:
           path: 'user'
-          select: '_id name username'
+          select: '_id name username updated_at'
           model: 'User'
 
       Love.find findData

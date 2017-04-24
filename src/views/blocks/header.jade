@@ -36,7 +36,7 @@ header.b-header
           if USER.is_new
             img(src="#{USER.picture}")
           else
-            img(src="#{IMG_URL}c_fill,w_50/ava/#{USER._id}.jpg")
+            img(src="#{IMG_URL}c_fill,w_50/v#{Math.floor(new Date(USER.updated_at) / 1000) || 1}/ava/#{USER._id}.jpg")
         div.i-drop.i-drop--user.js-drop-user.is-hidden
             if !USER.is_new
               a(href="/u/#{USER.username}")

@@ -37,7 +37,7 @@ block content
     .i-wrap__left
       .b-profile.i-wrap--640.is-center
         .b-profile__left
-          img.b-profile__ava(src="#{IMG_URL}ava/#{user._id}.jpg" alt="#{user.name} Framesia")
+          img.b-profile__ava(src="#{IMG_URL}v#{Math.floor(new Date(user.updated_at) / 1000) || 1}/ava/#{user._id}.jpg" alt="#{user.name} Framesia")
         .b-profile__right
           h1.b-profile__name #{user.name}
           p.b-profile__desc #{user.description}

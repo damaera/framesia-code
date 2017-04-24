@@ -26,7 +26,7 @@ module.exports = (req, res, next) ->
             from: user._id
             follow_type: 'Collection'
           }
-          .populate 'to', '_id name username description'
+          .populate 'to', '_id name username description updated_at'
           .lean()
           .exec (err, follows) ->
             collections = _.map follows, 'to'

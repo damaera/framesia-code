@@ -14,9 +14,9 @@ module.exports = (req, res, next) ->
 
   if !req.user then res.json { error: 'Unauthorized' }
   else
-    glob.glob "#{CONFIG.imgDir}post/#{post.id}*", (err, files) ->
-      for file in files
-        fs.unlink file
+    # glob.glob "#{CONFIG.imgDir}post/#{post.id}*", (err, files) ->
+    #   for file in files
+    #     fs.unlink file
 
     Post.findOne {
       _id: post.id

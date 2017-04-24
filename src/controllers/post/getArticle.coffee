@@ -9,10 +9,10 @@ extractor = require 'unfluff'
 module.exports = (req, res, next) ->
   populateQuery =
     path: 'response'
-    select: '_id title subtitle slug user love_count'
+    select: '_id title subtitle slug user love_count edited_at'
     populate:
       path: 'user'
-      select: '_id name username description'
+      select: '_id name username description updated_at'
       model: 'User'
 
   { slug } = req.params
@@ -22,8 +22,8 @@ module.exports = (req, res, next) ->
     slug: slug
     is_published: true
   }
-  .populate 'user', '_id name username description'
-  .populate 'collections', '_id name username'
+  .populate 'user', '_id name username description edited_at'
+  .populate 'collections', '_id name username edited_at'
   .populate populateQuery
   .lean()
   .exec (err, post) ->
@@ -46,8 +46,8 @@ module.exports = (req, res, next) ->
               response: post._id
               is_published: true
             }
-            .select 'title user subtitle slug love_count published_at'
-            .populate 'user', '_id name username'
+            .select 'title user subtitle slug love_count published_at edited_at'
+            .populate 'user', '_id name username updated_at'
             .sort '-love_count'
             .limit 2
             .lean()
@@ -58,7 +58,7 @@ module.exports = (req, res, next) ->
                     post: post._id
                     _id: comment
                   }
-                  .populate 'user', '_id name username'
+                  .populate 'user', '_id name username updated_at'
                   .lean()
                   .exec (err, comments) ->
                     res.render 'article', { user: post.user, article: post, comments: comments, is_comment_cb: true, responses: responses }

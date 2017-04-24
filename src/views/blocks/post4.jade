@@ -6,7 +6,7 @@ each item in post
     .b-post__repost--half
       if item.is_cover == true
         .is-half.img
-          img(src="#{IMG_URL}/post/#{item._id}-medium-cover.jpg")
+          img(src="#{IMG_URL}/v#{Math.floor(new Date(item.edited_at) / 1000) || 1}/post/#{item._id}-cover.jpg")
       .is-half
         .b-post__repost__content
           h3.b-post__title !{item.title}

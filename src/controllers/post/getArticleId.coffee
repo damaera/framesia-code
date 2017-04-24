@@ -8,16 +8,16 @@ module.exports = (req, res, next) ->
   if articleId.match mongoIdRegex
     populateQuery =
       path: 'response'
-      select: '_id title subtitle slug user love_count comment_count repost_count'
+      select: '_id title subtitle slug user love_count comment_count repost_count edited_at'
       populate:
         path: 'user'
-        select: '_id name username'
+        select: '_id name username updated_at'
         model: 'User'
 
     Post.findOne {
       _id: articleId
     }
-    .populate 'user', '_id name username description'
+    .populate 'user', '_id name username description updated_at'
     .populate populateQuery
     .lean()
     .exec (err, article) ->
@@ -31,7 +31,7 @@ module.exports = (req, res, next) ->
           Comment.find {
             post: article._id
           }
-          .populate 'user', '_id name username'
+          .populate 'user', '_id name username updated_at'
           .lean()
           .exec (err, comments) ->
             res.render 'article', { user: article.user, article: article, comments: comments }

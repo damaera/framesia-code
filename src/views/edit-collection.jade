@@ -16,7 +16,7 @@ block content
 
       label.text-bold #{__('Change profile picture')}
       br
-      img.js-first-time-ava(src="#{IMG_URL}col/#{collection._id}.jpg", alt="", height="200" width="200")
+      img.js-first-time-ava(src="#{IMG_URL}col/v#{Math.floor(new Date(collection.edited_at) / 1000) || 1}/#{collection._id}.jpg", alt="", height="200" width="200")
       input.js-first-time-ava-input.is-hidden(type="file")
       input.js-first-time-ava-data.is-hidden(name="picture" type="text")
       br

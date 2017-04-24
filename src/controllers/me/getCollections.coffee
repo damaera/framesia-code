@@ -11,7 +11,7 @@ module.exports = (req, res, next) ->
     ]
 
   Collection.find findData
-  .select 'user name username description follower_count'
+  .select 'user name username description follower_count edited_at'
   .lean()
   .exec (err, collections) ->
     # collections2 = []

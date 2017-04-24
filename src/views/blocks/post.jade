@@ -7,7 +7,7 @@ each item in post
       .b-post__head
         .i-user--inline
           span.i-user--inline__ava: a(href="/u/#{item.user.username}")
-            img(src="#{IMG_URL}c_fill,w_50/ava/#{item.user._id}.jpg")
+            img(src="#{IMG_URL}c_fill,w_50/v#{Math.floor(new Date(item.user.updated_at) / 1000) || 1}/ava/#{item.user._id}.jpg")
           span.i-user--inline__name: a(href="/u/#{item.user.username}") #{item.user.name}
           span.i-user--inline__mod
             span   
@@ -33,7 +33,7 @@ each item in post
       .b-post__head
         .i-user--inline
           span.i-user--inline__ava: a(href="/u/#{item.user.username}")
-            img(src="#{IMG_URL}c_fill,w_50/ava/#{item.user._id}.jpg")
+            img(src="#{IMG_URL}c_fill,w_50/v#{Math.floor(new Date(item.user.updated_at) / 1000) || 1}/ava/#{item.user._id}.jpg")
           span.i-user--inline__name: a(href="/u/#{item.user.username}") #{item.user.name}
           span.i-user--inline__mod
             span   
@@ -56,7 +56,7 @@ each item in post
       if item.is_cover
         .b-post__right
           a(href="/p/#{item.slug}")
-            img.b-post__cover(src="#{IMG_URL}ost/#{item._id}-cover.jpg", alt="")
+            img.b-post__cover(src="#{IMG_URL}v#{Math.floor(new Date(item.edited_at) / 1000) || 1}/post/#{item._id}-cover.jpg", alt="")
       .b-post__left(class=item.is_cover ? "" : "is-full")
         a(href="/p/#{item.slug}")
           h3.b-post__title !{item.title}
@@ -79,7 +79,7 @@ each item in post
       .b-post__head
         .i-user--inline
           span.i-user--inline__ava: a(href="/u/#{item.user.username}")
-            img(src="#{IMG_URL}_fill,w_50/ava/#{item.user._id}.jpg")
+            img(src="#{IMG_URL}_fill,w_50/v#{Math.floor(new Date(item.user.updated_at) / 1000) || 1}/ava/#{item.user._id}.jpg")
           span.i-user--inline__name: a(href="/u/#{item.user.username}") #{item.user.name}
           span.i-user--inline__mod
             span   
@@ -131,7 +131,7 @@ each item in post
           
         .i-user--inline
           span.i-user--inline__ava: a(href="/u/#{item.user.username}")
-            img(src="#{IMG_URL}c_fill,w_50/ava/#{item.user._id}.jpg")
+            img(src="#{IMG_URL}c_fill,w_50/v#{Math.floor(new Date(item.user.updated_at) / 1000) || 1}/ava/#{item.user._id}.jpg")
           span.i-user--inline__name: a(href="/u/#{item.user.username}") #{item.user.name}
           span.i-user--inline__mod
             span  #{__('published')}  
@@ -146,7 +146,7 @@ each item in post
       if item.is_cover
         .b-post__right
           a(href="/p/#{item.slug}")
-            img.b-post__cover(src="#{IMG_URL}c_fill,w_240,h_160/post/#{item._id}-cover.jpg", alt="")
+            img.b-post__cover(src="#{IMG_URL}c_fill,w_240,h_160/v#{Math.floor(new Date(item.edited_at) / 1000) || 1}/post/#{item._id}-cover.jpg", alt="")
       .b-post__left(class=item.is_cover ? "" : "is-full")
         a(href="/p/#{item.slug}")
           h3.b-post__title !{item.title}

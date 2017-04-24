@@ -20,7 +20,7 @@ block content
               div.b-post__repost--main
                 .b-article__cover.is-cover-full.b-post__repost--main__cover
                   if post.is_cover
-                    img.b-article__cover__img(src="#{IMG_URL}post/#{post._id}-big-cover.jpg")
+                    img.b-article__cover__img(src="#{IMG_URL}v#{Math.floor(new Date(post.edited_at) / 1000) || 1}/post/#{post._id}-cover.jpg")
                   .b-article__shadow.js-cover-shadow
                 .b-post__repost--main__content
                   h3.b-post__title !{post.title}
@@ -41,7 +41,7 @@ block content
                     if post.is_cover == true
                       .b-post__repost--half
                         .is-half.img
-                          img(src="#{IMG_URL}/post/#{post._id}-medium-cover.jpg")
+                          img(src="#{IMG_URL}v#{Math.floor(new Date(post.edited_at) / 1000) || 1}/post/#{post._id}-cover.jpg")
                         .is-half
                           .b-post__repost__content
                             h3.b-post__title !{post.title}
@@ -71,7 +71,7 @@ block content
                   if post.is_cover == true
                     .b-post__repost--half
                       .is-half.img
-                        img(src="#{IMG_URL}/post/#{post._id}-medium-cover.jpg")
+                        img(src="#{IMG_URL}v#{Math.floor(new Date(post.edited_at) / 1000) || 1}/post/#{post._id}-cover.jpg")
                       .is-half
                         .b-post__repost__content
                           h3.b-post__title !{post.title}

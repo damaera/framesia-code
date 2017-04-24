@@ -13,7 +13,7 @@ module.exports = (req, res, next) ->
 
   Post.find findData
   .sort '-edited_at'
-  .select '_id title subtitle slug created_at edited_at is_cover word_count reading_time is_published'
+  .select '_id title subtitle slug created_at edited_at is_cover word_count reading_time is_published edited_at'
   .limit 7
   .lean()
   .exec (err, posts) ->

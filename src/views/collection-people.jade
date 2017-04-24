@@ -27,7 +27,7 @@ block content
       .i-user.fl
         a(href="/u/#{admin.username}")
           span.i-user__ava
-            img(src="#{IMG_URL}c_fill,w_50/ava/#{admin._id}.jpg")
+            img(src="#{IMG_URL}c_fill,w_50/v#{Math.floor(new Date(admin.updated_at) / 1000) || 1}/ava/#{admin._id}.jpg")
         a(href="/u/#{admin.username}") 
           .i-user__right
             .i-user__name #{admin.name}
@@ -60,7 +60,7 @@ block content
         .i-user.fl
           a(href="/u/#{member.username}")
             span.i-user__ava
-              img(src="#{IMG_URL}c_fill,w_50/ava/#{member._id}.jpg")
+              img(src="#{IMG_URL}c_fill,w_50/v#{Math.floor(new Date(member.updated_at) / 1000) || 1}/ava/#{member._id}.jpg")
           a(href="/u/#{member.username}") 
             .i-user__right
               .i-user__name #{member.name}
@@ -78,7 +78,7 @@ block content
       .i-user.fl
         a(href="/u/#{member.username}")
           span.i-user__ava
-            img(src="#{IMG_URL}c_fill,w_50/ava/#{member._id}.jpg")
+            img(src="#{IMG_URL}c_fill,w_50/v#{Math.floor(new Date(member.updated_at) / 1000) || 1}/ava/#{member._id}.jpg")
         a(href="/u/#{member.username}") 
           .i-user__right
             .i-user__name #{member.name}

@@ -11,19 +11,19 @@ module.exports = (req, res, next) ->
 
   populateQueryRepost =
     path: 'repost'
-    select: '_id title subtitle slug user love_count reading_time'
+    select: '_id title subtitle slug user love_count reading_time edited_at'
     populate:
       path: 'user'
-      select: '_id name username'
+      select: '_id name username updated_at'
       model: 'User'
 
 
   populateQueryResponse =
     path: 'response'
-    select: '_id title subtitle slug user love_count'
+    select: '_id title subtitle slug user love_count edited_at'
     populate:
       path: 'user'
-      select: '_id name username'
+      select: '_id name username updated_at'
       model: 'User'
 
   findData =
@@ -35,9 +35,9 @@ module.exports = (req, res, next) ->
 
   Post.find findData
   .sort '-published_at'
-  .select '_id title subtitle slug user published_at is_cover love_count reading_time is_repost repost is_response is_repost_link repost_link response tags'
-  .populate 'user', '_id name username'
-  .populate 'repost_link', 'title subtitle slug source hostname url'
+  .select '_id title subtitle slug user published_at is_cover love_count reading_time is_repost repost is_response is_repost_link repost_link response tags edited_at'
+  .populate 'user', '_id name username updated_at'
+  .populate 'repost_link', 'title subtitle slug source hostname url edited_at'
   .populate populateQueryRepost
   .populate populateQueryResponse
   .limit 7
