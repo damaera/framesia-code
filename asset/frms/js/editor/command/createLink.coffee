@@ -39,26 +39,26 @@ module.exports = () ->
 
   beginCaret = anchorOffset
   endCaret = focusOffset
-  # get word by find nearest space
-  for i in [anchorOffset..0] by -1
-    beginCaret = i+1
-    break if anchorNode.textContent[i] is ' '
+  # # get word by find nearest space
+  # for i in [anchorOffset..0] by -1
+  #   beginCaret = i+1
+  #   break if anchorNode.textContent[i] is ' '
 
-  if focusNode.textContent[focusOffset-1] is ' '
-  then endCaret = focusOffset-1
-  else
-    for i in [focusOffset..focusNode.textContent.length]
-      endCaret = i
-      break if focusNode.textContent[i] is ' '
+  # if focusNode.textContent[focusOffset-1] is ' '
+  # then endCaret = focusOffset-1
+  # else
+  #   for i in [focusOffset..focusNode.textContent.length]
+  #     endCaret = i
+  #     break if focusNode.textContent[i] is ' '
 
-  if beginCaret is 1
-  then beginCaret--
+  # if beginCaret is 1
+  # then beginCaret--
 
-  if endCaret is focusNode.textContent.length
-  then endCaret--
+  # if endCaret is focusNode.textContent.length
+  # then endCaret--
 
-  # just setSelection
-  setSelection anchorNode, beginCaret, focusNode, endCaret+1
+  # # just setSelection
+  # setSelection anchorNode, beginCaret, focusNode, endCaret+1
 
   # find nesting
   if biRegex.test $beginParent.nodeName
@@ -89,7 +89,7 @@ module.exports = () ->
         inputPlaceholder: "ex: framesia.com"
         allowOutsideClick: true
       , (inputValue) ->
-        setSelection anchorNode, beginCaret, focusNode, endCaret+1
+        setSelection anchorNode, beginCaret, focusNode, endCaret
         if inputValue is false then return false
         else if inputValue is '' then return false
         else

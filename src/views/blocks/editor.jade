@@ -1,21 +1,28 @@
 include ../util/time.jade
 
 .b-toolbar.js-toolbar
+  select(class="b-toolbar__select js-toolbar-block")
+    option(class="b-graf" value="0") Normal
+    option(class="b-graf b-graf--h2" value="1") Heading 1
+    option(class="b-graf b-graf--h3" value="2") Heading 2
+    option(class="b-graf b-graf--quote1" value="3") Quote
+    option(class="b-graf b-graf--code" value="5") Code
+
   button.b-toolbar__item.js-bold.icon-bold.is-first(title="Bold")
   button.b-toolbar__item.js-italic.icon-italic(title="Italic")
   button.b-toolbar__item.js-link.icon-link(title="Make Link")
 
-  button.b-toolbar__item.js-heading1.icon-h1(title="Heading 1")
-  button.b-toolbar__item.js-heading2.icon-h2.is-hidden-tablet(title="Heading 2")
-  button.b-toolbar__item.js-quote1.icon-quote1.is-hidden-tablet(title="Quote 1")
-  button.b-toolbar__item.js-quote2.icon-quote2(title="Quote 2")
+  //- button.b-toolbar__item.js-heading1.icon-h1(title="Heading 1")
+  //- button.b-toolbar__item.js-heading2.icon-h2.is-hidden-tablet(title="Heading 2")
+  //- button.b-toolbar__item.js-quote1.icon-quote1.is-hidden-tablet(title="Quote 1")
+  //- button.b-toolbar__item.js-quote2.icon-quote2(title="Quote 2")
 
-  button.b-toolbar__item.js-code.icon-code.is-hidden-tablet(title="Code Block")
+  button.b-toolbar__item.js-inline-code.icon-code.is-hidden-tablet(title="Code")
   button.b-toolbar__item.js-center.icon-center(title="Align Center")
   button.b-toolbar__item.js-drop-cap.icon-drop-cap.is-hidden-tablet(title="Drop Cap")
 
   button.b-toolbar__item.js-hr.icon-hr.is-hidden-mobile(title="Divider Line")
-  button.b-toolbar__item.js-img.icon-add-img.is-hidden-mobile(title="Add Image")
+  button.b-toolbar__item.js-img.icon-add-img(title="Add Image")
   button.b-toolbar__item.js-help.icon-help.is-last.is-hidden-mobile(title="Help")
 
   button.js-open.is-hidden

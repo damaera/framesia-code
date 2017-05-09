@@ -121,9 +121,16 @@ toolbarChange = (e) ->
     then ($ button).classList.add 'is-active'
     else ($ button).classList.remove 'is-active'
 
-  toggleElement 'H2', '.js-heading1'
-  toggleElement 'H3', '.js-heading2'
-  toggleElement 'PRE', '.js-code'
+  # toggleElement 'H2', '.js-heading1'
+  # toggleElement 'H3', '.js-heading2'
+  # toggleElement 'PRE', '.js-code'
+  toggleElement 'CODE', '.js-inline-code'
+
+  if $beginParent.nodeName is 'H2' then ($ '.js-toolbar-block').value = 1
+  else if $beginParent.nodeName is 'H3' then ($ '.js-toolbar-block').value = 2
+  else if $beginParent.nodeName is 'PRE' then ($ '.js-toolbar-block').value = 5
+  else if $beginParent.nodeName is 'P' then ($ '.js-toolbar-block').value = 0
+  else if $beginParent.nodeName is 'BLOCKQUOTE' then ($ '.js-toolbar-block').value = 3
 
   # center
   if $beginParent.classList.contains 'is-center' or anchorNode.classList.contains 'is-center'
@@ -136,16 +143,17 @@ toolbarChange = (e) ->
   else ($ '.js-drop-cap').classList.remove 'is-active'
 
   # quote1 and 2
-  if $beginParent.nodeName is 'BLOCKQUOTE' or anchorNode.nodeName is 'BLOCKQUOTE'
-    if $beginParent.classList.contains 'is-second'
-      ($ '.js-quote1').classList.add 'is-active'
-      ($ '.js-quote2').classList.remove 'is-active'
-    else
-      ($ '.js-quote2').classList.add 'is-active'
-      ($ '.js-quote1').classList.remove 'is-active'
-  else
-    ($ '.js-quote1').classList.remove 'is-active'
-    ($ '.js-quote2').classList.remove 'is-active'
+  # if $beginParent.nodeName is 'BLOCKQUOTE' or anchorNode.nodeName is 'BLOCKQUOTE'
+  #   ($ '.js-toolbar-block').value = 3
+    # if $beginParent.classList.contains 'is-second'
+      # ($ '.js-quote1').classList.add 'is-active'
+      # ($ '.js-quote2').classList.remove 'is-active'
+    # else
+      # ($ '.js-quote2').classList.add 'is-active'
+      # ($ '.js-quote1').classList.remove 'is-active'
+  # else
+    # ($ '.js-quote1').classList.remove 'is-active'
+    # ($ '.js-quote2').classList.remove 'is-active'
 
   #hr
   if $beginParent.nodeName is 'LI'
@@ -163,23 +171,23 @@ toolbarChange = (e) ->
   # make disabled
   ##################
   if $beginParent.nodeName is 'LI'
-    ($ '.js-heading1').classList.add 'is-disabled'
-    ($ '.js-heading2').classList.add 'is-disabled'
-    ($ '.js-quote1').classList.add 'is-disabled'
-    ($ '.js-quote2').classList.add 'is-disabled'
-    ($ '.js-code').classList.add 'is-disabled'
+    ($ '.js-toolbar-block').classList.add 'is-disabled'
+    # ($ '.js-heading1').classList.add 'is-disabled'
+    # ($ '.js-heading2').classList.add 'is-disabled'
+    # ($ '.js-quote2').classList.add 'is-disabled'
+    # ($ '.js-code').classList.add 'is-disabled'
   else if $beginParent.firstChild.classList?.contains 'is-drop-cap'
-    ($ '.js-heading1').classList.add 'is-disabled'
-    ($ '.js-heading2').classList.add 'is-disabled'
-    ($ '.js-quote1').classList.add 'is-disabled'
-    ($ '.js-quote2').classList.add 'is-disabled'
-    ($ '.js-code').classList.add 'is-disabled'
+    ($ '.js-toolbar-block').classList.add 'is-disabled'
+    # ($ '.js-heading1').classList.add 'is-disabled'
+    # ($ '.js-heading2').classList.add 'is-disabled'
+    # ($ '.js-quote2').classList.add 'is-disabled'
+    # ($ '.js-code').classList.add 'is-disabled'
   else
-    ($ '.js-heading1').classList.remove 'is-disabled'
-    ($ '.js-heading2').classList.remove 'is-disabled'
-    ($ '.js-quote1').classList.remove 'is-disabled'
-    ($ '.js-quote2').classList.remove 'is-disabled'
-    ($ '.js-code').classList.remove 'is-disabled'
+    ($ '.js-toolbar-block').classList.remove 'is-disabled'
+    # ($ '.js-heading1').classList.remove 'is-disabled'
+    # ($ '.js-heading2').classList.remove 'is-disabled'
+    # ($ '.js-quote2').classList.remove 'is-disabled'
+    # ($ '.js-code').classList.remove 'is-disabled'
 
   # dropcap only in p element, with first char is alphabetical, (a-z)
   if $beginParent.nodeName isnt 'P'
@@ -193,19 +201,22 @@ toolbarChange = (e) ->
     ($ '.js-link').classList.add 'is-disabled'
     ($ '.js-bold').classList.add 'is-disabled'
     ($ '.js-italic').classList.add 'is-disabled'
+    ($ '.js-inline-code').classList.add 'is-disabled'
   else
     ($ '.js-link').classList.remove 'is-disabled'
     ($ '.js-bold').classList.remove 'is-disabled'
     ($ '.js-italic').classList.remove 'is-disabled'
+    ($ '.js-inline-code').classList.remove 'is-disabled'
 
   # figcaption cant converted to another element
   if $beginParent.nodeName is 'FIGCAPTION'
-    ($ '.js-heading1').classList.add 'is-disabled'
-    ($ '.js-heading2').classList.add 'is-disabled'
-    ($ '.js-quote1').classList.add 'is-disabled'
-    ($ '.js-quote2').classList.add 'is-disabled'
-    ($ '.js-code').classList.add 'is-disabled'
+    # ($ '.js-heading1').classList.add 'is-disabled'
+    # ($ '.js-heading2').classList.add 'is-disabled'
+    # ($ '.js-quote1').classList.add 'is-disabled'
+    # ($ '.js-quote2').classList.add 'is-disabled'
+    # ($ '.js-code').classList.add 'is-disabled'
     ($ '.js-center').classList.add 'is-disabled'
+    ($ '.js-toolbar-block').classList.add 'is-disabled'
 
   if $beginParent.nodeName is 'PRE'
     ($ '.js-link').classList.add 'is-disabled'

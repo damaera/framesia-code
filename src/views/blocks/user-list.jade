@@ -2,7 +2,7 @@ if users
   each user in users
     br
     span.i-user__ava(height="100%")
-      img(src="#{IMG_URL}c_fill,w_50/v#{Math.floor(new Date(user.updated_at) / 1000) || 1}/ava/#{user._id}.jpg")
+      img(src="#{IMG_URL}c_fill,w_50/v#{Math.floor(new Date(user.updated_at) / 1000 + 1) || 1}/ava/#{user._id}.jpg")
     span.i-user--footer__name.text-red: a(href="/u/#{user.username}") #{user.name}
     p.i-user--footer__desc #{user.description}
     p.i-user--footer__username: a(href="/u/#{user.username}") /#{user.username}

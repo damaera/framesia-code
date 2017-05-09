@@ -25,7 +25,7 @@ module.exports = (passport, FacebookStrategy) ->
     #   # email: data.emails
     #   # picture: data.picture.data.url
     # done null, form
-    console.log data
+    # console.log data
     process.nextTick () ->
 
       query = { facebook_id: data.id }

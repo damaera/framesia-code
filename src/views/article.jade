@@ -189,7 +189,7 @@ block content
           each collection in article.collections
             .footer-collection
               span.i-user__ava--sq
-                img(src="#{IMG_URL}c_fill,w_50/v#{Math.floor(new Date(collection.edited_at) / 1000) || 1}/col/#{collection._id}.jpg")
+                img(src="#{IMG_URL}c_fill,w_50/v#{Math.floor(new Date(collection.edited_at) / 1000 + 1) || 1}/col/#{collection._id}.jpg")
               span.i-user--footer__name.text-green: a(href="/c/#{collection.username}") #{collection.name}
               p.i-user--footer__username: a(href="/c/#{collection.username}") #{collection.username}
           .clear

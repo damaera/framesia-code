@@ -14,7 +14,7 @@ insertHr = require './command/insertHr.coffee'
 makeEmbed = require './command/makeEmbed.coffee'
 insertImage = require './command/insertImage.coffee'
 imageControl = require './command/imageControl.coffee'
-insertCode = require './command/insertCode.coffee'
+insertTable = require './command/insertTable.coffee'
 dropCap = require './command/dropCap.coffee'
 addCover = require './command/addCover.coffee'
 
@@ -97,15 +97,15 @@ document.addEventListener 'keydown', (e) ->
     # ctrl I
     else if e.keyCode is 73 then ($ '.js-italic').click()
     # ctrl 1
-    else if e.keyCode is 49 then ($ '.js-heading1').click()
+    # else if e.keyCode is 49 then ($ '.js-heading1').click()
     # ctrl 2
-    else if e.keyCode is 50 then ($ '.js-heading2').click()
+    # else if e.keyCode is 50 then ($ '.js-heading2').click()
     # ctrl 3
-    else if e.keyCode is 51 then ($ '.js-quote1').click()
+    # else if e.keyCode is 51 then ($ '.js-quote1').click()
     # ctrl 4
-    else if e.keyCode is 52 then ($ '.js-quote2').click()
+    # else if e.keyCode is 52 then ($ '.js-quote2').click()
     # ctrl 5
-    else if e.keyCode is 53 then ($ '.js-code').click()
+    # else if e.keyCode is 53 then ($ '.js-code').click()
     # ctrl E centering
     else if e.keyCode is 69 then ($ '.js-center').click()
     # ctrl K make link
@@ -245,37 +245,51 @@ command = (e, cb) ->
     else
       cb false
 
-($ '.js-heading1').onclick = (e) ->
+($ '.js-toolbar-block').onchange = (e) ->
+  type = e.target.value * 1
   command e, (res) ->
     if res
-    then blockElement 1
+    then blockElement type
+    else return
+  # blockElement e.target.value
+
+# ($ '.js-heading1').onclick = (e) ->
+#   command e, (res) ->
+#     if res
+#     then blockElement 1
+#     else return
+
+# ($ '.js-heading2').onclick = (e) ->
+#   command e, (res) ->
+#     if res
+#     then blockElement 2
+#     else return
+
+($ '.js-inline-code').onclick = (e) ->
+  command e, (res) ->
+    if res
+      # blockElement 4
+      # alignCenter()
+      boldItalic 'code'
     else return
 
-($ '.js-heading2').onclick = (e) ->
-  command e, (res) ->
-    if res
-    then blockElement 2
-    else return
+# ($ '.js-quote2').onclick = (e) ->
+#   command e, (res) ->
+#     if res
+#     then blockElement 3
+#     else return
 
-($ '.js-quote1').onclick = (e) ->
-  command e, (res) ->
-    if res
-      blockElement 4
-      alignCenter()
-      boldItalic 'italic'
-    else return
+# ($ '.js-quote1').onclick = (e) ->
+#   command e, (res) ->
+#     if res
+#     then blockElement 4
+#     else return
 
-($ '.js-quote2').onclick = (e) ->
-  command e, (res) ->
-    if res
-    then blockElement 3
-    else return
-
-($ '.js-code').onclick = (e) ->
-  command e, (res) ->
-    if res
-    then blockElement 5
-    else return
+# ($ '.js-code').onclick = (e) ->
+#   command e, (res) ->
+#     if res
+#     then blockElement 5
+#     else return
 
 ($ '.js-bold').onclick = (e) ->
   command e, (res) ->
@@ -327,6 +341,12 @@ $editable.addEventListener 'keyup', (e) ->
     if res
     then createLink()
     else return
+
+# ($ '.js-table').onclick = (e) ->
+#   command e, (res) ->
+#     if res
+#     then insertTable()
+#     else return
 
 ($ '.js-hr').onclick = (e) ->
   command e, (res) ->

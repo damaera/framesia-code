@@ -45,7 +45,7 @@ each notif in notifs
   .b-notif__item(data-notif-id="#{notif._id}" class="#{ notif.is_read == true ? 'is-read' : '' }")
     a(href="#{url}")
       span.i-user--inline__ava
-        img(src="#{IMG_URL}c_fill,w_50/ava/v#{Math.floor(new Date(notif.from.updated_at) / 1000) || 1}/#{notif.from._id}.jpg")
+        img(src="#{IMG_URL}c_fill,w_50/v#{Math.floor(new Date(notif.from.updated_at) / 1000 + 1) || 1}/ava/#{notif.from._id}.jpg")
       span.b-notif__user #{notif.from.name} 
       span  #{text}
       span  &middot;  

@@ -4,11 +4,18 @@ setSelection = require '../helper/setSelection.coffee'
 
 $editable = $ '.js-editable'
 
-boldItalic = (tag) ->
+boldItalic = (tag, selection) ->
   if tag is 'bold'
     document.execCommand 'bold'
   else if tag is 'italic'
     document.execCommand 'italic'
+  else if tag is 'code'
+    data = selection.toString()
+    
+    if data.length > 0
+      if selection.anchorNode.parentNode.nodeName is 'CODE'
+      then document.execCommand 'insertHTML', false, "#{data}"
+      else document.execCommand 'insertHTML', false, "<code>#{data.trim()}</code>  "
   else return
 
 module.exports = (tag) ->
@@ -23,26 +30,26 @@ module.exports = (tag) ->
 
   beginCaret = anchorOffset
   endCaret = focusOffset
-  # get word by find nearest space
-  for i in [anchorOffset..0] by -1
-    beginCaret = i+1
-    break if /^( |\-|&)$/.test anchorNode.textContent[i]
+  # # get word by find nearest space
+  # for i in [anchorOffset..0] by -1
+  #   beginCaret = i+1
+  #   break if /^( |\-|&)$/.test anchorNode.textContent[i]
 
-  if  /^( |\-|&)$/.test focusNode.textContent[focusOffset-1]
-  then endCaret = focusOffset-1
-  else
-    for i in [focusOffset..focusNode.textContent.length]
-      endCaret = i
-      break if /^( |\-|&)$/.test focusNode.textContent[i]
+  # if  /^( |\-|&)$/.test focusNode.textContent[focusOffset-1]
+  # then endCaret = focusOffset-1
+  # else
+  #   for i in [focusOffset..focusNode.textContent.length]
+  #     endCaret = i
+  #     break if /^( |\-|&)$/.test focusNode.textContent[i]
 
-  if beginCaret is 1
-  then beginCaret--
+  # if beginCaret is 1
+  # then beginCaret--
 
-  if endCaret is focusNode.textContent.length
-  then endCaret--
+  # if endCaret is focusNode.textContent.length
+  # then endCaret--
 
-  # just setSelection
-  setSelection anchorNode, beginCaret, focusNode, endCaret+1
+  # # just setSelection
+  # setSelection anchorNode, beginCaret, focusNode, endCaret+1
 
   isHeading = false
   for $child in $editable.childNodes
@@ -52,6 +59,6 @@ module.exports = (tag) ->
         if not elRegex.test $child.nodeName
           isHeading = true
   if isHeading isnt true
-    boldItalic tag
+    boldItalic tag, selection
   else
-    console.log 'heading gak bisa di bold / italic'
+    # console.log 'heading gak bisa di bold / italic'

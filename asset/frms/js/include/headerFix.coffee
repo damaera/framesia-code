@@ -8,11 +8,11 @@ prevDirection = 'down'
 if ($ '.b-toolbar')
   $header.classList.add 'is-fixed'
 
-if ($ '.b-welcome')
-  if (window.scrollY < 40)
-    $('.b-header').classList.add 'no-bg'
-  else
-    $('.b-header').classList.remove 'no-bg'
+# if ($ '.b-welcome')
+#   if (window.scrollY < 40)
+#     $('.b-header').classList.add 'no-bg'
+#   else
+#     $('.b-header').classList.remove 'no-bg'
 
 window.addEventListener 'scroll', (e) ->
   if !($ '.b-toolbar')
@@ -34,8 +34,8 @@ window.addEventListener 'scroll', (e) ->
     lastScrollTop = st
     prevDirection = direction
 
-    # no bg in header
-    if $('.b-welcome') or $('.is-cover-full')
+    # no bg in header coverfull
+    if $('.is-cover-full')
       if (window.scrollY < 400)
         $('.b-header').classList.add 'no-bg'
       else

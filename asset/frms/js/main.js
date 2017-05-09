@@ -227,6 +227,9 @@ module.exports = function(type) {
   } else if (type === 5) {
     hElement = code();
     eType = "PRE";
+  } else if (type === 0) {
+    hElement = p();
+    eType = "P";
   } else {
     return;
   }
@@ -306,18 +309,28 @@ setSelection = require('../helper/setSelection.coffee');
 
 $editable = $('.js-editable');
 
-boldItalic = function(tag) {
+boldItalic = function(tag, selection) {
+  var data;
   if (tag === 'bold') {
     return document.execCommand('bold');
   } else if (tag === 'italic') {
     return document.execCommand('italic');
+  } else if (tag === 'code') {
+    data = selection.toString();
+    if (data.length > 0) {
+      if (selection.anchorNode.parentNode.nodeName === 'CODE') {
+        return document.execCommand('insertHTML', false, "" + data);
+      } else {
+        return document.execCommand('insertHTML', false, "<code>" + (data.trim()) + "</code>  ");
+      }
+    }
   } else {
 
   }
 };
 
 module.exports = function(tag) {
-  var $beginParent, $child, $endParent, anchorNode, anchorOffset, beginCaret, elRegex, endCaret, focusNode, focusOffset, i, isHeading, j, k, l, len, ref1, ref2, ref3, ref4, selection;
+  var $beginParent, $child, $endParent, anchorNode, anchorOffset, beginCaret, elRegex, endCaret, focusNode, focusOffset, i, isHeading, len, ref1, selection;
   selection = window.getSelection();
   document.execCommand('StyleWithCSS', false, false);
   elRegex = /^(B|I|STRONG|EM|P|A|BLOCKQUOTE|UL|OL|FIGURE|PRE)$/;
@@ -326,33 +339,10 @@ module.exports = function(tag) {
   $endParent = focusNode.parentNode;
   beginCaret = anchorOffset;
   endCaret = focusOffset;
-  for (i = j = ref1 = anchorOffset; j >= 0; i = j += -1) {
-    beginCaret = i + 1;
-    if (/^( |\-|&)$/.test(anchorNode.textContent[i])) {
-      break;
-    }
-  }
-  if (/^( |\-|&)$/.test(focusNode.textContent[focusOffset - 1])) {
-    endCaret = focusOffset - 1;
-  } else {
-    for (i = k = ref2 = focusOffset, ref3 = focusNode.textContent.length; ref2 <= ref3 ? k <= ref3 : k >= ref3; i = ref2 <= ref3 ? ++k : --k) {
-      endCaret = i;
-      if (/^( |\-|&)$/.test(focusNode.textContent[i])) {
-        break;
-      }
-    }
-  }
-  if (beginCaret === 1) {
-    beginCaret--;
-  }
-  if (endCaret === focusNode.textContent.length) {
-    endCaret--;
-  }
-  setSelection(anchorNode, beginCaret, focusNode, endCaret + 1);
   isHeading = false;
-  ref4 = $editable.childNodes;
-  for (l = 0, len = ref4.length; l < len; l++) {
-    $child = ref4[l];
+  ref1 = $editable.childNodes;
+  for (i = 0, len = ref1.length; i < len; i++) {
+    $child = ref1[i];
     if (selection.containsNode($child, true)) {
       if ($child.innerHTML) {
         if (!elRegex.test($child.nodeName)) {
@@ -362,9 +352,9 @@ module.exports = function(tag) {
     }
   }
   if (isHeading !== true) {
-    return boldItalic(tag);
+    return boldItalic(tag, selection);
   } else {
-    return console.log('heading gak bisa di bold / italic');
+
   }
 };
 
@@ -402,7 +392,7 @@ removeTooltip = function($tt) {
 };
 
 module.exports = function() {
-  var $beginParent, $endParent, anchorNode, anchorOffset, beginCaret, biRegex, elRegex, endCaret, focusNode, focusOffset, i, j, k, ref1, ref2, ref3, selection;
+  var $beginParent, $endParent, anchorNode, anchorOffset, beginCaret, biRegex, elRegex, endCaret, focusNode, focusOffset, selection;
   selection = window.getSelection();
   document.execCommand('StyleWithCSS', false, false);
   biRegex = /^(B|I|STRONG|EM|SPAN)$/;
@@ -412,29 +402,6 @@ module.exports = function() {
   $endParent = focusNode.parentNode;
   beginCaret = anchorOffset;
   endCaret = focusOffset;
-  for (i = j = ref1 = anchorOffset; j >= 0; i = j += -1) {
-    beginCaret = i + 1;
-    if (anchorNode.textContent[i] === ' ') {
-      break;
-    }
-  }
-  if (focusNode.textContent[focusOffset - 1] === ' ') {
-    endCaret = focusOffset - 1;
-  } else {
-    for (i = k = ref2 = focusOffset, ref3 = focusNode.textContent.length; ref2 <= ref3 ? k <= ref3 : k >= ref3; i = ref2 <= ref3 ? ++k : --k) {
-      endCaret = i;
-      if (focusNode.textContent[i] === ' ') {
-        break;
-      }
-    }
-  }
-  if (beginCaret === 1) {
-    beginCaret--;
-  }
-  if (endCaret === focusNode.textContent.length) {
-    endCaret--;
-  }
-  setSelection(anchorNode, beginCaret, focusNode, endCaret + 1);
   if (biRegex.test($beginParent.nodeName)) {
     $beginParent = $beginParent.parentNode;
     if (biRegex.test($beginParent.nodeName)) {
@@ -467,8 +434,8 @@ module.exports = function() {
         inputPlaceholder: "ex: framesia.com",
         allowOutsideClick: true
       }, function(inputValue) {
-        var $link, l, len, ref4;
-        setSelection(anchorNode, beginCaret, focusNode, endCaret + 1);
+        var $link, i, len, ref1;
+        setSelection(anchorNode, beginCaret, focusNode, endCaret);
         if (inputValue === false) {
           return false;
         } else if (inputValue === '') {
@@ -479,9 +446,9 @@ module.exports = function() {
           }
           document.execCommand('createLink', false, inputValue);
           swal.close();
-          ref4 = $$('.js-editable a');
-          for (l = 0, len = ref4.length; l < len; l++) {
-            $link = ref4[l];
+          ref1 = $$('.js-editable a');
+          for (i = 0, len = ref1.length; i < len; i++) {
+            $link = ref1[i];
             $link.addEventListener('mouseover', function(e) {
               return makeTooltip($tt, this);
             });
@@ -716,9 +683,6 @@ alignImage = function(type) {
 
 
 },{"../helper/selector.coffee":17}],9:[function(require,module,exports){
-
-
-},{}],10:[function(require,module,exports){
 var $, $$, $editable, biRegex, blockRegex, hr, p, ref, ref1, setCaret;
 
 ref = require('../helper/elementList.coffee'), hr = ref.hr, p = ref.p;
@@ -772,7 +736,7 @@ module.exports = function() {
 };
 
 
-},{"../helper/elementList.coffee":15,"../helper/selector.coffee":17,"../helper/setCaret.coffee":18}],11:[function(require,module,exports){
+},{"../helper/elementList.coffee":15,"../helper/selector.coffee":17,"../helper/setCaret.coffee":18}],10:[function(require,module,exports){
 var $, $$, $editable, $inputImg, biRegex, figure, loadImage, makeImageControl, p, ref, ref1, removeImageControl, setSelection;
 
 ref = require('../helper/elementList.coffee'), figure = ref.figure, p = ref.p;
@@ -902,7 +866,51 @@ module.exports = function() {
 };
 
 
-},{"../helper/elementList.coffee":15,"../helper/selector.coffee":17,"../helper/setSelection.coffee":19,"blueimp-load-image-npm":21}],12:[function(require,module,exports){
+},{"../helper/elementList.coffee":15,"../helper/selector.coffee":17,"../helper/setSelection.coffee":19,"blueimp-load-image-npm":21}],11:[function(require,module,exports){
+var $, $$, $editable, biRegex, blockRegex, p, ref, ref1, setCaret, table;
+
+ref = require('../helper/elementList.coffee'), table = ref.table, p = ref.p;
+
+ref1 = require('../helper/selector.coffee'), $ = ref1.$, $$ = ref1.$$;
+
+setCaret = require('../helper/setCaret.coffee');
+
+$editable = $('.js-editable');
+
+biRegex = /^(B|I|STRONG|EM|A|SPAN)$/;
+
+blockRegex = /^(H1|H2|H3|P|BLOCKQUOTE|LI|UL|OL)$/;
+
+module.exports = function() {
+  var $beginParent, $endParent, $newP, $newTable, selection;
+  selection = window.getSelection();
+  $beginParent = selection.anchorNode.parentNode;
+  $endParent = selection.focusNode.parentNode;
+  if (biRegex.test($beginParent.nodeName)) {
+    $beginParent = $beginParent.parentNode;
+    if (biRegex.test($beginParent.nodeName)) {
+      $beginParent = $beginParent.parentNode;
+      if (biRegex.test($beginParent.nodeName)) {
+        $beginParent = $beginParent.parentNode;
+        if (biRegex.test($beginParent.nodeName)) {
+          $beginParent = $beginParent.parentNode;
+        }
+      }
+    }
+  }
+  if ($beginParent.nodeName === 'LI') {
+    $beginParent = $beginParent.parentNode;
+  }
+  $newTable = table(2, 2);
+  console.log($newTable);
+  $newP = p();
+  $newP.innerHTML = '<br>';
+  $editable.appendChild($newTable);
+  return $editable.appendChild($newP);
+};
+
+
+},{"../helper/elementList.coffee":15,"../helper/selector.coffee":17,"../helper/setCaret.coffee":18}],12:[function(require,module,exports){
 var p, setCaret;
 
 p = require('../helper/elementList.coffee').p;
@@ -999,7 +1007,7 @@ loadImage = require('blueimp-load-image-npm');
 shortid = require('shortid');
 
 purifyHtml = function(html) {
-  return html.replace(/</g, '&lt;').replace(/&lt;(br)(.*?)>/g, '<br>').replace(/&lt;span (.*?)>[A-Z]/g, '').replace(/&lt;\/span>/g, '').replace(/&lt;(b|strong)>/g, '<strong>').replace(/&lt;\/(b|strong)>/g, '</strong>').replace(/&lt;(i|em)>/g, '<em>').replace(/&lt;\/(i|em)>/g, '</em>').replace(/&lt;a href=/g, '<a href=').replace(/&lt;\/a>/g, '</a>');
+  return html.replace(/</g, '&lt;').replace(/&lt;(br)(.*?)>/g, '<br>').replace(/&lt;span (.*?)>[A-Z]/g, '').replace(/&lt;\/span>/g, '').replace(/&lt;(b|strong)>/g, '<strong>').replace(/&lt;\/(b|strong)>/g, '</strong>').replace(/&lt;(i|em)>/g, '<em>').replace(/&lt;\/(i|em)>/g, '</em>').replace(/&lt;code>/g, '<code>').replace(/&lt;\/code>/g, '</code>').replace(/&lt;a href=/g, '<a href=').replace(/&lt;\/a>/g, '</a>');
 };
 
 purifyImage = function(data) {
@@ -1339,7 +1347,7 @@ module.exports = {
     $code = document.createElement('PRE');
     $code.classList.add('b-graf');
     $code.classList.add('b-graf--code');
-    $blockquote.setAttribute('data-id', shortid.generate());
+    $code.setAttribute('data-id', shortid.generate());
     return $code;
   },
   cap: function() {
@@ -1363,6 +1371,20 @@ module.exports = {
     var $textNode;
     $textNode = document.createTextNode(text);
     return $textNode;
+  },
+  table: function(row, col) {
+    var $col, $row, $table, c, i, j, r, ref, ref1;
+    $table = document.createElement('TABLE');
+    $table.classList.add('b-graf');
+    $table.classList.add('b-graf--table');
+    for (r = i = 0, ref = row - 1; 0 <= ref ? i <= ref : i >= ref; r = 0 <= ref ? ++i : --i) {
+      $row = $table.insertRow(r);
+      for (c = j = 0, ref1 = col - 1; 0 <= ref1 ? j <= ref1 : j >= ref1; c = 0 <= ref1 ? ++j : --j) {
+        $col = $row.insertCell(c);
+        $col.innerHTML = '<br />';
+      }
+    }
+    return $table;
   },
   figure: function(type, img, caption) {
     var $caption, $figure, $img, altText, figureClass, placeholderText;
@@ -1460,7 +1482,7 @@ module.exports = function(el1, position1, el2, position2) {
 
 
 },{}],20:[function(require,module,exports){
-var $, $$, $btn, $editable, $inputLink, $title, $titleParent, $toolbar, $tt, $ttil, addCover, addListener, alignCenter, articleInit, autoLink, blockElement, boldItalic, charTransform, command, createLink, dropCap, hangingPunc, i, imageControl, insertCode, insertHr, insertImage, isTitleFocus, len, makeEmbed, makeImageControl, makeList, makeTooltip, normalizedEditable, oldValue, onPaste, onUndo, ref, ref1, ref2, removeImageControl, removeTooltip, setCaret, setSelection, setUndo, swal, timer, toDom, toJson, toolbarListener;
+var $, $$, $btn, $editable, $inputLink, $title, $titleParent, $toolbar, $tt, $ttil, addCover, addListener, alignCenter, articleInit, autoLink, blockElement, boldItalic, charTransform, command, createLink, dropCap, hangingPunc, i, imageControl, insertHr, insertImage, insertTable, isTitleFocus, len, makeEmbed, makeImageControl, makeList, makeTooltip, normalizedEditable, oldValue, onPaste, onUndo, ref, ref1, ref2, removeImageControl, removeTooltip, setCaret, setSelection, setUndo, swal, timer, toDom, toJson, toolbarListener;
 
 swal = require('sweetalert');
 
@@ -1486,7 +1508,7 @@ insertImage = require('./command/insertImage.coffee');
 
 imageControl = require('./command/imageControl.coffee');
 
-insertCode = require('./command/insertCode.coffee');
+insertTable = require('./command/insertTable.coffee');
 
 dropCap = require('./command/dropCap.coffee');
 
@@ -1576,16 +1598,6 @@ document.addEventListener('keydown', function(e) {
       return ($('.js-bold')).click();
     } else if (e.keyCode === 73) {
       return ($('.js-italic')).click();
-    } else if (e.keyCode === 49) {
-      return ($('.js-heading1')).click();
-    } else if (e.keyCode === 50) {
-      return ($('.js-heading2')).click();
-    } else if (e.keyCode === 51) {
-      return ($('.js-quote1')).click();
-    } else if (e.keyCode === 52) {
-      return ($('.js-quote2')).click();
-    } else if (e.keyCode === 53) {
-      return ($('.js-code')).click();
     } else if (e.keyCode === 69) {
       return ($('.js-center')).click();
     } else if (e.keyCode === 75) {
@@ -1747,52 +1759,22 @@ command = function(e, cb) {
   }
 };
 
-($('.js-heading1')).onclick = function(e) {
+($('.js-toolbar-block')).onchange = function(e) {
+  var type;
+  type = e.target.value * 1;
   return command(e, function(res) {
     if (res) {
-      return blockElement(1);
+      return blockElement(type);
     } else {
 
     }
   });
 };
 
-($('.js-heading2')).onclick = function(e) {
+($('.js-inline-code')).onclick = function(e) {
   return command(e, function(res) {
     if (res) {
-      return blockElement(2);
-    } else {
-
-    }
-  });
-};
-
-($('.js-quote1')).onclick = function(e) {
-  return command(e, function(res) {
-    if (res) {
-      blockElement(4);
-      alignCenter();
-      return boldItalic('italic');
-    } else {
-
-    }
-  });
-};
-
-($('.js-quote2')).onclick = function(e) {
-  return command(e, function(res) {
-    if (res) {
-      return blockElement(3);
-    } else {
-
-    }
-  });
-};
-
-($('.js-code')).onclick = function(e) {
-  return command(e, function(res) {
-    if (res) {
-      return blockElement(5);
+      return boldItalic('code');
     } else {
 
     }
@@ -2003,7 +1985,7 @@ $editable.addEventListener('click', function(e) {
 };
 
 
-},{"./command/addCover.coffee":2,"./command/alignCenter.coffee":3,"./command/blockElement.coffee":4,"./command/boldItalic.coffee":5,"./command/createLink.coffee":6,"./command/dropCap.coffee":7,"./command/imageControl.coffee":8,"./command/insertCode.coffee":9,"./command/insertHr.coffee":10,"./command/insertImage.coffee":11,"./command/makeEmbed.coffee":12,"./command/makeList.coffee":13,"./domParse.coffee":14,"./helper/selector.coffee":17,"./helper/setCaret.coffee":18,"./helper/setSelection.coffee":19,"./normalize/autoLink.coffee":33,"./normalize/charTransform.coffee":34,"./normalize/hangingPunc.coffee":35,"./normalize/normalizeEditable.coffee":36,"./normalize/onPaste.coffee":37,"./normalize/onUndo.coffee":38,"./normalize/toolbarListener.coffee":39,"sweetalert":31}],21:[function(require,module,exports){
+},{"./command/addCover.coffee":2,"./command/alignCenter.coffee":3,"./command/blockElement.coffee":4,"./command/boldItalic.coffee":5,"./command/createLink.coffee":6,"./command/dropCap.coffee":7,"./command/imageControl.coffee":8,"./command/insertHr.coffee":9,"./command/insertImage.coffee":10,"./command/insertTable.coffee":11,"./command/makeEmbed.coffee":12,"./command/makeList.coffee":13,"./domParse.coffee":14,"./helper/selector.coffee":17,"./helper/setCaret.coffee":18,"./helper/setSelection.coffee":19,"./normalize/autoLink.coffee":33,"./normalize/charTransform.coffee":34,"./normalize/hangingPunc.coffee":35,"./normalize/normalizeEditable.coffee":36,"./normalize/onPaste.coffee":37,"./normalize/onUndo.coffee":38,"./normalize/toolbarListener.coffee":39,"sweetalert":31}],21:[function(require,module,exports){
 'use strict';
 
 var loadImage = require('./load-image');
@@ -4498,9 +4480,18 @@ toolbarChange = function(e) {
       return ($(button)).classList.remove('is-active');
     }
   };
-  toggleElement('H2', '.js-heading1');
-  toggleElement('H3', '.js-heading2');
-  toggleElement('PRE', '.js-code');
+  toggleElement('CODE', '.js-inline-code');
+  if ($beginParent.nodeName === 'H2') {
+    ($('.js-toolbar-block')).value = 1;
+  } else if ($beginParent.nodeName === 'H3') {
+    ($('.js-toolbar-block')).value = 2;
+  } else if ($beginParent.nodeName === 'PRE') {
+    ($('.js-toolbar-block')).value = 5;
+  } else if ($beginParent.nodeName === 'P') {
+    ($('.js-toolbar-block')).value = 0;
+  } else if ($beginParent.nodeName === 'BLOCKQUOTE') {
+    ($('.js-toolbar-block')).value = 3;
+  }
   if ($beginParent.classList.contains('is-center' || anchorNode.classList.contains('is-center'))) {
     ($('.js-center')).classList.add('is-active');
   } else {
@@ -4510,18 +4501,6 @@ toolbarChange = function(e) {
     ($('.js-drop-cap')).classList.add('is-active');
   } else {
     ($('.js-drop-cap')).classList.remove('is-active');
-  }
-  if ($beginParent.nodeName === 'BLOCKQUOTE' || anchorNode.nodeName === 'BLOCKQUOTE') {
-    if ($beginParent.classList.contains('is-second')) {
-      ($('.js-quote1')).classList.add('is-active');
-      ($('.js-quote2')).classList.remove('is-active');
-    } else {
-      ($('.js-quote2')).classList.add('is-active');
-      ($('.js-quote1')).classList.remove('is-active');
-    }
-  } else {
-    ($('.js-quote1')).classList.remove('is-active');
-    ($('.js-quote2')).classList.remove('is-active');
   }
   if ($beginParent.nodeName === 'LI') {
     if (((ref6 = $beginParent.parentNode) != null ? (ref7 = ref6.nextSibling) != null ? ref7.nodeName : void 0 : void 0) === 'HR') {
@@ -4537,23 +4516,11 @@ toolbarChange = function(e) {
     }
   }
   if ($beginParent.nodeName === 'LI') {
-    ($('.js-heading1')).classList.add('is-disabled');
-    ($('.js-heading2')).classList.add('is-disabled');
-    ($('.js-quote1')).classList.add('is-disabled');
-    ($('.js-quote2')).classList.add('is-disabled');
-    ($('.js-code')).classList.add('is-disabled');
+    ($('.js-toolbar-block')).classList.add('is-disabled');
   } else if ((ref9 = $beginParent.firstChild.classList) != null ? ref9.contains('is-drop-cap') : void 0) {
-    ($('.js-heading1')).classList.add('is-disabled');
-    ($('.js-heading2')).classList.add('is-disabled');
-    ($('.js-quote1')).classList.add('is-disabled');
-    ($('.js-quote2')).classList.add('is-disabled');
-    ($('.js-code')).classList.add('is-disabled');
+    ($('.js-toolbar-block')).classList.add('is-disabled');
   } else {
-    ($('.js-heading1')).classList.remove('is-disabled');
-    ($('.js-heading2')).classList.remove('is-disabled');
-    ($('.js-quote1')).classList.remove('is-disabled');
-    ($('.js-quote2')).classList.remove('is-disabled');
-    ($('.js-code')).classList.remove('is-disabled');
+    ($('.js-toolbar-block')).classList.remove('is-disabled');
   }
   if ($beginParent.nodeName !== 'P') {
     ($('.js-drop-cap')).classList.add('is-disabled');
@@ -4566,18 +4533,16 @@ toolbarChange = function(e) {
     ($('.js-link')).classList.add('is-disabled');
     ($('.js-bold')).classList.add('is-disabled');
     ($('.js-italic')).classList.add('is-disabled');
+    ($('.js-inline-code')).classList.add('is-disabled');
   } else {
     ($('.js-link')).classList.remove('is-disabled');
     ($('.js-bold')).classList.remove('is-disabled');
     ($('.js-italic')).classList.remove('is-disabled');
+    ($('.js-inline-code')).classList.remove('is-disabled');
   }
   if ($beginParent.nodeName === 'FIGCAPTION') {
-    ($('.js-heading1')).classList.add('is-disabled');
-    ($('.js-heading2')).classList.add('is-disabled');
-    ($('.js-quote1')).classList.add('is-disabled');
-    ($('.js-quote2')).classList.add('is-disabled');
-    ($('.js-code')).classList.add('is-disabled');
     ($('.js-center')).classList.add('is-disabled');
+    ($('.js-toolbar-block')).classList.add('is-disabled');
   }
   if ($beginParent.nodeName === 'PRE') {
     return ($('.js-link')).classList.add('is-disabled');
@@ -4828,7 +4793,7 @@ if ($autoUser) {
 }
 
 
-},{"../../../../src/configClient.coffee":147,"../helper/selector.coffee":41,"horsey":87,"superagent":132}],45:[function(require,module,exports){
+},{"../../../../src/configClient.coffee":146,"../helper/selector.coffee":41,"horsey":87,"superagent":132}],45:[function(require,module,exports){
 var $, $jsArticle, articleId, beginTime, checkPercent, counter, delay, firstScroll, readInPercent, readingTime, request, seenInPercent, timeout;
 
 $ = require('../helper/selector.coffee').$;
@@ -5546,7 +5511,7 @@ if ($userFeed) {
 }
 
 
-},{"../../../../src/configClient.coffee":147,"../../../../src/views/blocks/col-list.jade":148,"../../../../src/views/blocks/post3.jade":154,"../../../../src/views/blocks/tag.jade":156,"../../../../src/views/blocks/user-list.jade":157,"../helper/langCatalog.coffee":40,"../helper/selector.coffee":41,"superagent":132}],55:[function(require,module,exports){
+},{"../../../../src/configClient.coffee":146,"../../../../src/views/blocks/col-list.jade":147,"../../../../src/views/blocks/post3.jade":153,"../../../../src/views/blocks/tag.jade":155,"../../../../src/views/blocks/user-list.jade":156,"../helper/langCatalog.coffee":40,"../helper/selector.coffee":41,"superagent":132}],55:[function(require,module,exports){
 var $, $img, loadImage, resizeCropImg;
 
 $ = require('../helper/selector.coffee').$;
@@ -5759,7 +5724,7 @@ if ($homeFeed) {
 }
 
 
-},{"../../../../src/configClient.coffee":147,"../../../../src/views/blocks/post.jade":152,"../../../../src/views/blocks/post4.jade":155,"../helper/langCatalog.coffee":40,"../helper/selector.coffee":41,"./love.coffee":63,"./repost.coffee":67,"superagent":132}],59:[function(require,module,exports){
+},{"../../../../src/configClient.coffee":146,"../../../../src/views/blocks/post.jade":151,"../../../../src/views/blocks/post4.jade":154,"../helper/langCatalog.coffee":40,"../helper/selector.coffee":41,"./love.coffee":63,"./repost.coffee":67,"superagent":132}],59:[function(require,module,exports){
 var $, $articleFeed, $articleSpinner, $loadMoreArticleFeed, __, __n, article, articleFeed, assetUrl, csrf, feedTemplate, imgUrl, ref, ref1, request;
 
 request = require('superagent');
@@ -5833,7 +5798,7 @@ if ($articleFeed) {
 }
 
 
-},{"../../../../src/configClient.coffee":147,"../../../../src/views/blocks/post-item.jade":151,"../helper/langCatalog.coffee":40,"../helper/selector.coffee":41,"./article.coffee":43,"./csrf.coffee":52,"superagent":132}],60:[function(require,module,exports){
+},{"../../../../src/configClient.coffee":146,"../../../../src/views/blocks/post-item.jade":150,"../helper/langCatalog.coffee":40,"../helper/selector.coffee":41,"./article.coffee":43,"./csrf.coffee":52,"superagent":132}],60:[function(require,module,exports){
 var $, $$, $commentFeed, $commentSpinner, $commentSpinner2, $loadMoreCommentFeed, $loadMoreCommentFeed2, __, __n, articleId, assetUrl, feedTemplate, imgUrl, loadFeed, love, ref, ref1, ref2, request;
 
 request = require('superagent');
@@ -5960,7 +5925,7 @@ if ($commentFeed) {
 }
 
 
-},{"../../../../src/configClient.coffee":147,"../../../../src/views/blocks/comment-list.jade":149,"../helper/langCatalog.coffee":40,"../helper/selector.coffee":41,"./love.coffee":63,"superagent":132}],61:[function(require,module,exports){
+},{"../../../../src/configClient.coffee":146,"../../../../src/views/blocks/comment-list.jade":148,"../helper/langCatalog.coffee":40,"../helper/selector.coffee":41,"./love.coffee":63,"superagent":132}],61:[function(require,module,exports){
 var $, $loadMoreLovedArticleFeed, $lovedArticleFeed, $lovedArticleSpinner, __, __n, assetUrl, feedTemplate, imgUrl, loadLovedArticleFeed, love, ref, ref1, repost, request;
 
 request = require('superagent');
@@ -6033,7 +5998,7 @@ if ($lovedArticleFeed) {
 }
 
 
-},{"../../../../src/configClient.coffee":147,"../../../../src/views/blocks/post2.jade":153,"../helper/langCatalog.coffee":40,"../helper/selector.coffee":41,"./love.coffee":63,"./repost.coffee":67,"superagent":132}],62:[function(require,module,exports){
+},{"../../../../src/configClient.coffee":146,"../../../../src/views/blocks/post2.jade":152,"../helper/langCatalog.coffee":40,"../helper/selector.coffee":41,"./love.coffee":63,"./repost.coffee":67,"superagent":132}],62:[function(require,module,exports){
 var $, $header, lastScrollTop, prevDirection;
 
 $ = require('../helper/selector.coffee').$;
@@ -6046,14 +6011,6 @@ prevDirection = 'down';
 
 if ($('.b-toolbar')) {
   $header.classList.add('is-fixed');
-}
-
-if ($('.b-welcome')) {
-  if (window.scrollY < 40) {
-    $('.b-header').classList.add('no-bg');
-  } else {
-    $('.b-header').classList.remove('no-bg');
-  }
 }
 
 window.addEventListener('scroll', function(e) {
@@ -6078,7 +6035,7 @@ window.addEventListener('scroll', function(e) {
     }
     lastScrollTop = st;
     prevDirection = direction;
-    if ($('.b-welcome') || $('.is-cover-full')) {
+    if ($('.is-cover-full')) {
       if (window.scrollY < 400) {
         return $('.b-header').classList.add('no-bg');
       } else {
@@ -6360,7 +6317,7 @@ if ($menotifFeed) {
 }
 
 
-},{"../../../../src/configClient.coffee":147,"../../../../src/views/blocks/notif.jade":150,"../helper/langCatalog.coffee":40,"../helper/selector.coffee":41,"superagent":132}],66:[function(require,module,exports){
+},{"../../../../src/configClient.coffee":146,"../../../../src/views/blocks/notif.jade":149,"../helper/langCatalog.coffee":40,"../helper/selector.coffee":41,"superagent":132}],66:[function(require,module,exports){
 var $, $formReportArticle, $inputReportArticle, $reportArticle, request, swal;
 
 request = require('superagent');
@@ -6699,12 +6656,10 @@ module.exports = tagging;
 var documentReady;
 
 (documentReady = function() {
-  var $, $$, $$imgCoverFull, $$imgCoverSlide, $$loginButton, $container, $figcaption, $figure, $imgCoverFull, $imgCoverSlide, $loginButton, article, csrf, i, imgUrl, j, k, l, len, len1, len2, len3, len4, love, m, pace, ref, ref1, ref2, repost, repostLink, request, scroll, swal;
+  var $, $$, $$imgCoverFull, $$imgCoverSlide, $$loginButton, $container, $figcaption, $figure, $imgCoverFull, $imgCoverSlide, $loginButton, article, csrf, i, imgUrl, j, k, l, len, len1, len2, len3, len4, love, m, ref, ref1, ref2, repost, repostLink, request, scroll, swal;
   swal = require('sweetalert');
   request = require('superagent');
   ref = require('./helper/selector.coffee'), $ = ref.$, $$ = ref.$$;
-  pace = require('./vendor/pace.js');
-  pace.start();
   swal.setDefaults({
     title: "Framesia",
     text: "Framesia",
@@ -6814,7 +6769,7 @@ var documentReady;
 })();
 
 
-},{"./editor/main.coffee":20,"./helper/selector.coffee":41,"./include/addCollection.coffee":42,"./include/article.coffee":43,"./include/autocompleteUser.coffee":44,"./include/checkRead.coffee":45,"./include/checkUsername.coffee":46,"./include/collection.coffee":47,"./include/collectionArticle.coffee":48,"./include/collectionPeople.coffee":49,"./include/comment.coffee":50,"./include/comment2.coffee":51,"./include/csrf.coffee":52,"./include/drop.coffee":53,"./include/feedRight.coffee":54,"./include/firstTime.coffee":55,"./include/follow.coffee":56,"./include/getArticle.coffee":57,"./include/getArticles.coffee":58,"./include/getArticles2.coffee":59,"./include/getComment.coffee":60,"./include/getLovedArticles.coffee":61,"./include/headerFix.coffee":62,"./include/love.coffee":63,"./include/makeTableOfContent.coffee":64,"./include/notif.coffee":65,"./include/report.coffee":66,"./include/repost.coffee":67,"./include/repostLink.coffee":68,"./include/saveArticle.coffee":69,"./include/tag.coffee":70,"./vendor/pace.js":145,"superagent":132,"sweetalert":144}],72:[function(require,module,exports){
+},{"./editor/main.coffee":20,"./helper/selector.coffee":41,"./include/addCollection.coffee":42,"./include/article.coffee":43,"./include/autocompleteUser.coffee":44,"./include/checkRead.coffee":45,"./include/checkUsername.coffee":46,"./include/collection.coffee":47,"./include/collectionArticle.coffee":48,"./include/collectionPeople.coffee":49,"./include/comment.coffee":50,"./include/comment2.coffee":51,"./include/csrf.coffee":52,"./include/drop.coffee":53,"./include/feedRight.coffee":54,"./include/firstTime.coffee":55,"./include/follow.coffee":56,"./include/getArticle.coffee":57,"./include/getArticles.coffee":58,"./include/getArticles2.coffee":59,"./include/getComment.coffee":60,"./include/getLovedArticles.coffee":61,"./include/headerFix.coffee":62,"./include/love.coffee":63,"./include/makeTableOfContent.coffee":64,"./include/notif.coffee":65,"./include/report.coffee":66,"./include/repost.coffee":67,"./include/repostLink.coffee":68,"./include/saveArticle.coffee":69,"./include/tag.coffee":70,"superagent":132,"sweetalert":144}],72:[function(require,module,exports){
 'use strict';
 
 var loadImage = require('./load-image');
@@ -13628,943 +13583,6 @@ arguments[4][30][0].apply(exports,arguments)
 },{"dup":30}],144:[function(require,module,exports){
 arguments[4][31][0].apply(exports,arguments)
 },{"./modules/default-params":136,"./modules/handle-click":137,"./modules/handle-dom":138,"./modules/handle-key":139,"./modules/handle-swal-dom":140,"./modules/set-params":142,"./modules/utils":143,"dup":31}],145:[function(require,module,exports){
-(function() {
-  var AjaxMonitor, Bar, DocumentMonitor, ElementMonitor, ElementTracker, EventLagMonitor, Evented, Events, NoTargetError, Pace, RequestIntercept, SOURCE_KEYS, Scaler, SocketRequestTracker, XHRRequestTracker, animation, avgAmplitude, bar, cancelAnimation, cancelAnimationFrame, defaultOptions, extend, extendNative, getFromDOM, getIntercept, handlePushState, ignoreStack, init, now, options, requestAnimationFrame, result, runAnimation, scalers, shouldIgnoreURL, shouldTrack, source, sources, uniScaler, _WebSocket, _XDomainRequest, _XMLHttpRequest, _i, _intercept, _len, _pushState, _ref, _ref1, _replaceState,
-    __slice = [].slice,
-    __hasProp = {}.hasOwnProperty,
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
-
-  defaultOptions = {
-    catchupTime: 100,
-    initialRate: .03,
-    minTime: 250,
-    ghostTime: 100,
-    maxProgressPerFrame: 20,
-    easeFactor: 1.25,
-    startOnPageLoad: true,
-    restartOnPushState: true,
-    restartOnRequestAfter: 500,
-    target: 'body',
-    elements: {
-      checkInterval: 100,
-      selectors: ['body']
-    },
-    eventLag: {
-      minSamples: 10,
-      sampleCount: 3,
-      lagThreshold: 3
-    },
-    ajax: {
-      trackMethods: ['GET'],
-      trackWebSockets: true,
-      ignoreURLs: []
-    }
-  };
-
-  now = function() {
-    var _ref;
-    return (_ref = typeof performance !== "undefined" && performance !== null ? typeof performance.now === "function" ? performance.now() : void 0 : void 0) != null ? _ref : +(new Date);
-  };
-
-  requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
-
-  cancelAnimationFrame = window.cancelAnimationFrame || window.mozCancelAnimationFrame;
-
-  if (requestAnimationFrame == null) {
-    requestAnimationFrame = function(fn) {
-      return setTimeout(fn, 50);
-    };
-    cancelAnimationFrame = function(id) {
-      return clearTimeout(id);
-    };
-  }
-
-  runAnimation = function(fn) {
-    var last, tick;
-    last = now();
-    tick = function() {
-      var diff;
-      diff = now() - last;
-      if (diff >= 33) {
-        last = now();
-        return fn(diff, function() {
-          return requestAnimationFrame(tick);
-        });
-      } else {
-        return setTimeout(tick, 33 - diff);
-      }
-    };
-    return tick();
-  };
-
-  result = function() {
-    var args, key, obj;
-    obj = arguments[0], key = arguments[1], args = 3 <= arguments.length ? __slice.call(arguments, 2) : [];
-    if (typeof obj[key] === 'function') {
-      return obj[key].apply(obj, args);
-    } else {
-      return obj[key];
-    }
-  };
-
-  extend = function() {
-    var key, out, source, sources, val, _i, _len;
-    out = arguments[0], sources = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
-    for (_i = 0, _len = sources.length; _i < _len; _i++) {
-      source = sources[_i];
-      if (source) {
-        for (key in source) {
-          if (!__hasProp.call(source, key)) continue;
-          val = source[key];
-          if ((out[key] != null) && typeof out[key] === 'object' && (val != null) && typeof val === 'object') {
-            extend(out[key], val);
-          } else {
-            out[key] = val;
-          }
-        }
-      }
-    }
-    return out;
-  };
-
-  avgAmplitude = function(arr) {
-    var count, sum, v, _i, _len;
-    sum = count = 0;
-    for (_i = 0, _len = arr.length; _i < _len; _i++) {
-      v = arr[_i];
-      sum += Math.abs(v);
-      count++;
-    }
-    return sum / count;
-  };
-
-  getFromDOM = function(key, json) {
-    var data, e, el;
-    if (key == null) {
-      key = 'options';
-    }
-    if (json == null) {
-      json = true;
-    }
-    el = document.querySelector("[data-pace-" + key + "]");
-    if (!el) {
-      return;
-    }
-    data = el.getAttribute("data-pace-" + key);
-    if (!json) {
-      return data;
-    }
-    try {
-      return JSON.parse(data);
-    } catch (_error) {
-      e = _error;
-      return typeof console !== "undefined" && console !== null ? console.error("Error parsing inline pace options", e) : void 0;
-    }
-  };
-
-  Evented = (function() {
-    function Evented() {}
-
-    Evented.prototype.on = function(event, handler, ctx, once) {
-      var _base;
-      if (once == null) {
-        once = false;
-      }
-      if (this.bindings == null) {
-        this.bindings = {};
-      }
-      if ((_base = this.bindings)[event] == null) {
-        _base[event] = [];
-      }
-      return this.bindings[event].push({
-        handler: handler,
-        ctx: ctx,
-        once: once
-      });
-    };
-
-    Evented.prototype.once = function(event, handler, ctx) {
-      return this.on(event, handler, ctx, true);
-    };
-
-    Evented.prototype.off = function(event, handler) {
-      var i, _ref, _results;
-      if (((_ref = this.bindings) != null ? _ref[event] : void 0) == null) {
-        return;
-      }
-      if (handler == null) {
-        return delete this.bindings[event];
-      } else {
-        i = 0;
-        _results = [];
-        while (i < this.bindings[event].length) {
-          if (this.bindings[event][i].handler === handler) {
-            _results.push(this.bindings[event].splice(i, 1));
-          } else {
-            _results.push(i++);
-          }
-        }
-        return _results;
-      }
-    };
-
-    Evented.prototype.trigger = function() {
-      var args, ctx, event, handler, i, once, _ref, _ref1, _results;
-      event = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
-      if ((_ref = this.bindings) != null ? _ref[event] : void 0) {
-        i = 0;
-        _results = [];
-        while (i < this.bindings[event].length) {
-          _ref1 = this.bindings[event][i], handler = _ref1.handler, ctx = _ref1.ctx, once = _ref1.once;
-          handler.apply(ctx != null ? ctx : this, args);
-          if (once) {
-            _results.push(this.bindings[event].splice(i, 1));
-          } else {
-            _results.push(i++);
-          }
-        }
-        return _results;
-      }
-    };
-
-    return Evented;
-
-  })();
-
-  Pace = window.Pace || {};
-
-  window.Pace = Pace;
-
-  extend(Pace, Evented.prototype);
-
-  options = Pace.options = extend({}, defaultOptions, window.paceOptions, getFromDOM());
-
-  _ref = ['ajax', 'document', 'eventLag', 'elements'];
-  for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-    source = _ref[_i];
-    if (options[source] === true) {
-      options[source] = defaultOptions[source];
-    }
-  }
-
-  NoTargetError = (function(_super) {
-    __extends(NoTargetError, _super);
-
-    function NoTargetError() {
-      _ref1 = NoTargetError.__super__.constructor.apply(this, arguments);
-      return _ref1;
-    }
-
-    return NoTargetError;
-
-  })(Error);
-
-  Bar = (function() {
-    function Bar() {
-      this.progress = 0;
-    }
-
-    Bar.prototype.getElement = function() {
-      var targetElement;
-      if (this.el == null) {
-        targetElement = document.querySelector(options.target);
-        if (!targetElement) {
-          throw new NoTargetError;
-        }
-        this.el = document.createElement('div');
-        this.el.className = "pace pace-active";
-        document.body.className = document.body.className.replace(/pace-done/g, '');
-        document.body.className += ' pace-running';
-        this.el.innerHTML = '<div class="pace-progress">\n  <div class="pace-progress-inner"></div>\n</div>\n<div class="pace-activity"></div>';
-        if (targetElement.firstChild != null) {
-          targetElement.insertBefore(this.el, targetElement.firstChild);
-        } else {
-          targetElement.appendChild(this.el);
-        }
-      }
-      return this.el;
-    };
-
-    Bar.prototype.finish = function() {
-      var el;
-      el = this.getElement();
-      el.className = el.className.replace('pace-active', '');
-      el.className += ' pace-inactive';
-      document.body.className = document.body.className.replace('pace-running', '');
-      return document.body.className += ' pace-done';
-    };
-
-    Bar.prototype.update = function(prog) {
-      this.progress = prog;
-      return this.render();
-    };
-
-    Bar.prototype.destroy = function() {
-      try {
-        this.getElement().parentNode.removeChild(this.getElement());
-      } catch (_error) {
-        NoTargetError = _error;
-      }
-      return this.el = void 0;
-    };
-
-    Bar.prototype.render = function() {
-      var el, key, progressStr, transform, _j, _len1, _ref2;
-      if (document.querySelector(options.target) == null) {
-        return false;
-      }
-      el = this.getElement();
-      transform = "translate3d(" + this.progress + "%, 0, 0)";
-      _ref2 = ['webkitTransform', 'msTransform', 'transform'];
-      for (_j = 0, _len1 = _ref2.length; _j < _len1; _j++) {
-        key = _ref2[_j];
-        el.children[0].style[key] = transform;
-      }
-      if (!this.lastRenderedProgress || this.lastRenderedProgress | 0 !== this.progress | 0) {
-        el.children[0].setAttribute('data-progress-text', "" + (this.progress | 0) + "%");
-        if (this.progress >= 100) {
-          progressStr = '99';
-        } else {
-          progressStr = this.progress < 10 ? "0" : "";
-          progressStr += this.progress | 0;
-        }
-        el.children[0].setAttribute('data-progress', "" + progressStr);
-      }
-      return this.lastRenderedProgress = this.progress;
-    };
-
-    Bar.prototype.done = function() {
-      return this.progress >= 100;
-    };
-
-    return Bar;
-
-  })();
-
-  Events = (function() {
-    function Events() {
-      this.bindings = {};
-    }
-
-    Events.prototype.trigger = function(name, val) {
-      var binding, _j, _len1, _ref2, _results;
-      if (this.bindings[name] != null) {
-        _ref2 = this.bindings[name];
-        _results = [];
-        for (_j = 0, _len1 = _ref2.length; _j < _len1; _j++) {
-          binding = _ref2[_j];
-          _results.push(binding.call(this, val));
-        }
-        return _results;
-      }
-    };
-
-    Events.prototype.on = function(name, fn) {
-      var _base;
-      if ((_base = this.bindings)[name] == null) {
-        _base[name] = [];
-      }
-      return this.bindings[name].push(fn);
-    };
-
-    return Events;
-
-  })();
-
-  _XMLHttpRequest = window.XMLHttpRequest;
-
-  _XDomainRequest = window.XDomainRequest;
-
-  _WebSocket = window.WebSocket;
-
-  extendNative = function(to, from) {
-    var e, key, _results;
-    _results = [];
-    for (key in from.prototype) {
-      try {
-        if ((to[key] == null) && typeof from[key] !== 'function') {
-          if (typeof Object.defineProperty === 'function') {
-            _results.push(Object.defineProperty(to, key, {
-              get: function() {
-                return from.prototype[key];
-              },
-              configurable: true,
-              enumerable: true
-            }));
-          } else {
-            _results.push(to[key] = from.prototype[key]);
-          }
-        } else {
-          _results.push(void 0);
-        }
-      } catch (_error) {
-        e = _error;
-      }
-    }
-    return _results;
-  };
-
-  ignoreStack = [];
-
-  Pace.ignore = function() {
-    var args, fn, ret;
-    fn = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
-    ignoreStack.unshift('ignore');
-    ret = fn.apply(null, args);
-    ignoreStack.shift();
-    return ret;
-  };
-
-  Pace.track = function() {
-    var args, fn, ret;
-    fn = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
-    ignoreStack.unshift('track');
-    ret = fn.apply(null, args);
-    ignoreStack.shift();
-    return ret;
-  };
-
-  shouldTrack = function(method) {
-    var _ref2;
-    if (method == null) {
-      method = 'GET';
-    }
-    if (ignoreStack[0] === 'track') {
-      return 'force';
-    }
-    if (!ignoreStack.length && options.ajax) {
-      if (method === 'socket' && options.ajax.trackWebSockets) {
-        return true;
-      } else if (_ref2 = method.toUpperCase(), __indexOf.call(options.ajax.trackMethods, _ref2) >= 0) {
-        return true;
-      }
-    }
-    return false;
-  };
-
-  RequestIntercept = (function(_super) {
-    __extends(RequestIntercept, _super);
-
-    function RequestIntercept() {
-      var monitorXHR,
-        _this = this;
-      RequestIntercept.__super__.constructor.apply(this, arguments);
-      monitorXHR = function(req) {
-        var _open;
-        _open = req.open;
-        return req.open = function(type, url, async) {
-          if (shouldTrack(type)) {
-            _this.trigger('request', {
-              type: type,
-              url: url,
-              request: req
-            });
-          }
-          return _open.apply(req, arguments);
-        };
-      };
-      window.XMLHttpRequest = function(flags) {
-        var req;
-        req = new _XMLHttpRequest(flags);
-        monitorXHR(req);
-        return req;
-      };
-      try {
-        extendNative(window.XMLHttpRequest, _XMLHttpRequest);
-      } catch (_error) {}
-      if (_XDomainRequest != null) {
-        window.XDomainRequest = function() {
-          var req;
-          req = new _XDomainRequest;
-          monitorXHR(req);
-          return req;
-        };
-        try {
-          extendNative(window.XDomainRequest, _XDomainRequest);
-        } catch (_error) {}
-      }
-      if ((_WebSocket != null) && options.ajax.trackWebSockets) {
-        window.WebSocket = function(url, protocols) {
-          var req;
-          if (protocols != null) {
-            req = new _WebSocket(url, protocols);
-          } else {
-            req = new _WebSocket(url);
-          }
-          if (shouldTrack('socket')) {
-            _this.trigger('request', {
-              type: 'socket',
-              url: url,
-              protocols: protocols,
-              request: req
-            });
-          }
-          return req;
-        };
-        try {
-          extendNative(window.WebSocket, _WebSocket);
-        } catch (_error) {}
-      }
-    }
-
-    return RequestIntercept;
-
-  })(Events);
-
-  _intercept = null;
-
-  getIntercept = function() {
-    if (_intercept == null) {
-      _intercept = new RequestIntercept;
-    }
-    return _intercept;
-  };
-
-  shouldIgnoreURL = function(url) {
-    var pattern, _j, _len1, _ref2;
-    _ref2 = options.ajax.ignoreURLs;
-    for (_j = 0, _len1 = _ref2.length; _j < _len1; _j++) {
-      pattern = _ref2[_j];
-      if (typeof pattern === 'string') {
-        if (url.indexOf(pattern) !== -1) {
-          return true;
-        }
-      } else {
-        if (pattern.test(url)) {
-          return true;
-        }
-      }
-    }
-    return false;
-  };
-
-  getIntercept().on('request', function(_arg) {
-    var after, args, request, type, url;
-    type = _arg.type, request = _arg.request, url = _arg.url;
-    if (shouldIgnoreURL(url)) {
-      return;
-    }
-    if (!Pace.running && (options.restartOnRequestAfter !== false || shouldTrack(type) === 'force')) {
-      args = arguments;
-      after = options.restartOnRequestAfter || 0;
-      if (typeof after === 'boolean') {
-        after = 0;
-      }
-      return setTimeout(function() {
-        var stillActive, _j, _len1, _ref2, _ref3, _results;
-        if (type === 'socket') {
-          stillActive = request.readyState < 2;
-        } else {
-          stillActive = (0 < (_ref2 = request.readyState) && _ref2 < 4);
-        }
-        if (stillActive) {
-          Pace.restart();
-          _ref3 = Pace.sources;
-          _results = [];
-          for (_j = 0, _len1 = _ref3.length; _j < _len1; _j++) {
-            source = _ref3[_j];
-            if (source instanceof AjaxMonitor) {
-              source.watch.apply(source, args);
-              break;
-            } else {
-              _results.push(void 0);
-            }
-          }
-          return _results;
-        }
-      }, after);
-    }
-  });
-
-  AjaxMonitor = (function() {
-    function AjaxMonitor() {
-      var _this = this;
-      this.elements = [];
-      getIntercept().on('request', function() {
-        return _this.watch.apply(_this, arguments);
-      });
-    }
-
-    AjaxMonitor.prototype.watch = function(_arg) {
-      var request, tracker, type, url;
-      type = _arg.type, request = _arg.request, url = _arg.url;
-      if (shouldIgnoreURL(url)) {
-        return;
-      }
-      if (type === 'socket') {
-        tracker = new SocketRequestTracker(request);
-      } else {
-        tracker = new XHRRequestTracker(request);
-      }
-      return this.elements.push(tracker);
-    };
-
-    return AjaxMonitor;
-
-  })();
-
-  XHRRequestTracker = (function() {
-    function XHRRequestTracker(request) {
-      var event, size, _j, _len1, _onreadystatechange, _ref2,
-        _this = this;
-      this.progress = 0;
-      if (window.ProgressEvent != null) {
-        size = null;
-        request.addEventListener('progress', function(evt) {
-          if (evt.lengthComputable) {
-            return _this.progress = 100 * evt.loaded / evt.total;
-          } else {
-            return _this.progress = _this.progress + (100 - _this.progress) / 2;
-          }
-        }, false);
-        _ref2 = ['load', 'abort', 'timeout', 'error'];
-        for (_j = 0, _len1 = _ref2.length; _j < _len1; _j++) {
-          event = _ref2[_j];
-          request.addEventListener(event, function() {
-            return _this.progress = 100;
-          }, false);
-        }
-      } else {
-        _onreadystatechange = request.onreadystatechange;
-        request.onreadystatechange = function() {
-          var _ref3;
-          if ((_ref3 = request.readyState) === 0 || _ref3 === 4) {
-            _this.progress = 100;
-          } else if (request.readyState === 3) {
-            _this.progress = 50;
-          }
-          return typeof _onreadystatechange === "function" ? _onreadystatechange.apply(null, arguments) : void 0;
-        };
-      }
-    }
-
-    return XHRRequestTracker;
-
-  })();
-
-  SocketRequestTracker = (function() {
-    function SocketRequestTracker(request) {
-      var event, _j, _len1, _ref2,
-        _this = this;
-      this.progress = 0;
-      _ref2 = ['error', 'open'];
-      for (_j = 0, _len1 = _ref2.length; _j < _len1; _j++) {
-        event = _ref2[_j];
-        request.addEventListener(event, function() {
-          return _this.progress = 100;
-        }, false);
-      }
-    }
-
-    return SocketRequestTracker;
-
-  })();
-
-  ElementMonitor = (function() {
-    function ElementMonitor(options) {
-      var selector, _j, _len1, _ref2;
-      if (options == null) {
-        options = {};
-      }
-      this.elements = [];
-      if (options.selectors == null) {
-        options.selectors = [];
-      }
-      _ref2 = options.selectors;
-      for (_j = 0, _len1 = _ref2.length; _j < _len1; _j++) {
-        selector = _ref2[_j];
-        this.elements.push(new ElementTracker(selector));
-      }
-    }
-
-    return ElementMonitor;
-
-  })();
-
-  ElementTracker = (function() {
-    function ElementTracker(selector) {
-      this.selector = selector;
-      this.progress = 0;
-      this.check();
-    }
-
-    ElementTracker.prototype.check = function() {
-      var _this = this;
-      if (document.querySelector(this.selector)) {
-        return this.done();
-      } else {
-        return setTimeout((function() {
-          return _this.check();
-        }), options.elements.checkInterval);
-      }
-    };
-
-    ElementTracker.prototype.done = function() {
-      return this.progress = 100;
-    };
-
-    return ElementTracker;
-
-  })();
-
-  DocumentMonitor = (function() {
-    DocumentMonitor.prototype.states = {
-      loading: 0,
-      interactive: 50,
-      complete: 100
-    };
-
-    function DocumentMonitor() {
-      var _onreadystatechange, _ref2,
-        _this = this;
-      this.progress = (_ref2 = this.states[document.readyState]) != null ? _ref2 : 100;
-      _onreadystatechange = document.onreadystatechange;
-      document.onreadystatechange = function() {
-        if (_this.states[document.readyState] != null) {
-          _this.progress = _this.states[document.readyState];
-        }
-        return typeof _onreadystatechange === "function" ? _onreadystatechange.apply(null, arguments) : void 0;
-      };
-    }
-
-    return DocumentMonitor;
-
-  })();
-
-  EventLagMonitor = (function() {
-    function EventLagMonitor() {
-      var avg, interval, last, points, samples,
-        _this = this;
-      this.progress = 0;
-      avg = 0;
-      samples = [];
-      points = 0;
-      last = now();
-      interval = setInterval(function() {
-        var diff;
-        diff = now() - last - 50;
-        last = now();
-        samples.push(diff);
-        if (samples.length > options.eventLag.sampleCount) {
-          samples.shift();
-        }
-        avg = avgAmplitude(samples);
-        if (++points >= options.eventLag.minSamples && avg < options.eventLag.lagThreshold) {
-          _this.progress = 100;
-          return clearInterval(interval);
-        } else {
-          return _this.progress = 100 * (3 / (avg + 3));
-        }
-      }, 50);
-    }
-
-    return EventLagMonitor;
-
-  })();
-
-  Scaler = (function() {
-    function Scaler(source) {
-      this.source = source;
-      this.last = this.sinceLastUpdate = 0;
-      this.rate = options.initialRate;
-      this.catchup = 0;
-      this.progress = this.lastProgress = 0;
-      if (this.source != null) {
-        this.progress = result(this.source, 'progress');
-      }
-    }
-
-    Scaler.prototype.tick = function(frameTime, val) {
-      var scaling;
-      if (val == null) {
-        val = result(this.source, 'progress');
-      }
-      if (val >= 100) {
-        this.done = true;
-      }
-      if (val === this.last) {
-        this.sinceLastUpdate += frameTime;
-      } else {
-        if (this.sinceLastUpdate) {
-          this.rate = (val - this.last) / this.sinceLastUpdate;
-        }
-        this.catchup = (val - this.progress) / options.catchupTime;
-        this.sinceLastUpdate = 0;
-        this.last = val;
-      }
-      if (val > this.progress) {
-        this.progress += this.catchup * frameTime;
-      }
-      scaling = 1 - Math.pow(this.progress / 100, options.easeFactor);
-      this.progress += scaling * this.rate * frameTime;
-      this.progress = Math.min(this.lastProgress + options.maxProgressPerFrame, this.progress);
-      this.progress = Math.max(0, this.progress);
-      this.progress = Math.min(100, this.progress);
-      this.lastProgress = this.progress;
-      return this.progress;
-    };
-
-    return Scaler;
-
-  })();
-
-  sources = null;
-
-  scalers = null;
-
-  bar = null;
-
-  uniScaler = null;
-
-  animation = null;
-
-  cancelAnimation = null;
-
-  Pace.running = false;
-
-  handlePushState = function() {
-    if (options.restartOnPushState) {
-      return Pace.restart();
-    }
-  };
-
-  if (window.history.pushState != null) {
-    _pushState = window.history.pushState;
-    window.history.pushState = function() {
-      handlePushState();
-      return _pushState.apply(window.history, arguments);
-    };
-  }
-
-  if (window.history.replaceState != null) {
-    _replaceState = window.history.replaceState;
-    window.history.replaceState = function() {
-      handlePushState();
-      return _replaceState.apply(window.history, arguments);
-    };
-  }
-
-  SOURCE_KEYS = {
-    ajax: AjaxMonitor,
-    elements: ElementMonitor,
-    document: DocumentMonitor,
-    eventLag: EventLagMonitor
-  };
-
-  (init = function() {
-    var type, _j, _k, _len1, _len2, _ref2, _ref3, _ref4;
-    Pace.sources = sources = [];
-    _ref2 = ['ajax', 'elements', 'document', 'eventLag'];
-    for (_j = 0, _len1 = _ref2.length; _j < _len1; _j++) {
-      type = _ref2[_j];
-      if (options[type] !== false) {
-        sources.push(new SOURCE_KEYS[type](options[type]));
-      }
-    }
-    _ref4 = (_ref3 = options.extraSources) != null ? _ref3 : [];
-    for (_k = 0, _len2 = _ref4.length; _k < _len2; _k++) {
-      source = _ref4[_k];
-      sources.push(new source(options));
-    }
-    Pace.bar = bar = new Bar;
-    scalers = [];
-    return uniScaler = new Scaler;
-  })();
-
-  Pace.stop = function() {
-    Pace.trigger('stop');
-    Pace.running = false;
-    bar.destroy();
-    cancelAnimation = true;
-    if (animation != null) {
-      if (typeof cancelAnimationFrame === "function") {
-        cancelAnimationFrame(animation);
-      }
-      animation = null;
-    }
-    return init();
-  };
-
-  Pace.restart = function() {
-    Pace.trigger('restart');
-    Pace.stop();
-    return Pace.start();
-  };
-
-  Pace.go = function() {
-    var start;
-    Pace.running = true;
-    bar.render();
-    start = now();
-    cancelAnimation = false;
-    return animation = runAnimation(function(frameTime, enqueueNextFrame) {
-      var avg, count, done, element, elements, i, j, remaining, scaler, scalerList, sum, _j, _k, _len1, _len2, _ref2;
-      remaining = 100 - bar.progress;
-      count = sum = 0;
-      done = true;
-      for (i = _j = 0, _len1 = sources.length; _j < _len1; i = ++_j) {
-        source = sources[i];
-        scalerList = scalers[i] != null ? scalers[i] : scalers[i] = [];
-        elements = (_ref2 = source.elements) != null ? _ref2 : [source];
-        for (j = _k = 0, _len2 = elements.length; _k < _len2; j = ++_k) {
-          element = elements[j];
-          scaler = scalerList[j] != null ? scalerList[j] : scalerList[j] = new Scaler(element);
-          done &= scaler.done;
-          if (scaler.done) {
-            continue;
-          }
-          count++;
-          sum += scaler.tick(frameTime);
-        }
-      }
-      avg = sum / count;
-      bar.update(uniScaler.tick(frameTime, avg));
-      if (bar.done() || done || cancelAnimation) {
-        bar.update(100);
-        Pace.trigger('done');
-        return setTimeout(function() {
-          bar.finish();
-          Pace.running = false;
-          return Pace.trigger('hide');
-        }, Math.max(options.ghostTime, Math.max(options.minTime - (now() - start), 0)));
-      } else {
-        return enqueueNextFrame();
-      }
-    });
-  };
-
-  Pace.start = function(_options) {
-    extend(options, _options);
-    Pace.running = true;
-    try {
-      bar.render();
-    } catch (_error) {
-      NoTargetError = _error;
-    }
-    if (!document.querySelector('.pace')) {
-      return setTimeout(Pace.start, 50);
-    } else {
-      Pace.trigger('start');
-      return Pace.go();
-    }
-  };
-
-  if (typeof define === 'function' && define.amd) {
-    define(['pace'], function() {
-      return Pace;
-    });
-  } else if (typeof exports === 'object') {
-    module.exports = Pace;
-  } else {
-    if (options.startOnPageLoad) {
-      Pace.start();
-    }
-  }
-
-}).call(this);
-
-},{}],146:[function(require,module,exports){
 (function (global){
 !function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.jade=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict';
@@ -14805,7 +13823,7 @@ exports.rethrow = function rethrow(err, filename, lineno, str){
 },{}]},{},[1])(1)
 });
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"fs":1}],147:[function(require,module,exports){
+},{"fs":1}],146:[function(require,module,exports){
 var assetUrl, imgUrl, siteUrl, url;
 
 url = 'asset.framesia.com';
@@ -14823,7 +13841,7 @@ module.exports = {
 };
 
 
-},{}],148:[function(require,module,exports){
+},{}],147:[function(require,module,exports){
 var jade = require("jade/runtime");
 
 module.exports = function template(locals) {
@@ -14841,7 +13859,7 @@ if ( collections)
     for (var $index = 0, $$l = $$obj.length; $index < $$l; $index++) {
       var collection = $$obj[$index];
 
-buf.push("<br/><span height=\"100%\" class=\"i-user__ava--sq\"><img" + (jade.attr("src", "" + (IMG_URL) + "c_fill,w_50/v" + (Math.floor(new Date(collection.edited_at) / 1000) || 1) + "/col/" + (collection._id) + ".jpg", true, false)) + "/></span><span class=\"i-user--footer__name text-green\"><a" + (jade.attr("href", "/c/" + (collection.username) + "", true, false)) + ">" + (jade.escape((jade_interp = collection.name) == null ? '' : jade_interp)) + "</a></span><p class=\"i-user--footer__desc\">" + (jade.escape((jade_interp = collection.description) == null ? '' : jade_interp)) + "</p><p class=\"i-user--footer__username\"><a" + (jade.attr("href", "/c/" + (collection.username) + "", true, false)) + ">/" + (jade.escape((jade_interp = collection.username) == null ? '' : jade_interp)) + "</a></p><div class=\"divider\"></div><br/>");
+buf.push("<br/><span height=\"100%\" class=\"i-user__ava--sq\"><img" + (jade.attr("src", "" + (IMG_URL) + "c_fill,w_50/v" + (Math.floor(new Date(collection.edited_at) / 1000 + 1) || 1) + "/col/" + (collection._id) + ".jpg", true, false)) + "/></span><span class=\"i-user--footer__name text-green\"><a" + (jade.attr("href", "/c/" + (collection.username) + "", true, false)) + ">" + (jade.escape((jade_interp = collection.name) == null ? '' : jade_interp)) + "</a></span><p class=\"i-user--footer__desc\">" + (jade.escape((jade_interp = collection.description) == null ? '' : jade_interp)) + "</p><p class=\"i-user--footer__username\"><a" + (jade.attr("href", "/c/" + (collection.username) + "", true, false)) + ">/" + (jade.escape((jade_interp = collection.username) == null ? '' : jade_interp)) + "</a></p><div class=\"divider\"></div><br/>");
     }
 
   } else {
@@ -14849,7 +13867,7 @@ buf.push("<br/><span height=\"100%\" class=\"i-user__ava--sq\"><img" + (jade.att
     for (var $index in $$obj) {
       $$l++;      var collection = $$obj[$index];
 
-buf.push("<br/><span height=\"100%\" class=\"i-user__ava--sq\"><img" + (jade.attr("src", "" + (IMG_URL) + "c_fill,w_50/v" + (Math.floor(new Date(collection.edited_at) / 1000) || 1) + "/col/" + (collection._id) + ".jpg", true, false)) + "/></span><span class=\"i-user--footer__name text-green\"><a" + (jade.attr("href", "/c/" + (collection.username) + "", true, false)) + ">" + (jade.escape((jade_interp = collection.name) == null ? '' : jade_interp)) + "</a></span><p class=\"i-user--footer__desc\">" + (jade.escape((jade_interp = collection.description) == null ? '' : jade_interp)) + "</p><p class=\"i-user--footer__username\"><a" + (jade.attr("href", "/c/" + (collection.username) + "", true, false)) + ">/" + (jade.escape((jade_interp = collection.username) == null ? '' : jade_interp)) + "</a></p><div class=\"divider\"></div><br/>");
+buf.push("<br/><span height=\"100%\" class=\"i-user__ava--sq\"><img" + (jade.attr("src", "" + (IMG_URL) + "c_fill,w_50/v" + (Math.floor(new Date(collection.edited_at) / 1000 + 1) || 1) + "/col/" + (collection._id) + ".jpg", true, false)) + "/></span><span class=\"i-user--footer__name text-green\"><a" + (jade.attr("href", "/c/" + (collection.username) + "", true, false)) + ">" + (jade.escape((jade_interp = collection.name) == null ? '' : jade_interp)) + "</a></span><p class=\"i-user--footer__desc\">" + (jade.escape((jade_interp = collection.description) == null ? '' : jade_interp)) + "</p><p class=\"i-user--footer__username\"><a" + (jade.attr("href", "/c/" + (collection.username) + "", true, false)) + ">/" + (jade.escape((jade_interp = collection.username) == null ? '' : jade_interp)) + "</a></p><div class=\"divider\"></div><br/>");
     }
 
   }
@@ -14857,7 +13875,7 @@ buf.push("<br/><span height=\"100%\" class=\"i-user__ava--sq\"><img" + (jade.att
 
 }}.call(this,"Date" in locals_for_with?locals_for_with.Date:typeof Date!=="undefined"?Date:undefined,"IMG_URL" in locals_for_with?locals_for_with.IMG_URL:typeof IMG_URL!=="undefined"?IMG_URL:undefined,"Math" in locals_for_with?locals_for_with.Math:typeof Math!=="undefined"?Math:undefined,"collections" in locals_for_with?locals_for_with.collections:typeof collections!=="undefined"?collections:undefined,"undefined" in locals_for_with?locals_for_with.undefined:typeof undefined!=="undefined"?undefined:undefined));;return buf.join("");
 };
-},{"jade/runtime":146}],149:[function(require,module,exports){
+},{"jade/runtime":145}],148:[function(require,module,exports){
 var jade = require("jade/runtime");
 
 module.exports = function template(locals) {
@@ -14905,7 +13923,7 @@ buf.push("<span>" + (jade.escape((jade_interp = __('Just now')) == null ? '' : j
     for (var $index = 0, $$l = $$obj.length; $index < $$l; $index++) {
       var comment = $$obj[$index];
 
-buf.push("<div" + (jade.attr("id", "" + (comment._id) + "", true, false)) + " class=\"b-comment__item\"><div class=\"i-user--inline\"><span class=\"i-user--inline__ava\"><img" + (jade.attr("src", "" + (IMG_URL) + "c_fill,w_50/v" + (Math.floor(new Date(comment.user.updated_at) / 1000) || 1) + "/ava/" + (comment.user._id) + ".jpg", true, false)) + "/></span><span class=\"i-user--inline__name\"><a" + (jade.attr("href", "/" + (comment.user.username) + "", true, false)) + ">" + (jade.escape((jade_interp = comment.user.name) == null ? '' : jade_interp)) + "</a></span><span class=\"b-comment__date i-user--inline__mod\">");
+buf.push("<div" + (jade.attr("id", "" + (comment._id) + "", true, false)) + " class=\"b-comment__item\"><div class=\"i-user--inline\"><span class=\"i-user--inline__ava\"><img" + (jade.attr("src", "" + (IMG_URL) + "c_fill,w_50/v" + (Math.floor(new Date(comment.user.updated_at) / 1000 + 1) || 1) + "/ava/" + (comment.user._id) + ".jpg", true, false)) + "/></span><span class=\"i-user--inline__name\"><a" + (jade.attr("href", "/" + (comment.user.username) + "", true, false)) + ">" + (jade.escape((jade_interp = comment.user.name) == null ? '' : jade_interp)) + "</a></span><span class=\"b-comment__date i-user--inline__mod\">");
 jade_mixins["time"](comment.created_at);
 buf.push("</span></div>");
 if ( !comment.is_published )
@@ -14933,7 +13951,7 @@ buf.push("</div></div></div>");
     for (var $index in $$obj) {
       $$l++;      var comment = $$obj[$index];
 
-buf.push("<div" + (jade.attr("id", "" + (comment._id) + "", true, false)) + " class=\"b-comment__item\"><div class=\"i-user--inline\"><span class=\"i-user--inline__ava\"><img" + (jade.attr("src", "" + (IMG_URL) + "c_fill,w_50/v" + (Math.floor(new Date(comment.user.updated_at) / 1000) || 1) + "/ava/" + (comment.user._id) + ".jpg", true, false)) + "/></span><span class=\"i-user--inline__name\"><a" + (jade.attr("href", "/" + (comment.user.username) + "", true, false)) + ">" + (jade.escape((jade_interp = comment.user.name) == null ? '' : jade_interp)) + "</a></span><span class=\"b-comment__date i-user--inline__mod\">");
+buf.push("<div" + (jade.attr("id", "" + (comment._id) + "", true, false)) + " class=\"b-comment__item\"><div class=\"i-user--inline\"><span class=\"i-user--inline__ava\"><img" + (jade.attr("src", "" + (IMG_URL) + "c_fill,w_50/v" + (Math.floor(new Date(comment.user.updated_at) / 1000 + 1) || 1) + "/ava/" + (comment.user._id) + ".jpg", true, false)) + "/></span><span class=\"i-user--inline__name\"><a" + (jade.attr("href", "/" + (comment.user.username) + "", true, false)) + ">" + (jade.escape((jade_interp = comment.user.name) == null ? '' : jade_interp)) + "</a></span><span class=\"b-comment__date i-user--inline__mod\">");
 jade_mixins["time"](comment.created_at);
 buf.push("</span></div>");
 if ( !comment.is_published )
@@ -14960,7 +13978,7 @@ buf.push("</div></div></div>");
 }).call(this);
 }.call(this,"Date" in locals_for_with?locals_for_with.Date:typeof Date!=="undefined"?Date:undefined,"IMG_URL" in locals_for_with?locals_for_with.IMG_URL:typeof IMG_URL!=="undefined"?IMG_URL:undefined,"Math" in locals_for_with?locals_for_with.Math:typeof Math!=="undefined"?Math:undefined,"__" in locals_for_with?locals_for_with.__:typeof __!=="undefined"?__:undefined,"__n" in locals_for_with?locals_for_with.__n:typeof __n!=="undefined"?__n:undefined,"comments" in locals_for_with?locals_for_with.comments:typeof comments!=="undefined"?comments:undefined,"is_login" in locals_for_with?locals_for_with.is_login:typeof is_login!=="undefined"?is_login:undefined,"undefined" in locals_for_with?locals_for_with.undefined:typeof undefined!=="undefined"?undefined:undefined));;return buf.join("");
 };
-},{"jade/runtime":146}],150:[function(require,module,exports){
+},{"jade/runtime":145}],149:[function(require,module,exports){
 var jade = require("jade/runtime");
 
 module.exports = function template(locals) {
@@ -15052,7 +14070,7 @@ text = __('responded your article')
 data = notif.object.post_id.title
   break;
 }
-buf.push("<div" + (jade.attr("data-notif-id", "" + (notif._id) + "", true, false)) + (jade.cls(['b-notif__item',"" + ( notif.is_read == true ? 'is-read' : '' ) + ""], [null,true])) + "><a" + (jade.attr("href", "" + (url) + "", true, false)) + "><span class=\"i-user--inline__ava\"><img" + (jade.attr("src", "" + (IMG_URL) + "c_fill,w_50/ava/v" + (Math.floor(new Date(notif.from.updated_at) / 1000) || 1) + "/" + (notif.from._id) + ".jpg", true, false)) + "/></span><span class=\"b-notif__user\">" + (jade.escape((jade_interp = notif.from.name) == null ? '' : jade_interp)) + " </span><span> " + (jade.escape((jade_interp = text) == null ? '' : jade_interp)) + "</span><span> &middot;  </span>");
+buf.push("<div" + (jade.attr("data-notif-id", "" + (notif._id) + "", true, false)) + (jade.cls(['b-notif__item',"" + ( notif.is_read == true ? 'is-read' : '' ) + ""], [null,true])) + "><a" + (jade.attr("href", "" + (url) + "", true, false)) + "><span class=\"i-user--inline__ava\"><img" + (jade.attr("src", "" + (IMG_URL) + "c_fill,w_50/v" + (Math.floor(new Date(notif.from.updated_at) / 1000 + 1) || 1) + "/ava/" + (notif.from._id) + ".jpg", true, false)) + "/></span><span class=\"b-notif__user\">" + (jade.escape((jade_interp = notif.from.name) == null ? '' : jade_interp)) + " </span><span> " + (jade.escape((jade_interp = text) == null ? '' : jade_interp)) + "</span><span> &middot;  </span>");
 jade_mixins["time"](notif.created_at);
 buf.push("<br/><div class=\"b-notif__data\"><b>" + (jade.escape((jade_interp = data) == null ? '' : jade_interp)) + "</b></div><div class=\"clear\"></div></a></div>");
     }
@@ -15106,7 +14124,7 @@ text = __('responded your article')
 data = notif.object.post_id.title
   break;
 }
-buf.push("<div" + (jade.attr("data-notif-id", "" + (notif._id) + "", true, false)) + (jade.cls(['b-notif__item',"" + ( notif.is_read == true ? 'is-read' : '' ) + ""], [null,true])) + "><a" + (jade.attr("href", "" + (url) + "", true, false)) + "><span class=\"i-user--inline__ava\"><img" + (jade.attr("src", "" + (IMG_URL) + "c_fill,w_50/ava/v" + (Math.floor(new Date(notif.from.updated_at) / 1000) || 1) + "/" + (notif.from._id) + ".jpg", true, false)) + "/></span><span class=\"b-notif__user\">" + (jade.escape((jade_interp = notif.from.name) == null ? '' : jade_interp)) + " </span><span> " + (jade.escape((jade_interp = text) == null ? '' : jade_interp)) + "</span><span> &middot;  </span>");
+buf.push("<div" + (jade.attr("data-notif-id", "" + (notif._id) + "", true, false)) + (jade.cls(['b-notif__item',"" + ( notif.is_read == true ? 'is-read' : '' ) + ""], [null,true])) + "><a" + (jade.attr("href", "" + (url) + "", true, false)) + "><span class=\"i-user--inline__ava\"><img" + (jade.attr("src", "" + (IMG_URL) + "c_fill,w_50/v" + (Math.floor(new Date(notif.from.updated_at) / 1000 + 1) || 1) + "/ava/" + (notif.from._id) + ".jpg", true, false)) + "/></span><span class=\"b-notif__user\">" + (jade.escape((jade_interp = notif.from.name) == null ? '' : jade_interp)) + " </span><span> " + (jade.escape((jade_interp = text) == null ? '' : jade_interp)) + "</span><span> &middot;  </span>");
 jade_mixins["time"](notif.created_at);
 buf.push("<br/><div class=\"b-notif__data\"><b>" + (jade.escape((jade_interp = data) == null ? '' : jade_interp)) + "</b></div><div class=\"clear\"></div></a></div>");
     }
@@ -15115,7 +14133,7 @@ buf.push("<br/><div class=\"b-notif__data\"><b>" + (jade.escape((jade_interp = d
 }).call(this);
 }.call(this,"Date" in locals_for_with?locals_for_with.Date:typeof Date!=="undefined"?Date:undefined,"IMG_URL" in locals_for_with?locals_for_with.IMG_URL:typeof IMG_URL!=="undefined"?IMG_URL:undefined,"Math" in locals_for_with?locals_for_with.Math:typeof Math!=="undefined"?Math:undefined,"__" in locals_for_with?locals_for_with.__:typeof __!=="undefined"?__:undefined,"__n" in locals_for_with?locals_for_with.__n:typeof __n!=="undefined"?__n:undefined,"notifs" in locals_for_with?locals_for_with.notifs:typeof notifs!=="undefined"?notifs:undefined,"undefined" in locals_for_with?locals_for_with.undefined:typeof undefined!=="undefined"?undefined:undefined));;return buf.join("");
 };
-},{"jade/runtime":146}],151:[function(require,module,exports){
+},{"jade/runtime":145}],150:[function(require,module,exports){
 var jade = require("jade/runtime");
 
 module.exports = function template(locals) {
@@ -15228,7 +14246,7 @@ buf.push("</div>");
 }).call(this);
 }.call(this,"Date" in locals_for_with?locals_for_with.Date:typeof Date!=="undefined"?Date:undefined,"Math" in locals_for_with?locals_for_with.Math:typeof Math!=="undefined"?Math:undefined,"__" in locals_for_with?locals_for_with.__:typeof __!=="undefined"?__:undefined,"__n" in locals_for_with?locals_for_with.__n:typeof __n!=="undefined"?__n:undefined,"post" in locals_for_with?locals_for_with.post:typeof post!=="undefined"?post:undefined,"undefined" in locals_for_with?locals_for_with.undefined:typeof undefined!=="undefined"?undefined:undefined));;return buf.join("");
 };
-},{"jade/runtime":146}],152:[function(require,module,exports){
+},{"jade/runtime":145}],151:[function(require,module,exports){
 var jade = require("jade/runtime");
 
 module.exports = function template(locals) {
@@ -15284,7 +14302,7 @@ buf.push("<span>" + (jade.escape((jade_interp =  readTime ) == null ? '' : jade_
 buf.push("<div" + (jade.attr("data-published-at", "" + (item.published_at) + "", true, false)) + " class=\"b-post__item\">");
 if ( item.is_repost == true)
 {
-buf.push("<div class=\"b-post__head\"><div class=\"i-user--inline\"><span class=\"i-user--inline__ava\"><a" + (jade.attr("href", "/u/" + (item.user.username) + "", true, false)) + "><img" + (jade.attr("src", "" + (IMG_URL) + "c_fill,w_50/v" + (Math.floor(new Date(item.user.updated_at) / 1000) || 1) + "/ava/" + (item.user._id) + ".jpg", true, false)) + "/></a></span><span class=\"i-user--inline__name\"><a" + (jade.attr("href", "/u/" + (item.user.username) + "", true, false)) + ">" + (jade.escape((jade_interp = item.user.name) == null ? '' : jade_interp)) + "</a></span><span class=\"i-user--inline__mod\"><span>  <i class=\"f-icon-repost\"></i> " + (jade.escape((jade_interp = __('suggested')) == null ? '' : jade_interp)) + "  </span>");
+buf.push("<div class=\"b-post__head\"><div class=\"i-user--inline\"><span class=\"i-user--inline__ava\"><a" + (jade.attr("href", "/u/" + (item.user.username) + "", true, false)) + "><img" + (jade.attr("src", "" + (IMG_URL) + "c_fill,w_50/v" + (Math.floor(new Date(item.user.updated_at) / 1000 + 1) || 1) + "/ava/" + (item.user._id) + ".jpg", true, false)) + "/></a></span><span class=\"i-user--inline__name\"><a" + (jade.attr("href", "/u/" + (item.user.username) + "", true, false)) + ">" + (jade.escape((jade_interp = item.user.name) == null ? '' : jade_interp)) + "</a></span><span class=\"i-user--inline__mod\"><span>  <i class=\"f-icon-repost\"></i> " + (jade.escape((jade_interp = __('suggested')) == null ? '' : jade_interp)) + "  </span>");
 jade_mixins["time"](item.published_at);
 buf.push("<span>&nbsp;&nbsp;&middot;&nbsp;&nbsp;</span>");
 jade_mixins["read"](item.repost.reading_time);
@@ -15292,7 +14310,7 @@ buf.push("</span><div class=\"clear\"></div></div></div><div class=\"b-post__rep
 }
 else if ( item.is_response == true)
 {
-buf.push("<div class=\"b-post__head\"><div class=\"i-user--inline\"><span class=\"i-user--inline__ava\"><a" + (jade.attr("href", "/u/" + (item.user.username) + "", true, false)) + "><img" + (jade.attr("src", "" + (IMG_URL) + "c_fill,w_50/v" + (Math.floor(new Date(item.user.updated_at) / 1000) || 1) + "/ava/" + (item.user._id) + ".jpg", true, false)) + "/></a></span><span class=\"i-user--inline__name\"><a" + (jade.attr("href", "/u/" + (item.user.username) + "", true, false)) + ">" + (jade.escape((jade_interp = item.user.name) == null ? '' : jade_interp)) + "</a></span><span class=\"i-user--inline__mod\"><span>  <i class=\"f-icon-reply\"></i> " + (jade.escape((jade_interp = __('responded')) == null ? '' : jade_interp)) + "  </span>");
+buf.push("<div class=\"b-post__head\"><div class=\"i-user--inline\"><span class=\"i-user--inline__ava\"><a" + (jade.attr("href", "/u/" + (item.user.username) + "", true, false)) + "><img" + (jade.attr("src", "" + (IMG_URL) + "c_fill,w_50/v" + (Math.floor(new Date(item.user.updated_at) / 1000 + 1) || 1) + "/ava/" + (item.user._id) + ".jpg", true, false)) + "/></a></span><span class=\"i-user--inline__name\"><a" + (jade.attr("href", "/u/" + (item.user.username) + "", true, false)) + ">" + (jade.escape((jade_interp = item.user.name) == null ? '' : jade_interp)) + "</a></span><span class=\"i-user--inline__mod\"><span>  <i class=\"f-icon-reply\"></i> " + (jade.escape((jade_interp = __('responded')) == null ? '' : jade_interp)) + "  </span>");
 jade_mixins["time"](item.published_at);
 buf.push("<span>&nbsp;&nbsp;&middot;&nbsp;&nbsp;</span>");
 jade_mixins["read"](item.reading_time);
@@ -15346,7 +14364,7 @@ buf.push("<a" + (jade.attr("href", "/c/" + (col.username) + "", true, false)) + 
 buf.push("</div>");
 }
 }
-buf.push("<div class=\"i-user--inline\"><span class=\"i-user--inline__ava\"><a" + (jade.attr("href", "/u/" + (item.user.username) + "", true, false)) + "><img" + (jade.attr("src", "" + (IMG_URL) + "c_fill,w_50/v" + (Math.floor(new Date(item.user.updated_at) / 1000) || 1) + "/ava/" + (item.user._id) + ".jpg", true, false)) + "/></a></span><span class=\"i-user--inline__name\"><a" + (jade.attr("href", "/u/" + (item.user.username) + "", true, false)) + ">" + (jade.escape((jade_interp = item.user.name) == null ? '' : jade_interp)) + "</a></span><span class=\"i-user--inline__mod\"><span> " + (jade.escape((jade_interp = __('published')) == null ? '' : jade_interp)) + "  </span>");
+buf.push("<div class=\"i-user--inline\"><span class=\"i-user--inline__ava\"><a" + (jade.attr("href", "/u/" + (item.user.username) + "", true, false)) + "><img" + (jade.attr("src", "" + (IMG_URL) + "c_fill,w_50/v" + (Math.floor(new Date(item.user.updated_at) / 1000 + 1) || 1) + "/ava/" + (item.user._id) + ".jpg", true, false)) + "/></a></span><span class=\"i-user--inline__name\"><a" + (jade.attr("href", "/u/" + (item.user.username) + "", true, false)) + ">" + (jade.escape((jade_interp = item.user.name) == null ? '' : jade_interp)) + "</a></span><span class=\"i-user--inline__mod\"><span> " + (jade.escape((jade_interp = __('published')) == null ? '' : jade_interp)) + "  </span>");
 jade_mixins["time"](item.published_at);
 buf.push("<span>&nbsp;&nbsp;&middot;&nbsp;&nbsp;</span>");
 jade_mixins["read"](item.reading_time);
@@ -15368,7 +14386,7 @@ buf.push("</div>");
 buf.push("<div" + (jade.attr("data-published-at", "" + (item.published_at) + "", true, false)) + " class=\"b-post__item\">");
 if ( item.is_repost == true)
 {
-buf.push("<div class=\"b-post__head\"><div class=\"i-user--inline\"><span class=\"i-user--inline__ava\"><a" + (jade.attr("href", "/u/" + (item.user.username) + "", true, false)) + "><img" + (jade.attr("src", "" + (IMG_URL) + "c_fill,w_50/v" + (Math.floor(new Date(item.user.updated_at) / 1000) || 1) + "/ava/" + (item.user._id) + ".jpg", true, false)) + "/></a></span><span class=\"i-user--inline__name\"><a" + (jade.attr("href", "/u/" + (item.user.username) + "", true, false)) + ">" + (jade.escape((jade_interp = item.user.name) == null ? '' : jade_interp)) + "</a></span><span class=\"i-user--inline__mod\"><span>  <i class=\"f-icon-repost\"></i> " + (jade.escape((jade_interp = __('suggested')) == null ? '' : jade_interp)) + "  </span>");
+buf.push("<div class=\"b-post__head\"><div class=\"i-user--inline\"><span class=\"i-user--inline__ava\"><a" + (jade.attr("href", "/u/" + (item.user.username) + "", true, false)) + "><img" + (jade.attr("src", "" + (IMG_URL) + "c_fill,w_50/v" + (Math.floor(new Date(item.user.updated_at) / 1000 + 1) || 1) + "/ava/" + (item.user._id) + ".jpg", true, false)) + "/></a></span><span class=\"i-user--inline__name\"><a" + (jade.attr("href", "/u/" + (item.user.username) + "", true, false)) + ">" + (jade.escape((jade_interp = item.user.name) == null ? '' : jade_interp)) + "</a></span><span class=\"i-user--inline__mod\"><span>  <i class=\"f-icon-repost\"></i> " + (jade.escape((jade_interp = __('suggested')) == null ? '' : jade_interp)) + "  </span>");
 jade_mixins["time"](item.published_at);
 buf.push("<span>&nbsp;&nbsp;&middot;&nbsp;&nbsp;</span>");
 jade_mixins["read"](item.repost.reading_time);
@@ -15376,7 +14394,7 @@ buf.push("</span><div class=\"clear\"></div></div></div><div class=\"b-post__rep
 }
 else if ( item.is_response == true)
 {
-buf.push("<div class=\"b-post__head\"><div class=\"i-user--inline\"><span class=\"i-user--inline__ava\"><a" + (jade.attr("href", "/u/" + (item.user.username) + "", true, false)) + "><img" + (jade.attr("src", "" + (IMG_URL) + "c_fill,w_50/v" + (Math.floor(new Date(item.user.updated_at) / 1000) || 1) + "/ava/" + (item.user._id) + ".jpg", true, false)) + "/></a></span><span class=\"i-user--inline__name\"><a" + (jade.attr("href", "/u/" + (item.user.username) + "", true, false)) + ">" + (jade.escape((jade_interp = item.user.name) == null ? '' : jade_interp)) + "</a></span><span class=\"i-user--inline__mod\"><span>  <i class=\"f-icon-reply\"></i> " + (jade.escape((jade_interp = __('responded')) == null ? '' : jade_interp)) + "  </span>");
+buf.push("<div class=\"b-post__head\"><div class=\"i-user--inline\"><span class=\"i-user--inline__ava\"><a" + (jade.attr("href", "/u/" + (item.user.username) + "", true, false)) + "><img" + (jade.attr("src", "" + (IMG_URL) + "c_fill,w_50/v" + (Math.floor(new Date(item.user.updated_at) / 1000 + 1) || 1) + "/ava/" + (item.user._id) + ".jpg", true, false)) + "/></a></span><span class=\"i-user--inline__name\"><a" + (jade.attr("href", "/u/" + (item.user.username) + "", true, false)) + ">" + (jade.escape((jade_interp = item.user.name) == null ? '' : jade_interp)) + "</a></span><span class=\"i-user--inline__mod\"><span>  <i class=\"f-icon-reply\"></i> " + (jade.escape((jade_interp = __('responded')) == null ? '' : jade_interp)) + "  </span>");
 jade_mixins["time"](item.published_at);
 buf.push("<span>&nbsp;&nbsp;&middot;&nbsp;&nbsp;</span>");
 jade_mixins["read"](item.reading_time);
@@ -15430,7 +14448,7 @@ buf.push("<a" + (jade.attr("href", "/c/" + (col.username) + "", true, false)) + 
 buf.push("</div>");
 }
 }
-buf.push("<div class=\"i-user--inline\"><span class=\"i-user--inline__ava\"><a" + (jade.attr("href", "/u/" + (item.user.username) + "", true, false)) + "><img" + (jade.attr("src", "" + (IMG_URL) + "c_fill,w_50/v" + (Math.floor(new Date(item.user.updated_at) / 1000) || 1) + "/ava/" + (item.user._id) + ".jpg", true, false)) + "/></a></span><span class=\"i-user--inline__name\"><a" + (jade.attr("href", "/u/" + (item.user.username) + "", true, false)) + ">" + (jade.escape((jade_interp = item.user.name) == null ? '' : jade_interp)) + "</a></span><span class=\"i-user--inline__mod\"><span> " + (jade.escape((jade_interp = __('published')) == null ? '' : jade_interp)) + "  </span>");
+buf.push("<div class=\"i-user--inline\"><span class=\"i-user--inline__ava\"><a" + (jade.attr("href", "/u/" + (item.user.username) + "", true, false)) + "><img" + (jade.attr("src", "" + (IMG_URL) + "c_fill,w_50/v" + (Math.floor(new Date(item.user.updated_at) / 1000 + 1) || 1) + "/ava/" + (item.user._id) + ".jpg", true, false)) + "/></a></span><span class=\"i-user--inline__name\"><a" + (jade.attr("href", "/u/" + (item.user.username) + "", true, false)) + ">" + (jade.escape((jade_interp = item.user.name) == null ? '' : jade_interp)) + "</a></span><span class=\"i-user--inline__mod\"><span> " + (jade.escape((jade_interp = __('published')) == null ? '' : jade_interp)) + "  </span>");
 jade_mixins["time"](item.published_at);
 buf.push("<span>&nbsp;&nbsp;&middot;&nbsp;&nbsp;</span>");
 jade_mixins["read"](item.reading_time);
@@ -15448,7 +14466,7 @@ buf.push("</div>");
 }).call(this);
 }.call(this,"Date" in locals_for_with?locals_for_with.Date:typeof Date!=="undefined"?Date:undefined,"IMG_URL" in locals_for_with?locals_for_with.IMG_URL:typeof IMG_URL!=="undefined"?IMG_URL:undefined,"Math" in locals_for_with?locals_for_with.Math:typeof Math!=="undefined"?Math:undefined,"__" in locals_for_with?locals_for_with.__:typeof __!=="undefined"?__:undefined,"__n" in locals_for_with?locals_for_with.__n:typeof __n!=="undefined"?__n:undefined,"post" in locals_for_with?locals_for_with.post:typeof post!=="undefined"?post:undefined,"undefined" in locals_for_with?locals_for_with.undefined:typeof undefined!=="undefined"?undefined:undefined));;return buf.join("");
 };
-},{"jade/runtime":146}],153:[function(require,module,exports){
+},{"jade/runtime":145}],152:[function(require,module,exports){
 var jade = require("jade/runtime");
 
 module.exports = function template(locals) {
@@ -15511,7 +14529,7 @@ buf.push("<div" + (jade.attr("data-love-id", "" + (item.loveId) + "", true, fals
 }).call(this);
 }.call(this,"__" in locals_for_with?locals_for_with.__:typeof __!=="undefined"?__:undefined,"post" in locals_for_with?locals_for_with.post:typeof post!=="undefined"?post:undefined,"undefined" in locals_for_with?locals_for_with.undefined:typeof undefined!=="undefined"?undefined:undefined));;return buf.join("");
 };
-},{"jade/runtime":146}],154:[function(require,module,exports){
+},{"jade/runtime":145}],153:[function(require,module,exports){
 var jade = require("jade/runtime");
 
 module.exports = function template(locals) {
@@ -15542,7 +14560,7 @@ buf.push("<a" + (jade.attr("href", "/p/" + (item.slug) + "", true, false)) + "><
 }).call(this);
 }.call(this,"post" in locals_for_with?locals_for_with.post:typeof post!=="undefined"?post:undefined,"undefined" in locals_for_with?locals_for_with.undefined:typeof undefined!=="undefined"?undefined:undefined));;return buf.join("");
 };
-},{"jade/runtime":146}],155:[function(require,module,exports){
+},{"jade/runtime":145}],154:[function(require,module,exports){
 var jade = require("jade/runtime");
 
 module.exports = function template(locals) {
@@ -15621,7 +14639,7 @@ buf.push("<div class=\"is-half\"><div class=\"b-post__repost__content\"><h3 clas
 
 buf.push("");}.call(this,"Date" in locals_for_with?locals_for_with.Date:typeof Date!=="undefined"?Date:undefined,"IMG_URL" in locals_for_with?locals_for_with.IMG_URL:typeof IMG_URL!=="undefined"?IMG_URL:undefined,"Math" in locals_for_with?locals_for_with.Math:typeof Math!=="undefined"?Math:undefined,"__" in locals_for_with?locals_for_with.__:typeof __!=="undefined"?__:undefined,"post" in locals_for_with?locals_for_with.post:typeof post!=="undefined"?post:undefined,"undefined" in locals_for_with?locals_for_with.undefined:typeof undefined!=="undefined"?undefined:undefined));;return buf.join("");
 };
-},{"jade/runtime":146}],156:[function(require,module,exports){
+},{"jade/runtime":145}],155:[function(require,module,exports){
 var jade = require("jade/runtime");
 
 module.exports = function template(locals) {
@@ -15654,7 +14672,7 @@ buf.push("<a" + (jade.attr("href", "/s?q=" + (tag._id) + "&type=topic", true, fa
 
 buf.push("</div>");}.call(this,"tags" in locals_for_with?locals_for_with.tags:typeof tags!=="undefined"?tags:undefined,"undefined" in locals_for_with?locals_for_with.undefined:typeof undefined!=="undefined"?undefined:undefined));;return buf.join("");
 };
-},{"jade/runtime":146}],157:[function(require,module,exports){
+},{"jade/runtime":145}],156:[function(require,module,exports){
 var jade = require("jade/runtime");
 
 module.exports = function template(locals) {
@@ -15672,7 +14690,7 @@ if ( users)
     for (var $index = 0, $$l = $$obj.length; $index < $$l; $index++) {
       var user = $$obj[$index];
 
-buf.push("<br/><span height=\"100%\" class=\"i-user__ava\"><img" + (jade.attr("src", "" + (IMG_URL) + "c_fill,w_50/v" + (Math.floor(new Date(user.updated_at) / 1000) || 1) + "/ava/" + (user._id) + ".jpg", true, false)) + "/></span><span class=\"i-user--footer__name text-red\"><a" + (jade.attr("href", "/u/" + (user.username) + "", true, false)) + ">" + (jade.escape((jade_interp = user.name) == null ? '' : jade_interp)) + "</a></span><p class=\"i-user--footer__desc\">" + (jade.escape((jade_interp = user.description) == null ? '' : jade_interp)) + "</p><p class=\"i-user--footer__username\"><a" + (jade.attr("href", "/u/" + (user.username) + "", true, false)) + ">/" + (jade.escape((jade_interp = user.username) == null ? '' : jade_interp)) + "</a></p><div class=\"divider\"></div><br/>");
+buf.push("<br/><span height=\"100%\" class=\"i-user__ava\"><img" + (jade.attr("src", "" + (IMG_URL) + "c_fill,w_50/v" + (Math.floor(new Date(user.updated_at) / 1000 + 1) || 1) + "/ava/" + (user._id) + ".jpg", true, false)) + "/></span><span class=\"i-user--footer__name text-red\"><a" + (jade.attr("href", "/u/" + (user.username) + "", true, false)) + ">" + (jade.escape((jade_interp = user.name) == null ? '' : jade_interp)) + "</a></span><p class=\"i-user--footer__desc\">" + (jade.escape((jade_interp = user.description) == null ? '' : jade_interp)) + "</p><p class=\"i-user--footer__username\"><a" + (jade.attr("href", "/u/" + (user.username) + "", true, false)) + ">/" + (jade.escape((jade_interp = user.username) == null ? '' : jade_interp)) + "</a></p><div class=\"divider\"></div><br/>");
     }
 
   } else {
@@ -15680,7 +14698,7 @@ buf.push("<br/><span height=\"100%\" class=\"i-user__ava\"><img" + (jade.attr("s
     for (var $index in $$obj) {
       $$l++;      var user = $$obj[$index];
 
-buf.push("<br/><span height=\"100%\" class=\"i-user__ava\"><img" + (jade.attr("src", "" + (IMG_URL) + "c_fill,w_50/v" + (Math.floor(new Date(user.updated_at) / 1000) || 1) + "/ava/" + (user._id) + ".jpg", true, false)) + "/></span><span class=\"i-user--footer__name text-red\"><a" + (jade.attr("href", "/u/" + (user.username) + "", true, false)) + ">" + (jade.escape((jade_interp = user.name) == null ? '' : jade_interp)) + "</a></span><p class=\"i-user--footer__desc\">" + (jade.escape((jade_interp = user.description) == null ? '' : jade_interp)) + "</p><p class=\"i-user--footer__username\"><a" + (jade.attr("href", "/u/" + (user.username) + "", true, false)) + ">/" + (jade.escape((jade_interp = user.username) == null ? '' : jade_interp)) + "</a></p><div class=\"divider\"></div><br/>");
+buf.push("<br/><span height=\"100%\" class=\"i-user__ava\"><img" + (jade.attr("src", "" + (IMG_URL) + "c_fill,w_50/v" + (Math.floor(new Date(user.updated_at) / 1000 + 1) || 1) + "/ava/" + (user._id) + ".jpg", true, false)) + "/></span><span class=\"i-user--footer__name text-red\"><a" + (jade.attr("href", "/u/" + (user.username) + "", true, false)) + ">" + (jade.escape((jade_interp = user.name) == null ? '' : jade_interp)) + "</a></span><p class=\"i-user--footer__desc\">" + (jade.escape((jade_interp = user.description) == null ? '' : jade_interp)) + "</p><p class=\"i-user--footer__username\"><a" + (jade.attr("href", "/u/" + (user.username) + "", true, false)) + ">/" + (jade.escape((jade_interp = user.username) == null ? '' : jade_interp)) + "</a></p><div class=\"divider\"></div><br/>");
     }
 
   }
@@ -15688,4 +14706,4 @@ buf.push("<br/><span height=\"100%\" class=\"i-user__ava\"><img" + (jade.attr("s
 
 }}.call(this,"Date" in locals_for_with?locals_for_with.Date:typeof Date!=="undefined"?Date:undefined,"IMG_URL" in locals_for_with?locals_for_with.IMG_URL:typeof IMG_URL!=="undefined"?IMG_URL:undefined,"Math" in locals_for_with?locals_for_with.Math:typeof Math!=="undefined"?Math:undefined,"undefined" in locals_for_with?locals_for_with.undefined:typeof undefined!=="undefined"?undefined:undefined,"users" in locals_for_with?locals_for_with.users:typeof users!=="undefined"?users:undefined));;return buf.join("");
 };
-},{"jade/runtime":146}]},{},[71]);
+},{"jade/runtime":145}]},{},[71]);

@@ -4,8 +4,8 @@
 
   { $, $$ } = require './helper/selector.coffee' 
 
-  pace = require './vendor/pace.js'
-  pace.start()
+  # pace = require './vendor/pace.js'
+  # pace.start()
 
   swal.setDefaults
     title: "Framesia"

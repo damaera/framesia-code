@@ -35,6 +35,8 @@ purifyHtml = (html) ->
     .replace /&lt;\/(b|strong)>/g, '</strong>'
     .replace /&lt;(i|em)>/g, '<em>'
     .replace /&lt;\/(i|em)>/g, '</em>'
+    .replace /&lt;code>/g, '<code>'
+    .replace /&lt;\/code>/g, '</code>'
     .replace /&lt;a href=/g, '<a href='
     .replace /&lt;\/a>/g, '</a>'
 

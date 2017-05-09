@@ -7,7 +7,7 @@ each item in post
       .b-post__head
         .i-user--inline
           span.i-user--inline__ava: a(href="/u/#{item.user.username}")
-            img(src="#{IMG_URL}c_fill,w_50/v#{Math.floor(new Date(item.user.updated_at) / 1000) || 1}/ava/#{item.user._id}.jpg")
+            img(src="#{IMG_URL}c_fill,w_50/v#{Math.floor(new Date(item.user.updated_at) / 1000 + 1) || 1}/ava/#{item.user._id}.jpg")
           span.i-user--inline__name: a(href="/u/#{item.user.username}") #{item.user.name}
           span.i-user--inline__mod
             span   
@@ -33,7 +33,7 @@ each item in post
       .b-post__head
         .i-user--inline
           span.i-user--inline__ava: a(href="/u/#{item.user.username}")
-            img(src="#{IMG_URL}c_fill,w_50/v#{Math.floor(new Date(item.user.updated_at) / 1000) || 1}/ava/#{item.user._id}.jpg")
+            img(src="#{IMG_URL}c_fill,w_50/v#{Math.floor(new Date(item.user.updated_at) / 1000 + 1) || 1}/ava/#{item.user._id}.jpg")
           span.i-user--inline__name: a(href="/u/#{item.user.username}") #{item.user.name}
           span.i-user--inline__mod
             span   
@@ -131,7 +131,7 @@ each item in post
           
         .i-user--inline
           span.i-user--inline__ava: a(href="/u/#{item.user.username}")
-            img(src="#{IMG_URL}c_fill,w_50/v#{Math.floor(new Date(item.user.updated_at) / 1000) || 1}/ava/#{item.user._id}.jpg")
+            img(src="#{IMG_URL}c_fill,w_50/v#{Math.floor(new Date(item.user.updated_at) / 1000 + 1) || 1}/ava/#{item.user._id}.jpg")
           span.i-user--inline__name: a(href="/u/#{item.user.username}") #{item.user.name}
           span.i-user--inline__mod
             span  #{__('published')}  

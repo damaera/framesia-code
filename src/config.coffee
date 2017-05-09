@@ -7,8 +7,8 @@ siteUrl = "http://localhost:8080/"
 # assetUrl = "https://asset.framesia.com/frms/"
 assetUrl = "http://localhost:8080/asset/frms/"
 
-# dbUrl = "mongodb://damn:123qwe@ds149030.mlab.com:49030/frms"
-dbUrl = "mongodb://test:123qwe@ds161630.mlab.com:61630/frms-dev"
+dbUrl = "mongodb://damn:123qwe@ds149030.mlab.com:49030/frms"
+# dbUrl = "mongodb://test:123qwe@ds161630.mlab.com:61630/frms-dev"
 
 facebook = 
   clientID: '1570105449948928'

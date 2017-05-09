@@ -63,6 +63,9 @@ module.exports = (type = 1) ->
   else if type is 5
     hElement = code()
     eType = "PRE"
+  else if type is 0
+    hElement = p()
+    eType = "P"
   else return
 
   if $beginEl.parentNode.firstChild.classList?.contains 'is-drop-cap'

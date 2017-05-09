@@ -2,16 +2,25 @@ extends layout/index
 
 
 block content
-  .b-welcome
-    .b-welcome__cover
-    .i-wrap--640.is-center
-      h2.b-graf--h2 #{__('Frame your thoughts.')}
-      h3.b-graf--quote1.is-center #{__('Welcome to Framesia. Read more, write more and discuss the discoveries. A discoveries platform.')}
-      //- a(href="/a/facebook")
-      button.i-button.i-button--large.i-button--green.js-login-button #{__('Getting started')}
-      a(href="/p/try-editor")
-        button.i-button.i-button--large #{__('Try our editor')}
+  //- .b-welcome
+  //-   .b-welcome__cover.i-wrap--640
+  //-   .i-wrap--640.is-center
+  //-     h2.b-graf--h2 #{__('Frame your thoughts.')}
+  //-     h3.b-graf--quote1.is-center #{__('Welcome to Framesia. Read more, write more and discuss the discoveries. A discoveries platform.')}
+  //-     //- a(href="/a/facebook")
+  //-     button.i-button.i-button--large.i-button--green.js-login-button #{__('Getting started')}
+  //-     a(href="/p/try-editor")
+  //-       button.i-button.i-button--large #{__('Try our editor')}
   .i-wrap__left(style="padding:0")
+    .b-welcome
+      .b-welcome__cover.i-wrap--640
+      .i-wrap--640.is-center
+        h2.b-graf--h2 #{__('Frame your thoughts.')}
+        h3.b-graf--quote1.is-center #{__('Welcome to Framesia. Read more, write more and discuss the discoveries. A discoveries platform.')}
+        //- a(href="/a/facebook")
+        button.i-button.i-button--large.i-button--green.js-login-button #{__('Getting started')}
+        a(href="/p/try-editor")
+          button.i-button.i-button--large #{__('Try our editor')}
     .i-wrap--640
       if collection
         .js-bigarticle
@@ -114,6 +123,7 @@ block content
           .bar1
           .bar2
           .bar3
+        //- .r-article-feed
       .is-center
         br
         br

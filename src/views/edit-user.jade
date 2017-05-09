@@ -22,7 +22,7 @@ block content
     if USER.is_new
       img.js-first-time-ava(src="#{USER.picture}", alt="", height="200")
     else
-      img.js-first-time-ava(src="#{IMG_URL}v#{Math.floor(new Date(USER.edited_at) / 1000) || 1}/ava/#{USER._id}.jpg", alt="", height="200")
+      img.js-first-time-ava(src="#{IMG_URL}v#{Math.floor(new Date(USER.updated_at) / 1000) || 1}/ava/#{USER._id}.jpg", alt="", height="200")
     input.js-first-time-ava-input.is-hidden(type="file")
     input.js-first-time-ava-data.is-hidden(name="picture" type="text")
     br

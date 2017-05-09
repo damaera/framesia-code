@@ -23,7 +23,7 @@ module.exports = (req, res, next) ->
       user.picture = undefined
       user.language_chosen = post.language_chosen
       user.country_chosen = post.country_chosen
-      user.update_at = new Date()
+      user.updated_at = Date.now()
 
       uNameRegex = new RegExp "^#{user.username}$", 'i'
 
@@ -36,6 +36,7 @@ module.exports = (req, res, next) ->
             callback = (ress) ->
               req.login user, (err) ->
                 user.save (err) ->
+                  console.log user
                   if err
                   then next new Error err.message
                   else res.redirect "/u/#{user.username}"

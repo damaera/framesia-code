@@ -51,7 +51,7 @@ module.exports =
     $code = document.createElement 'PRE'
     $code.classList.add 'b-graf'
     $code.classList.add 'b-graf--code'
-    $blockquote.setAttribute 'data-id', shortid.generate()
+    $code.setAttribute 'data-id', shortid.generate()
     $code
 
   cap: () ->
@@ -73,6 +73,17 @@ module.exports =
   text: (text) ->
     $textNode = document.createTextNode text
     $textNode
+  
+  table: (row, col) ->
+    $table = document.createElement 'TABLE'
+    $table.classList.add 'b-graf'
+    $table.classList.add 'b-graf--table'
+    for r in [0..row-1]
+      $row = $table.insertRow r
+      for c in [0..col-1]
+        $col = $row.insertCell c
+        $col.innerHTML = '<br />'
+    $table
 
   figure: (type = 'center', img, caption = "deskripsi gambar (opsional)") ->
     figureClass = type

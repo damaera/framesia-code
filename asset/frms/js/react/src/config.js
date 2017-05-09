@@ -1,0 +1,1 @@
+export const IMG_URL = 'https://res.cloudinary.com/frms/image/upload/'

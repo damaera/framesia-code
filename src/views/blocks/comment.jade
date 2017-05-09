@@ -17,7 +17,7 @@ include ../util/time.jade
       .b-comment__user
         .i-user--inline
           span.i-user--inline__ava
-            img(src="#{IMG_URL}c_fill,w_50/ava/#{USER._id}.jpg")
+            img(src="#{IMG_URL}c_fill,w_50/v#{Math.floor(new Date(USER.updated_at) / 1000 + 1) || 1}/ava/#{USER._id}.jpg")
           p.i-user--inline__name: a(href="/u/#{USER.username}") #{USER.name}
           .clear
       .b-comment__input
@@ -44,7 +44,7 @@ include ../util/time.jade
             
             .i-user--inline
               span.i-user--inline__ava
-                img(src="#{IMG_URL}c_fill,w_50/v#{Math.floor(new Date(comment.user.updated_at) / 1000) || 1}/ava/#{comment.user._id}.jpg")
+                img(src="#{IMG_URL}c_fill,w_50/v#{Math.floor(new Date(comment.user.updated_at) / 1000 + 1) || 1}/ava/#{comment.user._id}.jpg")
               span.i-user--inline__name
                 a(href="/#{comment.user.username}") #{comment.user.name}
               span.b-comment__date.i-user--inline__mod

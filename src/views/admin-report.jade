@@ -22,7 +22,7 @@ table
       td
         each user in post.users
           a(href="/u/#{user}")
-            img(src="#{IMG_URL}c_fill,w_50/v#{Math.floor(new Date(user.updated_at) / 1000) || 1}/ava/#{user}.jpg")
+            img(src="#{IMG_URL}c_fill,w_50/v#{Math.floor(new Date(user.updated_at) / 1000 + 1) || 1}/ava/#{user}.jpg")
       td
         form(method="post" action="/x/block-article")
           input(type="hidden" name="_csrf" value="#{CSRF}" )

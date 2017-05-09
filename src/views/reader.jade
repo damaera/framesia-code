@@ -5,8 +5,8 @@ block meta
   title #{title}
   meta(name="description" content="#{description ? description : title}")
   meta(name="keywords" content="#{keywords ? keywords : title.split(' ').join(',')}")
-  //- if author.length > 0
-  //-   meta(name="author" content="#{author}")
+  if author.length > 0
+    meta(name="author" content="#{author}")
 
 block content
   if empty
