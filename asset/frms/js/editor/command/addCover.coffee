@@ -16,7 +16,6 @@ renderImg = (img) ->
   $imgCover.style.width = "#{width}px"
   $imgCover.style.height = "#{height}px"
 
-
   $title.classList.remove 'is-with-cover'
   $shadow.classList.add 'is-hidden'
 
